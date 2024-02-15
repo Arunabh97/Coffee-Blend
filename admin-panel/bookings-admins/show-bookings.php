@@ -30,7 +30,8 @@ $allBookings = $bookings->fetchAll(PDO::FETCH_OBJ);
                     <th scope="col">Phone</th>
                     <th scope="col">Message</th>
                     <th scope="col">Status</th>
-                    <th scope="col">Created_at</th>
+                    <th scope="col">Change Status</th>
+                    <th scope="col">Created_At</th>
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
@@ -45,7 +46,9 @@ $allBookings = $bookings->fetchAll(PDO::FETCH_OBJ);
                     <td><?php echo $booking->phone; ?></td>
                     <td><?php echo $booking->message; ?></td>
                     <td><?php echo $booking->status; ?></td>
+                    <td><a href="change-status.php?id=<?php echo $booking->id; ?>" class="btn btn-warning  text-white text-center ">Change Status</a></td>
                     <td><?php echo $booking->created_at; ?></td>
+                    
                      <td><a href="delete-bookings.php?id=<?php echo $booking->id; ?>" class="btn btn-danger  text-center ">Delete</a></td>
                   </tr>
                   <?php endforeach; ?>

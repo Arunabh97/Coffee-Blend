@@ -2,6 +2,7 @@
 
     session_start();
     define("APPURL","http://localhost/coffee-blend");
+    define("IMAGEPRODUCTS", "http://localhost/coffee-blend/admin-panel/products-admins/images");
 
     // Check if alert message exists
 if (isset($_SESSION['alert'])) {
@@ -50,11 +51,11 @@ if (isset($_SESSION['alert'])) {
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
 	          <li class="nav-item active"><a href="<?php echo APPURL; ?>" class="nav-link">Home</a></li>
-	          <li class="nav-item"><a href="menu.php" class="nav-link">Menu</a></li>
-	          <li class="nav-item"><a href="services.php" class="nav-link">Services</a></li>
-	          <li class="nav-item"><a href="about.php" class="nav-link">About</a></li>
+	          <li class="nav-item"><a href="<?php echo APPURL; ?>/menu.php" class="nav-link">Menu</a></li>
+	          <li class="nav-item"><a href="<?php echo APPURL; ?>/services.php" class="nav-link">Services</a></li>
+	          <li class="nav-item"><a href="<?php echo APPURL; ?>/about.php" class="nav-link">About</a></li>
 	         
-	          <li class="nav-item"><a href="contact.php" class="nav-link">Contact</a></li>
+	          <li class="nav-item"><a href="<?php echo APPURL; ?>/contact.php" class="nav-link">Contact</a></li>
 	          <?php if(isset($_SESSION['username'])) : ?>
               <li class="nav-item cart"><a href="<?php echo APPURL; ?>/products/cart.php" class="nav-link"><span class="icon icon-shopping_cart"></span></a>
               <li class="nav-item dropdown">
