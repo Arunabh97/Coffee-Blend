@@ -65,7 +65,7 @@
 						      <tr class="text-center">
 						        <td class="product-remove"><a href="delete-product.php?id=<?php echo $product->id; ?>"><span class="icon-close"></span></a></td>
 						        
-						        <td class="image-prod"><div class="img" style="background-image:url(<?php echo APPURL; ?>/images/<?php echo $product->image; ?>);"></div></td>
+						        <td class="image-prod"><div class="img" style="background-image:url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $product->image; ?>);"></div></td>
 						        
 						        <td class="product-name">
 						        	<h3><?php echo $product->name; ?></h3>
@@ -119,7 +119,8 @@
 					<form method="POST" action="cart.php">
 					<input type="hidden" name="total_price" value="<?php echo $allCartTotal->total + 50 - 5; ?>">
 					<?php if($allCartTotal->total > 0) : ?>
-    				<button name="checkout" type="submit" class="btn btn-primary py-3 px-4">Proceed to Checkout</button>
+						<button name="checkout" type="submit" style="padding: 12px 46px; background-color: #e74c3c; color: #ffffff; font-weight: bold; border: none; cursor: pointer; transition: background-color 0.3s, color 0.3s;" onmouseover="this.style.backgroundColor='transparent'; this.style.color='#3498db'" onmouseout="this.style.backgroundColor='#e74c3c'; this.style.color='#ffffff'">Proceed to Checkout</button>
+
 					<?php endif; ?>
 				</form>
 				</div>

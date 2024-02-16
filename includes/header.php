@@ -1,5 +1,18 @@
 <?php 
 
+  // db.php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "coffee-blend";
+
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch(PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+}
+
     session_start();
     define("APPURL","http://localhost/coffee-blend");
     define("IMAGEPRODUCTS", "http://localhost/coffee-blend/admin-panel/products-admins/images");
@@ -57,14 +70,31 @@ if (isset($_SESSION['alert'])) {
 	         
 	          <li class="nav-item"><a href="<?php echo APPURL; ?>/contact.php" class="nav-link">Contact</a></li>
 	          <?php if(isset($_SESSION['username'])) : ?>
-              <li class="nav-item cart"><a href="<?php echo APPURL; ?>/products/cart.php" class="nav-link"><span class="icon icon-shopping_cart"></span></a>
+              <li class="nav-item cart">
+    <a href="<?php echo APPURL; ?>/products/cart.php" class="nav-link">
+        <span class="icon icon-shopping_cart"></span>
+        <?php
+        // Fetch and display the count of items in the cart
+        $cartCount = 0; // Default value if the count is not available
+        if (isset($_SESSION['user_id'])) {
+            $cartQuery = $conn->query("SELECT COUNT(*) AS count FROM cart WHERE user_id = '$_SESSION[user_id]'");
+            $cartCountResult = $cartQuery->fetch(PDO::FETCH_ASSOC);
+            $cartCount = $cartCountResult['count'];
+        }
+        ?>
+        <?php if ($cartCount > 0) : ?>
+            <sup class="badge badge-pill badge-danger"><?php echo $cartCount; ?></sup>
+        <?php endif; ?>
+    </a>
+</li>
+
               <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <?php echo $_SESSION['username']; ?>
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="<?php echo APPURL; ?>/users/bookings.php">Your Bookings</a></li>
+            <li><a class="dropdown-item" href="<?php echo APPURL; ?>/users/orders.php">Your Orders</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="<?php echo APPURL; ?>/logout.php">Logout</a></li>
           </ul>

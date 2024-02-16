@@ -2,10 +2,16 @@
 <?php require "config/config.php"; ?>
 <?php
 
-	$products = $conn->query("SELECT * FROM products");
+	$products = $conn->query("SELECT * FROM products WHERE type='drink'");
 	$products->execute();
 
 	$allProducts = $products->fetchAll(PDO::FETCH_OBJ);
+
+	//reviews
+	$reviews = $conn->query("SELECT * FROM reviews");
+	$reviews->execute();
+
+	$allReviews = $reviews->fetchAll(PDO::FETCH_OBJ);
 
 ?>
 
@@ -119,9 +125,13 @@
 	    					<div class="form-group">
 		              <textarea name="message" id="" cols="30" rows="2" class="form-control" placeholder="Message"></textarea>
 		            </div>
+					<?php if(isset($_SESSION['user_id'])) : ?>
 		            <div class="form-group ml-md-4">
 		              <button type="submit" name="submit"  class="btn btn-white py-3 px-4">Book a table</button>
 		            </div>
+					<?php else : ?>
+						<p class="text-white">Login to Book Table </p>
+					<?php endif; ?>
 	    				</div>
 	    			</form>
 	    		</div>
@@ -348,78 +358,23 @@
 	    </div>
 	    <div class="container-wrap">
 	      <div class="row d-flex no-gutters">
-	        <div class="col-lg align-self-sm-end ftco-animate">
+			<?php foreach($allReviews as $review) : ?>
+	        <div class="col-md-3 align-self-sm-end ftco-animate">
 	          <div class="testimony">
 	             <blockquote>
-	                <p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small.&rdquo;</p>
+	                <p>&ldquo;<?php echo $review->review; ?>.&rdquo;</p>
 	              </blockquote>
 	              <div class="author d-flex mt-4">
-	                <div class="image mr-3 align-self-center">
-	                  <img src="images/person_1.jpg" alt="">
-	                </div>
-	                <div class="name align-self-center">Louise Kelly <span class="position">Illustrator Designer</span></div>
+	                
+	                <div class="name align-self-center"><?php echo $review->username; ?></div>
 	              </div>
 	          </div>
 	        </div>
-	        <div class="col-lg align-self-sm-end">
-	          <div class="testimony overlay">
-	             <blockquote>
-	                <p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.&rdquo;</p>
-	              </blockquote>
-	              <div class="author d-flex mt-4">
-	                <div class="image mr-3 align-self-center">
-	                  <img src="images/person_2.jpg" alt="">
-	                </div>
-	                <div class="name align-self-center">Louise Kelly <span class="position">Illustrator Designer</span></div>
-	              </div>
-	          </div>
-	        </div>
-	        <div class="col-lg align-self-sm-end ftco-animate">
-	          <div class="testimony">
-	             <blockquote>
-	                <p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small  line of blind text by the name. &rdquo;</p>
-	              </blockquote>
-	              <div class="author d-flex mt-4">
-	                <div class="image mr-3 align-self-center">
-	                  <img src="images/person_3.jpg" alt="">
-	                </div>
-	                <div class="name align-self-center">Louise Kelly <span class="position">Illustrator Designer</span></div>
-	              </div>
-	          </div>
-	        </div>
-	        <div class="col-lg align-self-sm-end">
-	          <div class="testimony overlay">
-	             <blockquote>
-	                <p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however.&rdquo;</p>
-	              </blockquote>
-	              <div class="author d-flex mt-4">
-	                <div class="image mr-3 align-self-center">
-	                  <img src="images/person_2.jpg" alt="">
-	                </div>
-	                <div class="name align-self-center">Louise Kelly <span class="position">Illustrator Designer</span></div>
-	              </div>
-	          </div>
-	        </div>
-	        <div class="col-lg align-self-sm-end ftco-animate">
-	          <div class="testimony">
-	            <blockquote>
-	              <p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small  line of blind text by the name. &rdquo;</p>
-	            </blockquote>
-	            <div class="author d-flex mt-4">
-	              <div class="image mr-3 align-self-center">
-	                <img src="images/person_3.jpg" alt="">
-	              </div>
-	              <div class="name align-self-center">Louise Kelly <span class="position">Illustrator Designer</span></div>
-	            </div>
-	          </div>
-	        </div>
+	        
+			<?php endforeach; ?>
 	      </div>
 	    </div>
 	  </section>
 
    
-
-		
-	
-
-    <?php require "includes/footer.php"; ?>
+<?php require "includes/footer.php"; ?>

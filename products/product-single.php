@@ -56,6 +56,44 @@
 		header("location: ".APPURL."/404.php");
 	}
 ?>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- JavaScript for quantity adjustment -->
+<script>
+  $(document).ready(function () {
+    // Plus button
+    $('.quantity-right-plus').click(function (e) {
+      e.preventDefault();
+      if (!isItemAddedToCart()) {
+        var quantity = parseInt($('#quantity').val());
+        $('#quantity').val(quantity + 1);
+      }
+    });
+
+    // Minus button
+    $('.quantity-left-minus').click(function (e) {
+      e.preventDefault();
+      if (!isItemAddedToCart()) {
+        var quantity = parseInt($('#quantity').val());
+        if (quantity > 1) {
+          $('#quantity').val(quantity - 1);
+        }
+      }
+    });
+
+    // Function to check if the item is added to the cart
+    function isItemAddedToCart() {
+      <?php if (isset($_SESSION['user_id']) && $rowCount > 0) : ?>
+        alert('Item is already added to the cart. Quantity adjustment is disabled.');
+        return true;
+      <?php else : ?>
+        return false;
+      <?php endif; ?>
+    }
+  });
+</script>
+
     <section class="home-slider owl-carousel">
 
       <div class="slider-item" style="background-image: url(<?php echo APPURL; ?>/images/bg_3.jpg);" data-stellar-background-ratio="0.5">
@@ -77,7 +115,7 @@
     	<div class="container">
     		<div class="row">
     			<div class="col-lg-6 mb-5 ftco-animate">
-    				<a href="images/menu-2.jpg" class="image-popup"><img src="<?php echo APPURL; ?>/images/<?php echo $singleProduct->image; ?>" class="img-fluid" alt="Colorlib Template"></a>
+    				<a href="images/menu-2.jpg" class="image-popup"><img src="<?php echo IMAGEPRODUCTS; ?>/<?php echo $singleProduct->image; ?>" class="img-fluid" alt="Colorlib Template"></a>
     			</div>
     			<div class="col-lg-6 product-details pl-md-5 ftco-animate">
     				<h3><?php echo $singleProduct->name; ?></h3>
@@ -124,12 +162,12 @@
 				<input name="description" value="<?php echo $singleProduct->description; ?>" type="hidden">
 				<?php if(isset($_SESSION['user_id'])) :?>
 				<?php if($rowCount > 0) : ?>
-					<button name="submit" type="submit" class="btn btn-primary py-3 px-5" disabled>Added to Cart</button>
+					<button style="margin-top: -335px;" name="submit" type="submit" class="btn btn-secondary py-3 px-5" disabled>Added to Cart</button>
 				<?php else : ?>
-				<button name="submit" type="submit" class="btn btn-primary py-3 px-5">Add to Cart</button>
+				<button style="display: inline-block; position: relative; z-index: 1; padding: 2em; margin-top: -280px; margin-left: 632px; height: 65px;" name="submit" type="submit" class="btn btn-primary py-3 px-5 ">Add to Cart</button>
 				<?php endif; ?>
 				<?php else :  ?>
-					<p style="margin-top: -280px; margin-left: 632px; height: 65px;">login to add product to cart</p>
+					<p style="margin-top: -270px; margin-left: 632px; height: 65px; font-weight: bold; color: white;">Login To Add Product To Cart</p>
 				<?php endif; ?>
 			</form>	
 		</div>
@@ -150,7 +188,7 @@
 		<?php foreach ($allRelatedProducts as $relatedProduct) : ?>
     <div class="col-md-3">
         <div class="menu-entry">
-            <a href="<?php echo APPURL; ?>/products/product-single.php?id=<?php echo $relatedProduct->id; ?>" class="img" style="background-image: url(<?php echo APPURL; ?>/images/<?php echo $relatedProduct->image; ?>);"></a>
+            <a href="<?php echo APPURL; ?>/products/product-single.php?id=<?php echo $relatedProduct->id; ?>" class="img" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $relatedProduct->image; ?>);"></a>
             <div class="text text-center pt-4">
                 <h3><a href="<?php echo APPURL; ?>/products/product-single.php?id=<?php echo $relatedProduct->id; ?>"><?php echo $relatedProduct->name; ?></a></h3>
                 <p><?php echo $relatedProduct->description; ?></p>
