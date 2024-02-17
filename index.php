@@ -2,6 +2,8 @@
 <?php require "config/config.php"; ?>
 <?php
 
+	$isLoggedIn = isset($_SESSION['user_id']);
+
 	$products = $conn->query("SELECT * FROM products WHERE type='drink'");
 	$products->execute();
 
@@ -15,22 +17,36 @@
 
 ?>
 
-    <section class="home-slider owl-carousel">
-      <div class="slider-item" style="background-image: url(images/bg_1.jpg);">
-      	<div class="overlay"></div>
+
+<script>
+    function redirectToLogin() {
+        window.location.href = 'login.php';
+    }
+</script>
+
+<section class="home-slider owl-carousel">
+    <div class="slider-item" style="background-image: url(images/bg_1.jpg);">
+        <div class="overlay"></div>
         <div class="container">
-          <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
+            <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
 
-            <div class="col-md-8 col-sm-12 text-center ftco-animate">
-            	<span class="subheading">Welcome</span>
-              <h1 class="mb-4">The Best Coffee Testing Experience</h1>
-              <p class="mb-4 mb-md-5">A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-              <p><a href="#" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a> <a href="#" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a></p>
+                <div class="col-md-8 col-sm-12 text-center ftco-animate">
+                    <span class="subheading">Welcome</span>
+                    <h1 class="mb-4">The Best Coffee Testing Experience</h1>
+                    <p class="mb-4 mb-md-5">A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+                    <p>
+                        <?php if ($isLoggedIn) : ?>
+                            <a href="products/cart.php" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a>
+                        <?php else : ?>
+                            <a href="#" onclick="redirectToLogin()" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a>
+                        <?php endif; ?>
+                        <a href="menu.php" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a>
+                    </p>
+                </div>
+
             </div>
-
-          </div>
         </div>
-      </div>
+    </div>
 
       <div class="slider-item" style="background-image: url(images/bg_2.jpg);">
       	<div class="overlay"></div>
@@ -41,7 +57,12 @@
             	<span class="subheading">Welcome</span>
               <h1 class="mb-4">Amazing Taste &amp; Beautiful Place</h1>
               <p class="mb-4 mb-md-5">A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-              <p><a href="#" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a> <a href="#" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a></p>
+              <p><?php if ($isLoggedIn) : ?>
+                            <a href="products/cart.php" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a>
+                        <?php else : ?>
+                            <a href="#" onclick="redirectToLogin()" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a>
+                        <?php endif; ?>
+                        <a href="menu.php" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a></p>
             </div>
 
           </div>
@@ -57,7 +78,12 @@
             	<span class="subheading">Welcome</span>
               <h1 class="mb-4">Creamy Hot and Ready to Serve</h1>
               <p class="mb-4 mb-md-5">A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-              <p><a href="#" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a> <a href="#" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a></p>
+              <p><?php if ($isLoggedIn) : ?>
+                            <a href="products/cart.php" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a>
+                        <?php else : ?>
+                            <a href="#" onclick="redirectToLogin()" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a>
+                        <?php endif; ?>
+                        <a href="menu.php" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a></p>
             </div>
 
           </div>

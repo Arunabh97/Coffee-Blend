@@ -162,7 +162,7 @@
 				<input name="description" value="<?php echo $singleProduct->description; ?>" type="hidden">
 				<?php if(isset($_SESSION['user_id'])) :?>
 				<?php if($rowCount > 0) : ?>
-					<button style="margin-top: -335px;" name="submit" type="submit" class="btn btn-secondary py-3 px-5" disabled>Added to Cart</button>
+					<button style="display: inline-block; position: relative; z-index: 1; padding: 2em; margin-top: -280px; margin-left: 632px; height: 65px;" name="submit" type="submit" class="btn btn-secondary py-3 px-5" disabled>Added to Cart</button>
 				<?php else : ?>
 				<button style="display: inline-block; position: relative; z-index: 1; padding: 2em; margin-top: -280px; margin-left: 632px; height: 65px;" name="submit" type="submit" class="btn btn-primary py-3 px-5 ">Add to Cart</button>
 				<?php endif; ?>

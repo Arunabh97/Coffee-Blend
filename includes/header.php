@@ -34,7 +34,8 @@ if (isset($_SESSION['alert'])) {
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
-
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
     <link rel="stylesheet" href="<?php echo APPURL; ?>/css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo APPURL; ?>/css/animate.css">
     
@@ -57,7 +58,7 @@ if (isset($_SESSION['alert'])) {
   <body>
   	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 	    <div class="container">
-	      <a class="navbar-brand" href="<?php echo APPURL; ?>">Coffee<small>Blend</small></a>
+	      <a class="navbar-brand" href="<?php echo APPURL; ?>"><i class='bx bx-coffee-togo'></i>Coffee<small>Blend</small></a>
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
@@ -93,8 +94,8 @@ if (isset($_SESSION['alert'])) {
             <?php echo $_SESSION['username']; ?>
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="<?php echo APPURL; ?>/users/bookings.php">Your Bookings</a></li>
-            <li><a class="dropdown-item" href="<?php echo APPURL; ?>/users/orders.php">Your Orders</a></li>
+            <li><a class="dropdown-item" href="<?php echo APPURL; ?>/users/bookings.php">Bookings</a></li>
+            <li><a class="dropdown-item" href="<?php echo APPURL; ?>/users/orders.php">Orders</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="<?php echo APPURL; ?>/logout.php">Logout</a></li>
           </ul>

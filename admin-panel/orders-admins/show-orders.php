@@ -13,26 +13,28 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
 
 ?>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
       <div class="row">
         <div class="col">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title mb-4 d-inline">Orders</h5>
+              <h5 class="card-title mb-4 d-inline"><i class="fas fa-shopping-cart"></i> Orders</h5>
             
               <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Last Name</th>
-                    <th scope="col">Town</th>
-                    <th scope="col">State</th>
-                    <th scope="col">Zip code</th>
-                    <th scope="col">Phone No.</th>
-                    <th scope="col">Street Address</th>
-                    <th scope="col">Total Price</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Update</th>
-                    <th scope="col">Action</th>
+                  <th scope="col"><i class="fas fa-user"></i> First Name</th>
+                  <th scope="col"><i class="fas fa-user"></i> Last Name</th>
+                  <th scope="col"><i class="fas fa-city"></i> Town</th>
+                  <th scope="col"><i class="fas fa-flag"></i> State</th>
+                  <th scope="col"><i class="fas fa-map-pin"></i> Zip code</th>
+                  <th scope="col"><i class="fas fa-phone"></i> Phone No.</th>
+                  <th scope="col"><i class="fas fa-road"></i> Street Address</th>
+                  <th scope="col"><i class="fas fa-dollar-sign"></i> Total Price</th>
+                  <th scope="col"><i class="fas fa-info-circle"></i> Status</th>
+                  <th scope="col"><i class="fas fa-edit"></i> Update</th>
+                  <th scope="col"><i class="fas fa-cogs"></i> Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -50,8 +52,8 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
                     <td><?php echo $order->total_price; ?></td>
 
                     <td><?php echo $order->status; ?></td>
-                    <td><a href="change-status.php?id=<?php echo $order->id; ?>" class="btn btn-warning  text-white text-center ">Update Status</a></td>
-                    <td><a href="delete-orders.php?id=<?php echo $order->id; ?>" class="btn btn-danger  text-center ">Delete</a></td>
+                    <td><a href="change-status.php?id=<?php echo $order->id; ?>" class="btn btn-warning  text-white text-center "><i class="fas fa-sync-alt"></i> Update Status</a></td>
+                    <td><a href="delete-orders.php?id=<?php echo $order->id; ?>" class="btn btn-danger  text-center"><i class="fas fa-trash-alt"></i> Delete</a></td>
                   </tr>
                   <?php endforeach; ?>
                 </tbody>
