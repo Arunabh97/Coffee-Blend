@@ -119,7 +119,7 @@
     			</div>
     			<div class="col-lg-6 product-details pl-md-5 ftco-animate">
     				<h3><?php echo $singleProduct->name; ?></h3>
-    				<p class="price"><span><?php echo $singleProduct->price; ?></span></p>
+    				<p class="price"><span>₹<?php echo $singleProduct->price; ?></span></p>
     				<p>
 					<?php echo $singleProduct->description; ?>
 					</p>
@@ -192,7 +192,7 @@
             <div class="text text-center pt-4">
                 <h3><a href="<?php echo APPURL; ?>/products/product-single.php?id=<?php echo $relatedProduct->id; ?>"><?php echo $relatedProduct->name; ?></a></h3>
                 <p><?php echo $relatedProduct->description; ?></p>
-                <p class="price"><span><?php echo $relatedProduct->price; ?></span></p>
+                <p class="price"><span>₹<?php echo $relatedProduct->price; ?></span></p>
                 <p><a href="<?php echo APPURL; ?>/products/product-single.php?id=<?php echo $relatedProduct->id; ?>" class="btn btn-primary btn-outline-primary">Show</a></p>
             </div>
         </div>

@@ -4,7 +4,8 @@
 
 	$isLoggedIn = isset($_SESSION['user_id']);
 
-	$products = $conn->query("SELECT * FROM products WHERE type='drink'");
+	$products = $conn->query("SELECT * FROM products WHERE type='drink' AND id IN (1, 2, 3, 4)");
+
 	$products->execute();
 
 	$allProducts = $products->fetchAll(PDO::FETCH_OBJ);
@@ -323,7 +324,7 @@
     					<div class="text text-center pt-4">
     						<h3><a href="#"><?php echo $product->name; ?></a></h3>
     						<p><?php echo $product->description; ?></p>
-    						<p class="price"><span><?php echo $product->price; ?></span></p>
+    						<p class="price"><span>₹<?php echo $product->price; ?></span></p>
     						<p><a target="_blank" href="products/product-single.php?id=<?php echo $product->id; ?>" class="btn btn-primary btn-outline-primary">Show</a></p>
     					</div>
     				</div>

@@ -70,6 +70,7 @@ if (isset($_POST['submit'])) {
                     <option selected>Choose Type</option>
                     <option value="drink">drink</option>
                     <option value="dessert">dessert</option>
+                    <option value="appetizer">appetizer</option>
                   </select>
                 </div>
 

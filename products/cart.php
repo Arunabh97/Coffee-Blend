@@ -72,7 +72,7 @@
 						        	<p><?php echo $product->description; ?></p>
 						        </td>
 						        
-						        <td class="price"><?php echo $product->price; ?></td>
+						        <td class="price">₹ <?php echo $product->price; ?></td>
 						        
 						        <td>
 									<div class="input-group mb-3">
@@ -80,7 +80,7 @@
 									 </div>
 					            </td>
 						        
-						        <td class="total"><?php echo $product->price * $product->quantity; ?></td>
+						        <td class="total">₹<?php echo $product->price * $product->quantity; ?></td>
 						      </tr>
 
 						      <?php endforeach; ?>
@@ -98,21 +98,21 @@
     					<h3>Cart Totals</h3>
     					<p class="d-flex">
     						<span>Subtotal</span>
-    						<span><?php echo $allCartTotal->total; ?></span>
+    						<span>₹<?php echo $allCartTotal->total; ?></span>
     					</p>
     					<p class="d-flex">
     						<span>Delivery</span>
-    						<span>50</span>
+    						<span>₹50</span>
     					</p>
     					<p class="d-flex">
     						<span>Discount</span>
-    						<span>5</span>
+    						<span>₹5</span>
     					</p>
     					<hr>
     					<p class="d-flex total-price">
     						<span>Total</span>
 							<?php if($allCartTotal->total > 0) : ?>
-    							<span><?php echo $allCartTotal->total + 50 - 5; ?></span>
+    							<span>₹<?php echo $allCartTotal->total + 50 - 5; ?></span>
 							<?php endif; ?>
 						</p>
     				</div>

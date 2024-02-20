@@ -63,7 +63,7 @@
 
 						        <td class="price"><?php echo $order->phone; ?></td>
 						        <td>
-                                <?php echo $order->total_price; ?>
+                                ₹<?php echo $order->total_price; ?>
 					            </td>
 						        
 						        <td class="total"><?php echo $order->status; ?></td>
