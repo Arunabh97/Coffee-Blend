@@ -13,6 +13,12 @@ $drinks->execute();
 
 $allDrinks = $drinks->fetchAll(PDO::FETCH_OBJ);
 
+//grapping appetizers
+$appetizers = $conn->query("SELECT * FROM products WHERE type='appetizer'");
+$appetizers->execute();
+
+$allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
+
 ?>
     <section class="home-slider owl-carousel">
 
@@ -120,7 +126,7 @@ $allDrinks = $drinks->fetchAll(PDO::FETCH_OBJ);
         			<div class="desc pl-3">
 	        			<div class="d-flex text align-items-center">
 	        				<h3><span><?php echo $dessert->name; ?></span></h3>
-	        				<span class="price"><?php echo $dessert->price; ?></span>
+	        				<span class="price">₹<?php echo $dessert->price; ?></span>
 	        			</div>
 	        			<div class="d-block">
 	        				<p><?php echo $dessert->description; ?></p>
@@ -138,7 +144,7 @@ $allDrinks = $drinks->fetchAll(PDO::FETCH_OBJ);
         			<div class="desc pl-3">
 	        			<div class="d-flex text align-items-center">
 	        				<h3><span><?php echo $drink->name; ?></span></h3>
-	        				<span class="price"><?php echo $drink->price; ?></span>
+	        				<span class="price">₹<?php echo $drink->price; ?></span>
 	        			</div>
 	        			<div class="d-block">
 	        				<p><?php echo $drink->description; ?></p>
@@ -169,6 +175,8 @@ $allDrinks = $drinks->fetchAll(PDO::FETCH_OBJ);
 		              <a class="nav-link active" id="v-pills-2-tab" data-toggle="pill" href="#v-pills-2" role="tab" aria-controls="v-pills-2" aria-selected="false">Drinks</a>
 
 		              <a class="nav-link" id="v-pills-3-tab" data-toggle="pill" href="#v-pills-3" role="tab" aria-controls="v-pills-3" aria-selected="false">Desserts</a>
+
+					  <a class="nav-link" id="v-pills-4-tab" data-toggle="pill" href="#v-pills-4" role="tab" aria-controls="v-pills-4" aria-selected="false">Appetizers</a>
 		            </div>
 		          </div>
 		          <div class="col-md-12 d-flex align-items-center">
@@ -186,7 +194,7 @@ $allDrinks = $drinks->fetchAll(PDO::FETCH_OBJ);
 		              				<div class="text">
 		              					<h3><a href="products/product-single.php?id=<?php echo $drink->id; ?>"><?php echo $drink->name; ?></a></h3>
 		              					<p><?php echo $drink->description; ?></p>
-		              					<p class="price"><span><?php echo $drink->price; ?></span></p>
+		              					<p class="price"><span>₹<?php echo $drink->price; ?></span></p>
 		              					<p><a href="products/product-single.php?id=<?php echo $drink->id; ?>" class="btn btn-primary btn-outline-primary">Show</a></p>
 		              				</div>
 		              			</div>
@@ -204,8 +212,26 @@ $allDrinks = $drinks->fetchAll(PDO::FETCH_OBJ);
 		              				<div class="text">
 		              					<h3><a href="products/product-single.php?id=<?php echo $dessert->id; ?>"><?php echo $dessert->name; ?></a></h3>
 		              					<p><?php echo $dessert->description; ?></p>
-		              					<p class="price"><span><?php echo $dessert->price; ?></span></p>
+		              					<p class="price"><span>₹<?php echo $dessert->price; ?></span></p>
 		              					<p><a href="products/product-single.php?id=<?php echo $dessert->id; ?>" class="btn btn-primary btn-outline-primary">Show</a></p>
+		              				</div>
+		              			</div>
+		              		</div>
+		              		<?php endforeach; ?>
+		              	</div>
+		              </div>
+
+					  <div class="tab-pane fade" id="v-pills-4" role="tabpanel" aria-labelledby="v-pills-4-tab">
+		                <div class="row">
+							<?php foreach($allAppetizers as $appetizer) : ?>
+		              		<div class="col-md-4 text-center">
+		              			<div class="menu-wrap">
+		              				<a href="products/product-single.php?id=<?php echo $appetizer->id; ?>" class="menu-img img mb-4" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $appetizer->image; ?>);"></a>
+		              				<div class="text">
+		              					<h3><a href="products/product-single.php?id=<?php echo $appetizer->id; ?>"><?php echo $appetizer->name; ?></a></h3>
+		              					<p><?php echo $appetizer->description; ?></p>
+		              					<p class="price"><span>₹<?php echo $appetizer->price; ?></span></p>
+		              					<p><a href="products/product-single.php?id=<?php echo $appetizer->id; ?>" class="btn btn-primary btn-outline-primary">Show</a></p>
 		              				</div>
 		              			</div>
 		              		</div>

@@ -7,26 +7,30 @@ if(isset ($_SESSION['username'])){
 }
 
 if (isset($_POST['submit'])) {
-    if (empty($_POST['username']) || empty($_POST['email']) || empty($_POST['password'])) {
-        echo "<script>alert('One or more inputs are empty');</script>";
-    } else {
-        $username = $_POST['username'];
-        $email = $_POST['email'];
-        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+  if (empty($_POST['username']) || empty($_POST['email']) || empty($_POST['password']) || empty($_POST['first_name']) || empty($_POST['last_name'])) {
+     echo "<script>alert('One or more inputs are empty');</script>";
+  } else {
+     $username = $_POST['username'];
+     $email = $_POST['email'];
+     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+     $first_name = $_POST['first_name'];
+     $last_name = $_POST['last_name'];
 
-        // Assuming $conn is your database connection object
-        $insert = $conn->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
+     $insert = $conn->prepare("INSERT INTO users (username, email, password, first_name, last_name) VALUES (:username, :email, :password, :first_name, :last_name)");
 
-        $insert->execute([
-            ":username" => $username,
-            ":email" => $email,
-            ":password" => $password,
-        ]);
+     $insert->execute([
+        ":username" => $username,
+        ":email" => $email,
+        ":password" => $password,
+        ":first_name" => $first_name,
+        ":last_name" => $last_name,
+     ]);
 
-        header("location: login.php");
-        exit(); 
-    }
+     header("location: login.php");
+     exit();
+  }
 }
+
 ?>
 
     <section class="home-slider owl-carousel">
@@ -53,6 +57,19 @@ if (isset($_POST['submit'])) {
 			<form action="register.php" method="POST" class="billing-form ftco-bg-dark p-3 p-md-5">
 				<h3 class="mb-4 billing-heading">Register</h3>
 	          	<div class="row align-items-end">
+              <div class="col-md-12">
+                  <div class="form-group">
+                      <label for="FirstName">First Name</label>
+                      <input type="text" name="first_name" class="form-control" placeholder="First Name">
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                      <label for="LastName">Last Name</label>
+                      <input type="text" name="last_name" class="form-control" placeholder="Last Name">
+                  </div>
+                </div>
+
                  <div class="col-md-12">
                         <div class="form-group">
                             <label for="Username">Username</label>

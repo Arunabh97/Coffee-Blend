@@ -57,6 +57,17 @@
 	}
 ?>
 
+<style>
+    .product-detail-image {
+        display: block;
+        width: 100%; 
+        height: auto; 
+        max-height: 450px; 
+        margin: 0 auto; 
+    }
+</style>
+
+
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <!-- JavaScript for quantity adjustment -->
@@ -115,7 +126,10 @@
     	<div class="container">
     		<div class="row">
     			<div class="col-lg-6 mb-5 ftco-animate">
-    				<a href="images/menu-2.jpg" class="image-popup"><img src="<?php echo IMAGEPRODUCTS; ?>/<?php echo $singleProduct->image; ?>" class="img-fluid" alt="Colorlib Template"></a>
+				<a href="<?php echo IMAGEPRODUCTS; ?>/<?php echo $singleProduct->image; ?>" class="image-popup">
+    			<img src="<?php echo IMAGEPRODUCTS; ?>/<?php echo $singleProduct->image; ?>" class="img-fluid product-detail-image" alt="Colorlib Template">
+				</a>
+
     			</div>
     			<div class="col-lg-6 product-details pl-md-5 ftco-animate">
     				<h3><?php echo $singleProduct->name; ?></h3>
@@ -162,9 +176,9 @@
 				<input name="description" value="<?php echo $singleProduct->description; ?>" type="hidden">
 				<?php if(isset($_SESSION['user_id'])) :?>
 				<?php if($rowCount > 0) : ?>
-					<button style="display: inline-block; position: relative; z-index: 1; padding: 2em; margin-top: -280px; margin-left: 632px; height: 65px;" name="submit" type="submit" class="btn btn-secondary py-3 px-5" disabled>Added to Cart</button>
+					<button style="display: inline-block; position: relative; z-index: 1; padding: 2em; margin-top: -160px; margin-left: 632px; height: 65px;" name="submit" type="submit" class="btn btn-secondary py-3 px-5" disabled>Added to Cart</button>
 				<?php else : ?>
-				<button style="display: inline-block; position: relative; z-index: 1; padding: 2em; margin-top: -280px; margin-left: 632px; height: 65px;" name="submit" type="submit" class="btn btn-primary py-3 px-5 ">Add to Cart</button>
+				<button style="display: inline-block; position: relative; z-index: 1; padding: 2em; margin-top: -160px; margin-left: 632px; height: 65px;" name="submit" type="submit" class="btn btn-primary py-3 px-5 ">Add to Cart</button>
 				<?php endif; ?>
 				<?php else :  ?>
 					<p style="margin-top: -270px; margin-left: 632px; height: 65px; font-weight: bold; color: white;">Login To Add Product To Cart</p>
