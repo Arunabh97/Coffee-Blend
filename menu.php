@@ -185,59 +185,96 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
 
 		              
 
-		              <div class="tab-pane fade show active" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-2-tab">
-		                <div class="row">
-							<?php foreach($allDrinks as $drink) : ?>
-		              		<div class="col-md-4 text-center">
-		              			<div class="menu-wrap">
-		              				<a href="products/product-single.php?id=<?php echo $drink->id; ?>" class="menu-img img mb-4" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $drink->image; ?>);"></a>
-		              				<div class="text">
-		              					<h3><a href="products/product-single.php?id=<?php echo $drink->id; ?>"><?php echo $drink->name; ?></a></h3>
-		              					<p><?php echo $drink->description; ?></p>
-		              					<p class="price"><span>₹<?php echo $drink->price; ?></span></p>
-		              					<p><a href="products/product-single.php?id=<?php echo $drink->id; ?>" class="btn btn-primary btn-outline-primary">Show</a></p>
-		              				</div>
-		              			</div>
-		              		</div>
-		              		<?php endforeach; ?>
-		              	</div>
-		              </div>
+					<div class="tab-pane fade show active" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-2-tab">
+						<div id="drinksCarousel" class="carousel slide" data-ride="carousel" data-interval="2000">
+							<div class="carousel-inner">
+								<?php $count = 0; ?>
+								<?php foreach ($allDrinks as $drink) : ?>
+									<?php if ($count % 3 == 0) : ?>
+										<div class="carousel-item<?php echo ($count === 0) ? ' active' : ''; ?>">
+											<div class="row">
+									<?php endif; ?>
+									<div class="col-md-4 text-center">
+										<div class="menu-wrap">
+											<a href="products/product-single.php?id=<?php echo $drink->id; ?>" class="menu-img img mb-4" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $drink->image; ?>);"></a>
+											<div class="text">
+												<h3><a href="products/product-single.php?id=<?php echo $drink->id; ?>"><?php echo $drink->name; ?></a></h3>
+												<p><?php echo $drink->description; ?></p>
+												<p class="price"><span><?php echo $drink->price; ?></span></p>
+												<p><a href="products/product-single.php?id=<?php echo $drink->id; ?>" class="btn btn-primary btn-outline-primary">Show</a></p>
+											</div>
+										</div>
+									</div>
+									<?php if ($count % 3 == 2 || $count === count($allDrinks) - 1) : ?>
+											</div>
+										</div>
+									<?php endif; ?>
+									<?php $count++; ?>
+								<?php endforeach; ?>
+							</div>
+						</div>
+					</div>
 
-		              <div class="tab-pane fade" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-3-tab">
-		                <div class="row">
-							<?php foreach($allDesserts as $dessert) : ?>
-		              		<div class="col-md-4 text-center">
-		              			<div class="menu-wrap">
-		              				<a href="products/product-single.php?id=<?php echo $dessert->id; ?>" class="menu-img img mb-4" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $dessert->image; ?>);"></a>
-		              				<div class="text">
-		              					<h3><a href="products/product-single.php?id=<?php echo $dessert->id; ?>"><?php echo $dessert->name; ?></a></h3>
-		              					<p><?php echo $dessert->description; ?></p>
-		              					<p class="price"><span>₹<?php echo $dessert->price; ?></span></p>
-		              					<p><a href="products/product-single.php?id=<?php echo $dessert->id; ?>" class="btn btn-primary btn-outline-primary">Show</a></p>
-		              				</div>
-		              			</div>
-		              		</div>
-		              		<?php endforeach; ?>
-		              	</div>
-		              </div>
+					<div class="tab-pane fade" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-3-tab">
+						<div id="dessertsCarousel" class="carousel slide" data-ride="carousel" data-interval="1000">
+							<div class="carousel-inner">
+								<?php $count = 0; ?>
+								<?php foreach ($allDesserts as $dessert) : ?>
+									<?php if ($count % 3 == 0) : ?>
+										<div class="carousel-item<?php echo ($count === 0) ? ' active' : ''; ?>">
+											<div class="row">
+									<?php endif; ?>
+									<div class="col-md-4 text-center">
+										<div class="menu-wrap">
+											<a href="products/product-single.php?id=<?php echo $dessert->id; ?>" class="menu-img img mb-4" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $dessert->image; ?>);"></a>
+											<div class="text">
+												<h3><a href="products/product-single.php?id=<?php echo $dessert->id; ?>"><?php echo $dessert->name; ?></a></h3>
+												<p><?php echo $dessert->description; ?></p>
+												<p class="price"><span><?php echo $dessert->price; ?></span></p>
+												<p><a href="products/product-single.php?id=<?php echo $dessert->id; ?>" class="btn btn-primary btn-outline-primary">Show</a></p>
+											</div>
+										</div>
+									</div>
+									<?php if ($count % 3 == 2 || $count === count($allDesserts) - 1) : ?>
+											</div>
+										</div>
+									<?php endif; ?>
+									<?php $count++; ?>
+								<?php endforeach; ?>
+							</div>
+						</div>
+					</div>
 
-					  <div class="tab-pane fade" id="v-pills-4" role="tabpanel" aria-labelledby="v-pills-4-tab">
-		                <div class="row">
-							<?php foreach($allAppetizers as $appetizer) : ?>
-		              		<div class="col-md-4 text-center">
-		              			<div class="menu-wrap">
-		              				<a href="products/product-single.php?id=<?php echo $appetizer->id; ?>" class="menu-img img mb-4" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $appetizer->image; ?>);"></a>
-		              				<div class="text">
-		              					<h3><a href="products/product-single.php?id=<?php echo $appetizer->id; ?>"><?php echo $appetizer->name; ?></a></h3>
-		              					<p><?php echo $appetizer->description; ?></p>
-		              					<p class="price"><span>₹<?php echo $appetizer->price; ?></span></p>
-		              					<p><a href="products/product-single.php?id=<?php echo $appetizer->id; ?>" class="btn btn-primary btn-outline-primary">Show</a></p>
-		              				</div>
-		              			</div>
-		              		</div>
-		              		<?php endforeach; ?>
-		              	</div>
-		              </div>
+					<div class="tab-pane fade" id="v-pills-4" role="tabpanel" aria-labelledby="v-pills-4-tab">
+						<div id="appetizersCarousel" class="carousel slide" data-ride="carousel" data-interval="1000">
+							<div class="carousel-inner">
+								<?php $count = 0; ?>
+								<?php foreach ($allAppetizers as $appetizer) : ?>
+									<?php if ($count % 3 == 0) : ?>
+										<div class="carousel-item<?php echo ($count === 0) ? ' active' : ''; ?>">
+											<div class="row">
+									<?php endif; ?>
+									<div class="col-md-4 text-center">
+										<div class="menu-wrap">
+											<a href="products/product-single.php?id=<?php echo $appetizer->id; ?>" class="menu-img img mb-4" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $appetizer->image; ?>);"></a>
+											<div class="text">
+												<h3><a href="products/product-single.php?id=<?php echo $appetizer->id; ?>"><?php echo $appetizer->name; ?></a></h3>
+												<p><?php echo $appetizer->description; ?></p>
+												<p class="price"><span><?php echo $appetizer->price; ?></span></p>
+												<p><a href="products/product-single.php?id=<?php echo $appetizer->id; ?>" class="btn btn-primary btn-outline-primary">Show</a></p>
+											</div>
+										</div>
+									</div>
+									<?php if ($count % 3 == 2 || $count === count($allAppetizers) - 1) : ?>
+											</div>
+										</div>
+									<?php endif; ?>
+									<?php $count++; ?>
+								<?php endforeach; ?>
+							</div>
+						</div>
+					</div>
+
 		            </div>
 		          </div>
 		        </div>
