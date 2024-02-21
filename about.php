@@ -61,7 +61,7 @@ $allReviews = $reviews->fetchAll(PDO::FETCH_OBJ);
 	              </blockquote>
 	              <div class="author d-flex mt-4">
 	                
-	                <div class="name align-self-center"><?php echo $review->username; ?></div>
+	                <div class="name align-self-center">-<?php echo $review->username; ?></div>
 	              </div>
 	          </div>
 	        </div>

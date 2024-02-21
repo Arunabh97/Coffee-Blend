@@ -79,7 +79,7 @@ if (isset($_GET['id'])) {
                     </div>
                     <br>
                     <!-- Submit button -->
-                    <button type="submit" name="update" class="btn btn-primary mb-4 text-center">Update</button>
+                    <button type="submit" name="update" class="btn btn-primary mb-4 text-center"><i class="fas fa-edit"></i> Update</button>
                 </form>
             </div>
         </div>

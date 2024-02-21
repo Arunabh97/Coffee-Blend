@@ -26,18 +26,22 @@ $allAdmins = $admins->fetchAll(PDO::FETCH_OBJ);
                     <th scope="col"><i class="fas fa-id-card"></i> Id</th>
                     <th scope="col"><i class="fas fa-user"></i> Admin Name</th>
                     <th scope="col"><i class="fas fa-envelope"></i> Email</th>
+                    <th scope="col"><i class="fas fa-cog"></i> Profile Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <?php foreach($allAdmins as $admins) : ?>
-                  <tr>
-                    <th scope="row"><?php echo $admins->id; ?></th>
-                    <td><?php echo $admins->adminname; ?></td>
-                    <td><?php echo $admins->email; ?></td>
-                   
-                  </tr>
+                  <?php foreach($allAdmins as $admin) : ?>
+                    <tr>
+                      <th scope="row"><?php echo $admin->id; ?></th>
+                      <td><?php echo $admin->adminname; ?></td>
+                      <td><?php echo $admin->email; ?></td>
+                      <td>
+                        <?php if ($_SESSION['admin_id'] == $admin->id) : ?>
+                          <a href="edit-admins.php?id=<?php echo $admin->id; ?>" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i> Edit</a>
+                        <?php endif; ?>
+                      </td>
+                    </tr>
                   <?php endforeach; ?>
-
                 </tbody>
               </table> 
             </div>

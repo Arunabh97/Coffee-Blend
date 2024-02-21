@@ -23,9 +23,9 @@
                 <div class="text">
                   <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about</a></h3>
                   <div class="meta">
-                    <div><a href="#"><span class="icon-calendar"></span> Sept 15, 2018</a></div>
+                    <div><a href="#"><span class="icon-calendar"></span> Feb 28, 2024</a></div>
                     <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                    <div><a href="#"><span class="icon-chat"></span> 19</a></div>
+                    <div><a href="#"><span class="icon-chat"></span> 20</a></div>
                   </div>
                 </div>
               </div>
@@ -34,7 +34,7 @@
                 <div class="text">
                   <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about</a></h3>
                   <div class="meta">
-                    <div><a href="#"><span class="icon-calendar"></span> Sept 15, 2018</a></div>
+                    <div><a href="#"><span class="icon-calendar"></span> Feb 28, 2024</a></div>
                     <div><a href="#"><span class="icon-person"></span> Admin</a></div>
                     <div><a href="#"><span class="icon-chat"></span> 19</a></div>
                   </div>
@@ -58,9 +58,9 @@
             	<h2 class="ftco-heading-2">Have a Questions?</h2>
             	<div class="block-23 mb-3">
 	              <ul>
-	                <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
-	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
-	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+	                <li><span class="icon icon-map-marker"></span><span class="text">Street 4, Dimna Chowk, Mango Jamshedpur, Jharkhand, IN-831012</span></li>
+	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+91 22 1234 5678</span></a></li>
+	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">coffee.blend@gmail.com</span></a></li>
 	              </ul>
 	            </div>
             </div>

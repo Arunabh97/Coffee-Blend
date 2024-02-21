@@ -100,7 +100,7 @@
 	    				<div class="col-md-4 d-flex ftco-animate">
 	    					<div class="icon"><span class="icon-phone"></span></div>
 	    					<div class="text">
-	    						<h3>000 (123) 456 7890</h3>
+	    						<h3>+91 22 1234 5678</h3>
 	    						<p>A small river named Duden flows by their place and supplies.</p>
 	    					</div>
 	    				</div>
@@ -108,7 +108,7 @@
 	    					<div class="icon"><span class="icon-my_location"></span></div>
 	    					<div class="text">
 	    						<h3>198 West 21th Street</h3>
-	    						<p>	203 Fake St. Mountain View, San Francisco, California, USA</p>
+	    						<p>Street 4, Dimna Chowk, Mango Jamshedpur, Jharkhand IN-831012</p>
 	    					</div>
 	    				</div>
 	    				<div class="col-md-4 d-flex ftco-animate">
@@ -235,22 +235,22 @@
     				<div class="row">
     					<div class="col-md-6">
     						<div class="menu-entry">
-		    					<a href="#" class="img" style="background-image: url(images/menu-1.jpg);"></a>
+		    					<a href="<?php echo APPURL; ?>/menu.php" class="img" style="background-image: url(images/menu-1.jpg);"></a>
 		    				</div>
     					</div>
     					<div class="col-md-6">
     						<div class="menu-entry mt-lg-4">
-		    					<a href="#" class="img" style="background-image: url(images/menu-2.jpg);"></a>
+		    					<a href="<?php echo APPURL; ?>/menu.php" class="img" style="background-image: url(images/menu-2.jpg);"></a>
 		    				</div>
     					</div>
     					<div class="col-md-6">
     						<div class="menu-entry">
-		    					<a href="#" class="img" style="background-image: url(images/menu-3.jpg);"></a>
+		    					<a href="<?php echo APPURL; ?>/menu.php" class="img" style="background-image: url(images/menu-3.jpg);"></a>
 		    				</div>
     					</div>
     					<div class="col-md-6">
     						<div class="menu-entry mt-lg-4">
-		    					<a href="#" class="img" style="background-image: url(images/menu-4.jpg);"></a>
+		    					<a href="<?php echo APPURL; ?>/menu.php" class="img" style="background-image: url(images/menu-4.jpg);"></a>
 		    				</div>
     					</div>
     				</div>

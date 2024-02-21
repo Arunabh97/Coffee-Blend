@@ -79,7 +79,7 @@ if (isset($_POST['submit'])) {
 
       
                 <!-- Submit button -->
-                <button type="submit" name="submit" class="btn btn-primary  mb-4 text-center">create</button>
+                <button type="submit" name="submit" class="btn btn-primary  mb-4 text-center"><i class="fa-solid fa-plus"></i> Create</button>
 
           
               </form>
