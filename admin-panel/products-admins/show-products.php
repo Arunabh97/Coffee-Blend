@@ -42,7 +42,8 @@ $allProducts = $products->fetchAll(PDO::FETCH_OBJ);
                      <td><?php echo $product->price; ?></td>
                      <td><?php echo $product->type; ?></td>
                      <td><a href="delete-products.php?id=<?php echo $product->id; ?>" class="btn btn-danger  text-center"><i class="fas fa-trash-alt"></i> Delete</a></td>
-                  </tr>
+                     <td><a href="edit-products.php?id=<?php echo $product->id; ?>" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a></td>
+                    </tr>
                   <?php endforeach; ?>
                 </tbody>
               </table> 

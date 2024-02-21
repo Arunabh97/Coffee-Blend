@@ -153,6 +153,24 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
         		</div>
         		<?php endforeach; ?>
         	</div>
+
+			<div class="col-md-6">
+        		<h3 class="mb-5 heading-pricing ftco-animate">Appetizers</h3>
+        		<?php foreach($allAppetizers as $appetizer) : ?>
+				<div class="pricing-entry d-flex ftco-animate">
+        			<div class="img" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $appetizer->image; ?>);"></div>
+        			<div class="desc pl-3">
+	        			<div class="d-flex text align-items-center">
+	        				<h3><span><?php echo $appetizer->name; ?></span></h3>
+	        				<span class="price">₹<?php echo $appetizer->price; ?></span>
+	        			</div>
+	        			<div class="d-block">
+	        				<p><?php echo $appetizer->description; ?></p>
+	        			</div>
+        			</div>
+        		</div>
+        		<?php endforeach; ?>
+        	</div>
         </div>
     	</div>
     </section>
