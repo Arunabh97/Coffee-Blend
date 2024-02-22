@@ -39,6 +39,9 @@
             <a class="nav-link" href="<?php echo ADMINURL; ?>/admins/admins.php" style="margin-left: 20px;"><i class="fa-solid fa-user-tie"></i> Admins</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="<?php echo ADMINURL; ?>/users/users.php" style="margin-left: 20px;"><i class="fa-solid fa-user"></i> Users</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="<?php echo ADMINURL; ?>/orders-admins/show-orders.php" style="margin-left: 20px;"><i class="fa-solid fa-cart-shopping"></i> Orders</a>
           </li>
           <li class="nav-item">
