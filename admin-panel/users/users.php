@@ -80,9 +80,9 @@ $allUsers = $usersQuery->fetchAll(PDO::FETCH_OBJ);
                     <tr>
                         <th scope="col"><i class="fas fa-id-card"></i> Id</th>
                         <th scope="col"><i class="fas fa-user"></i> Username</th>
-                        <th scope="col"><i class="fas fa-envelope"></i> Email</th>
                         <th scope="col"><i class="fas fa-user"></i> First Name</th>
                         <th scope="col"><i class="fas fa-user"></i> Last Name</th>
+                        <th scope="col"><i class="fas fa-envelope"></i> Email</th> 
                         <th scope="col"><i class="fas fa-cog"></i> User Actions</th>
                     </tr>
                     </thead>
@@ -91,9 +91,9 @@ $allUsers = $usersQuery->fetchAll(PDO::FETCH_OBJ);
                         <tr>
                             <th scope="row"><?php echo $user->id; ?></th>
                             <td><?php echo $user->username; ?></td>
-                            <td><?php echo $user->email; ?></td>
                             <td><?php echo $user->first_name; ?></td>
                             <td><?php echo $user->last_name; ?></td>
+                            <td><?php echo $user->email; ?></td>
                             <td>
                                 <a href="edit-user.php?id=<?php echo $user->id; ?>"
                                    class="btn btn-sm btn-primary btn-action"><i class="fas fa-edit"></i> Edit</a>
