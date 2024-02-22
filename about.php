@@ -89,7 +89,7 @@ $allReviews = $reviews->fetchAll(PDO::FETCH_OBJ);
                             <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
                                 <div class="row">
                                     <?php foreach ($reviewsChunk as $review) : ?>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 d-flex align-items-center">
                                             <div class="testimony">
                                                 <blockquote>
                                                     <p>&ldquo;<?php echo $review->review; ?>.&rdquo;</p>

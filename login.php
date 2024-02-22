@@ -81,7 +81,8 @@ if (isset($_POST['submit'])) {
                 <div class="col-md-12">
                 	<div class="form-group mt-4">
 							<div class="radio">
-                  <button type="submit" name="submit" class="btn btn-primary py-3 px-4">Login</button>
+                  <button type="submit" name="submit" class="btn btn-primary py-3 px-4">Login</button><p class="mt-3">Not registered yet? <a href="register.php">Register here</a></p>
+
 						    </div>
 					</div>
                 </div>

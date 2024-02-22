@@ -50,9 +50,6 @@
           <li class="nav-item">
             <a class="nav-link" href="<?php echo ADMINURL; ?>/bookings-admins/show-bookings.php" style="margin-left: 20px;"><i class="far fa-calendar"></i> Bookings</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?php echo ADMINURL; ?>/users/show-customer-enquiries.php" style="margin-left: 20px;"><i class="far fa-calendar"></i> User Enquiries</a>
-          </li>
         </ul>
         <?php endif; ?>
         <ul class="navbar-nav ml-md-auto d-md-flex">

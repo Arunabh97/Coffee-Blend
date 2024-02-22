@@ -1,7 +1,6 @@
+<?php require "../layouts/header.php"; ?>
+<?php require "../../config/config.php"; ?>
 <?php
-require "../layouts/header.php";
-require "../../config/config.php";
-
 if (!isset($_SESSION['admin_name'])) {
     header("location: " . ADMINURL . "/admins/login-admins.php");
     exit();
@@ -79,8 +78,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         background-color: #5a6268;
     }
     </style>
-</head>
-<body>
 
 <!-- Your HTML form for creating a new user -->
 <div class="row">

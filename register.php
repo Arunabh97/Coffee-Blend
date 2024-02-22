@@ -1,36 +1,41 @@
-<?php require "includes/header.php"; ?>
-<?php require "config/config.php"; ?>
 <?php
+require "includes/header.php";
+require "config/config.php";
 
-if(isset ($_SESSION['username'])){
+if(isset($_SESSION['username'])){
   header("location: ".APPURL."");
 }
 
 if (isset($_POST['submit'])) {
-  if (empty($_POST['username']) || empty($_POST['email']) || empty($_POST['password']) || empty($_POST['first_name']) || empty($_POST['last_name'])) {
-     echo "<script>alert('One or more inputs are empty');</script>";
-  } else {
-     $username = $_POST['username'];
-     $email = $_POST['email'];
-     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-     $first_name = $_POST['first_name'];
-     $last_name = $_POST['last_name'];
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
+    $first_name = $_POST['first_name'];
+    $last_name = $_POST['last_name'];
 
-     $insert = $conn->prepare("INSERT INTO users (username, email, password, first_name, last_name) VALUES (:username, :email, :password, :first_name, :last_name)");
+    if (empty($username) || empty($email) || empty($password) || empty($confirm_password) || empty($first_name) || empty($last_name)) {
+        echo "<script>alert('One or more inputs are empty');</script>";
+    } elseif ($password !== $confirm_password) {
+        echo "<script>alert('Password and Confirm Password do not match');</script>";
+    } else {
+        // Proceed with the registration process
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-     $insert->execute([
-        ":username" => $username,
-        ":email" => $email,
-        ":password" => $password,
-        ":first_name" => $first_name,
-        ":last_name" => $last_name,
-     ]);
+        $insert = $conn->prepare("INSERT INTO users (username, email, password, first_name, last_name) VALUES (:username, :email, :password, :first_name, :last_name)");
 
-     header("location: login.php");
-     exit();
-  }
+        $insert->execute([
+            ":username" => $username,
+            ":email" => $email,
+            ":password" => $password_hash,
+            ":first_name" => $first_name,
+            ":last_name" => $last_name,
+        ]);
+
+        header("location: login.php");
+        exit();
+    }
 }
-
 ?>
 
     <section class="home-slider owl-carousel">
@@ -88,12 +93,20 @@ if (isset($_POST['submit'])) {
 	                	<label for="Password">Password</label>
 	                    <input type="password" name="password" class="form-control" placeholder="Password">
 	                </div>
-
                 </div>
+
+                <div class="col-md-12">
+                  <div class="form-group">
+                      <label for="ConfirmPassword">Confirm Password</label>
+                      <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password">
+                  </div>
+              </div>
+
                 <div class="col-md-12">
                 	<div class="form-group mt-4">
 							<div class="radio">
                   <button type="submit" name="submit" class="btn btn-primary py-3 px-4">Register</button>
+                  <p class="mt-3">Already registered? <a href="login.php">Login here</a></p>
 						    </div>
 					</div>
                 </div>
