@@ -40,7 +40,7 @@
     			":user_id" => $user_id,
 			]);
 
-			echo "<script>alert('Added to cart successfully'); </script>";
+			echo "<script>alert('Added to cart successfully'); window.location.href = 'cart.php';</script>";
 
 		}
 
@@ -127,7 +127,7 @@
     		<div class="row">
     			<div class="col-lg-6 mb-5 ftco-animate">
 				<a href="<?php echo IMAGEPRODUCTS; ?>/<?php echo $singleProduct->image; ?>" class="image-popup">
-    			<img src="<?php echo IMAGEPRODUCTS; ?>/<?php echo $singleProduct->image; ?>" class="img-fluid product-detail-image" alt="Colorlib Template">
+    			<img src="<?php echo IMAGEPRODUCTS; ?>/<?php echo $singleProduct->image; ?>" class="img-fluid " alt="Colorlib Template">
 				</a>
 
     			</div>
@@ -140,19 +140,18 @@
 
     				<form method="POST" action="product-single.php?id=<?php echo $id; ?>">
 
-						<div class="row mt-4">
-							<div class="col-md-6">
-								<!-- <div class="form-group d-flex">
-		              <div class="select-wrap">
-	                  <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-	                  <select name="" id="" class="form-control">
-	                  	<option value="">Small</option>
-	                    <option value="">Medium</option>
-	                    <option value="">Large</option>
-	                    <option value="">Extra Large</option>
-	                  </select>
-	                </div> -->
-		            </div>
+					<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="form-group d-flex">
+            <div class="select-wrap">
+                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                <select name="" id="" class="form-control" style="cursor: pointer;">
+                    <option value="">Small</option>
+                    <option value="">Medium</option>
+                    <option value="">Large</option>
+                </select>
+            </div>
+        </div>
 							</div>
 							<div class="w-100"></div>
 							<div class="input-group col-md-6 d-flex mb-3">
@@ -176,9 +175,10 @@
 				<input name="description" value="<?php echo $singleProduct->description; ?>" type="hidden">
 				<?php if(isset($_SESSION['user_id'])) :?>
 				<?php if($rowCount > 0) : ?>
-					<button style="display: inline-block; position: relative; z-index: 1; padding: 2em; margin-top: -160px; margin-left: 632px; height: 65px;" name="submit" type="submit" class="btn btn-secondary py-3 px-5" disabled>Added to Cart</button>
+					<button name="submit" type="submit" class="btn btn-secondary py-3 px-5" disabled>Added to Cart</button>
 				<?php else : ?>
-				<button style="display: inline-block; position: relative; z-index: 1; padding: 2em; margin-top: -160px; margin-left: 632px; height: 65px;" name="submit" type="submit" class="btn btn-primary py-3 px-5 ">Add to Cart</button>
+					<button name="submit" type="submit" class="btn btn-warning py-3 px-5" style="background-color: #ffc107; color: #fff; border: 1px solid #ffc107;" onmouseover="this.style.backgroundColor='transparent'; this.style.color='#ffc107'" onmouseout="this.style.backgroundColor='#ffc107'; this.style.color='#fff'">Add to Cart</button>
+
 				<?php endif; ?>
 				<?php else :  ?>
 					<p style="margin-top: -270px; margin-left: 632px; height: 65px; font-weight: bold; color: white;">Login To Add Product To Cart</p>
@@ -190,29 +190,51 @@
     </section>
 
     <section class="ftco-section">
-    	<div class="container">
-    		<div class="row justify-content-center mb-5 pb-3">
-          <div class="col-md-7 heading-section ftco-animate text-center">
-          	<span class="subheading">Discover</span>
-            <h2 class="mb-4">Related products</h2>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-          </div>
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+            <div class="col-md-7 heading-section ftco-animate text-center">
+                <span class="subheading">Discover</span>
+                <h2 class="mb-4">Related products</h2>
+                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+            </div>
         </div>
         <div class="row">
-		<?php foreach ($allRelatedProducts as $relatedProduct) : ?>
-    <div class="col-md-3">
-        <div class="menu-entry">
-            <a href="<?php echo APPURL; ?>/products/product-single.php?id=<?php echo $relatedProduct->id; ?>" class="img" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $relatedProduct->image; ?>);"></a>
-            <div class="text text-center pt-4">
-                <h3><a href="<?php echo APPURL; ?>/products/product-single.php?id=<?php echo $relatedProduct->id; ?>"><?php echo $relatedProduct->name; ?></a></h3>
-                <p><?php echo $relatedProduct->description; ?></p>
-                <p class="price"><span>₹<?php echo $relatedProduct->price; ?></span></p>
-                <p><a href="<?php echo APPURL; ?>/products/product-single.php?id=<?php echo $relatedProduct->id; ?>" class="btn btn-primary btn-outline-primary">Show</a></p>
+            <div class="col-md-12">
+                <div id="related-products-carousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <?php $counter = 0; ?>
+                        <?php foreach ($allRelatedProducts as $relatedProduct) : ?>
+                            <?php if ($counter % 4 === 0) : ?>
+                                <div class="carousel-item <?php echo ($counter === 0) ? 'active' : ''; ?>">
+                                    <div class="row">
+                            <?php endif; ?>
+                            <div class="col-md-3">
+                                <div class="menu-entry">
+                                    <a href="<?php echo APPURL; ?>/products/product-single.php?id=<?php echo $relatedProduct->id; ?>" class="img" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $relatedProduct->image; ?>);"></a>
+                                    <div class="text text-center pt-4">
+                                        <h3><a href="<?php echo APPURL; ?>/products/product-single.php?id=<?php echo $relatedProduct->id; ?>"><?php echo $relatedProduct->name; ?></a></h3>
+                                        <p><?php echo $relatedProduct->description; ?></p>
+                                        <p class="price"><span>₹<?php echo $relatedProduct->price; ?></span></p>
+                                        <p><a href="<?php echo APPURL; ?>/products/product-single.php?id=<?php echo $relatedProduct->id; ?>" class="btn btn-primary btn-outline-primary">Show</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php if (($counter + 1) % 4 === 0 || ($counter + 1) === count($allRelatedProducts)) : ?>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            <?php $counter++; ?>
+                        <?php endforeach; ?>
+                    </div>
+                    <ol class="carousel-indicators">
+                        <?php for ($i = 0; $i < ceil(count($allRelatedProducts) / 4); $i++) : ?>
+                            <li data-target="#related-products-carousel" data-slide-to="<?php echo $i; ?>" class="<?php echo ($i === 0) ? 'active' : ''; ?>"></li>
+                        <?php endfor; ?>
+                    </ol>
+                </div>
             </div>
         </div>
     </div>
-<?php endforeach; ?>
-        </div>
-    	</div>
-    </section>
+</section>
+
 	<?php require "../includes/footer.php"; ?>

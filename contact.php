@@ -1,4 +1,39 @@
 <?php require "includes/header.php"; ?>
+<?php require "config/config.php"; ?>
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  // Retrieve form data
+  $name = $_POST["name"];
+  $email = $_POST["email"];
+  $subject = $_POST["subject"];
+  $message = $_POST["message"];
+
+  try {
+      $sql = "INSERT INTO customer_inquiries (name, email, subject, message) VALUES (:name, :email, :subject, :message)";
+      $stmt = $conn->prepare($sql);
+      $stmt->bindParam(':name', $name);
+      $stmt->bindParam(':email', $email);
+      $stmt->bindParam(':subject', $subject);
+      $stmt->bindParam(':message', $message);
+      
+      if ($stmt->execute()) {
+          // Success message
+          echo '<script>alert("Message sent successfully!");</script>';
+      } else {
+          // Error message
+          $errorInfo = $stmt->errorInfo();
+          echo '<script>alert("Error: ' . $errorInfo[2] . '");</script>';
+      }
+  } catch (PDOException $e) {
+      // Handle any PDO exceptions here
+      echo '<script>alert("PDOException: ' . $e->getMessage() . '");</script>';
+  }
+
+  // Close the connection properly for PDO
+  $conn = null;
+}
+
+?>
 
     <section class="home-slider owl-carousel">
 
@@ -41,28 +76,28 @@
 					</div>
 					<div class="col-md-1"></div>
           <div class="col-md-6 ftco-animate">
-            <form action="contact.php" class="contact-form">
+            <form action="contact.php" method="POST" class="contact-form">
             	<div class="row">
             		<div class="col-md-6">
 	                <div class="form-group">
-	                  <input type="text" class="form-control" placeholder="Your Name">
+                  <input type="text" name="name" class="form-control" placeholder="Your Name">
 	                </div>
                 </div>
                 <div class="col-md-6">
 	                <div class="form-group">
-	                  <input type="text" class="form-control" placeholder="Your Email">
+                  <input type="text" name="email" class="form-control" placeholder="Your Email">
 	                </div>
 	                </div>
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Subject">
+              <input type="text" name="subject" class="form-control" placeholder="Subject">
               </div>
               <div class="form-group">
-                <textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
+                <textarea name="message" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
               </div>
               <div class="form-group">
                 <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
-              </div>
+            </div>
             </form>
           </div>
         </div>

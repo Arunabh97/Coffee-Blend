@@ -377,43 +377,55 @@
 
     
 
-    <section class="ftco-section img" id="ftco-testimony" style="background-image: url(images/bg_1.jpg);" data-stellar-background-ratio="0.5">
+<section class="ftco-section img" id="ftco-testimony" style="background-image: url(images/bg_1.jpg);" data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
         <div class="row justify-content-center mb-5">
             <div class="col-md-7 heading-section text-center ftco-animate">
                 <span class="subheading">Testimony</span>
-                <h2 class="mb-4">Customers Says</h2>
+                <h2 class="mb-4">Customers Say</h2>
                 <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
             </div>
         </div>
     </div>
     <div class="container-wrap">
-        <div class="row d-flex no-gutters">
-            <?php foreach ($allReviews as $review) : ?>
-                <div class="col-md-3 align-self-sm-end ftco-animate">
-                    <div class="testimony">
-                        <blockquote>
-                            <p>&ldquo;<?php echo $review->review; ?>.&rdquo;</p>
-                        </blockquote>
-                        <div class="rating">
-                            <?php
-                            // Display stars based on the user rating
-                            for ($i = 1; $i <= 5; $i++) {
-                                echo ($i <= $review->rating) ? '★' : '☆';
-                            }
-                            ?>
-                        </div>
-                        <div class="author d-flex mt-4">
-                            <div class="name align-self-center"><?php echo $review->username; ?></div>
-                        </div>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
+        <div id="testimonialCarousel" class="carousel slide" data-ride="carousel">
+			<div class="carousel-inner">
+				<?php $reviewsChunks = array_chunk($allReviews, 4); ?>
+				<?php foreach ($reviewsChunks as $index => $reviewsChunk) : ?>
+					<div class="carousel-item <?php echo ($index === 0) ? 'active' : ''; ?>">
+						<div class="row">
+							<?php foreach ($reviewsChunk as $review) : ?>
+								<div class="col-md-3 ftco-animate d-flex align-items-center">
+									<div class="testimony">
+										<blockquote>
+											<p>&ldquo;<?php echo $review->review; ?>.&rdquo;</p>
+										</blockquote>
+										<div class="rating">
+											<?php
+											// Display stars based on the user rating
+											for ($i = 1; $i <= 5; $i++) {
+												echo ($i <= $review->rating) ? '★' : '☆';
+											}
+											?>
+										</div>
+										<div class="author d-flex mt-4">
+											<div class="name align-self-center"><?php echo $review->username; ?></div>
+										</div>
+									</div>
+								</div>
+							<?php endforeach; ?>
+						</div>
+					</div>
+				<?php endforeach; ?>
+			</div>
+			<ol class="carousel-indicators">
+				<?php foreach ($reviewsChunks as $index => $reviewsChunk) : ?>
+					<li data-target="#testimonialCarousel" data-slide-to="<?php echo $index; ?>" class="<?php echo ($index === 0) ? 'active' : ''; ?>"></li>
+				<?php endforeach; ?>
+			</ol>
+		</div>
     </div>
 </section>
 
-
-   
 <?php require "includes/footer.php"; ?>

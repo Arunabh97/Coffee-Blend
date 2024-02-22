@@ -50,14 +50,8 @@ if (isset($_POST['submit'])) {
                   <input type="password" name="password" id="form2Example1" class="form-control" placeholder="password" required/>
                 </div>
 
-               
-            
-                
-              
-
-
                 <!-- Submit button -->
-                <button type="submit" name="submit" class="btn btn-primary  mb-4 text-center">Create</button>
+                <button type="submit" name="submit" class="btn btn-primary  mb-4 text-center"><i class="fa-solid fa-plus"></i> Create</button>
 
           
               </form>

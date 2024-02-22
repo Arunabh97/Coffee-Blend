@@ -20,6 +20,13 @@ $appetizers->execute();
 $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
 
 ?>
+<style>
+	.product-category-container {
+    max-height: 650px;
+    overflow-y: auto;
+}
+
+</style>
     <section class="home-slider owl-carousel">
 
       <div class="slider-item" style="background-image: url(images/bg_6.jpg);" data-stellar-background-ratio="0.5">
@@ -114,66 +121,65 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
     </section>
 
     <section class="ftco-section">
-    	<div class="container">
+    <div class="container">
         <div class="row">
-        
-        	
-        	<div class="col-md-6">
-        		<h3 class="mb-5 heading-pricing ftco-animate">Desserts</h3>
-        		<?php foreach($allDesserts as $dessert) : ?>
-				<div class="pricing-entry d-flex ftco-animate">
-        			<div class="img" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $dessert->image; ?>);"></div>
-        			<div class="desc pl-3">
-	        			<div class="d-flex text align-items-center">
-	        				<h3><span><?php echo $dessert->name; ?></span></h3>
-	        				<span class="price">₹<?php echo $dessert->price; ?></span>
-	        			</div>
-	        			<div class="d-block">
-	        				<p><?php echo $dessert->description; ?></p>
-	        			</div>
-        			</div>
-        		</div>
-        		<?php endforeach; ?>
-        	</div>
+            <div class="col-md-6 product-category-container">
+                <h3 class="mb-5 heading-pricing ftco-animate">Desserts</h3>
+                <?php foreach($allDesserts as $dessert) : ?>
+                    <div class="pricing-entry d-flex ftco-animate">
+                        <div class="img" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $dessert->image; ?>);"></div>
+                        <div class="desc pl-3">
+                            <div class="d-flex text align-items-center">
+                                <h3><span><?php echo $dessert->name; ?></span></h3>
+                                <span class="price">₹<?php echo $dessert->price; ?></span>
+                            </div>
+                            <div class="d-block">
+                                <p><?php echo $dessert->description; ?></p>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
 
-        	<div class="col-md-6">
-        		<h3 class="mb-5 heading-pricing ftco-animate">Drinks</h3>
-        		<?php foreach($allDrinks as $drink) : ?>
-				<div class="pricing-entry d-flex ftco-animate">
-        			<div class="img" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $drink->image; ?>);"></div>
-        			<div class="desc pl-3">
-	        			<div class="d-flex text align-items-center">
-	        				<h3><span><?php echo $drink->name; ?></span></h3>
-	        				<span class="price">₹<?php echo $drink->price; ?></span>
-	        			</div>
-	        			<div class="d-block">
-	        				<p><?php echo $drink->description; ?></p>
-	        			</div>
-	        		</div>
-        		</div>
-        		<?php endforeach; ?>
-        	</div>
+            <div class="col-md-6 product-category-container">
+                <h3 class="mb-5 heading-pricing ftco-animate">Drinks</h3>
+                <?php foreach($allDrinks as $drink) : ?>
+                    <div class="pricing-entry d-flex ftco-animate">
+                        <div class="img" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $drink->image; ?>);"></div>
+                        <div class="desc pl-3">
+                            <div class="d-flex text align-items-center">
+                                <h3><span><?php echo $drink->name; ?></span></h3>
+                                <span class="price">₹<?php echo $drink->price; ?></span>
+                            </div>
+                            <div class="d-block">
+                                <p><?php echo $drink->description; ?></p>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
 
-			<div class="col-md-6">
-        		<h3 class="mb-5 heading-pricing ftco-animate">Appetizers</h3>
-        		<?php foreach($allAppetizers as $appetizer) : ?>
-				<div class="pricing-entry d-flex ftco-animate">
-        			<div class="img" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $appetizer->image; ?>);"></div>
-        			<div class="desc pl-3">
-	        			<div class="d-flex text align-items-center">
-	        				<h3><span><?php echo $appetizer->name; ?></span></h3>
-	        				<span class="price">₹<?php echo $appetizer->price; ?></span>
-	        			</div>
-	        			<div class="d-block">
-	        				<p><?php echo $appetizer->description; ?></p>
-	        			</div>
-        			</div>
-        		</div>
-        		<?php endforeach; ?>
-        	</div>
+            <div class="col-md-6 product-category-container">
+                <h3 class="mb-5 heading-pricing ftco-animate">Appetizers</h3>
+                <?php foreach($allAppetizers as $appetizer) : ?>
+                    <div class="pricing-entry d-flex ftco-animate">
+                        <div class="img" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $appetizer->image; ?>);"></div>
+                        <div class="desc pl-3">
+                            <div class="d-flex text align-items-center">
+                                <h3><span><?php echo $appetizer->name; ?></span></h3>
+                                <span class="price">₹<?php echo $appetizer->price; ?></span>
+                            </div>
+                            <div class="d-block">
+                                <p><?php echo $appetizer->description; ?></p>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
         </div>
-    	</div>
-    </section>
+    </div>
+</section>
+
 
     <section class="ftco-menu mb-5 pb-5">
     	<div class="container">

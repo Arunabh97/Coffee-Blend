@@ -69,47 +69,60 @@ $allReviews = $reviews->fetchAll(PDO::FETCH_OBJ);
     </div>
 </section>
 
-<section class="ftco-section img" id="ftco-testimony" style="background-image: url(images/bg_1.jpg);" data-stellar-background-ratio="0.5">
-    <div class="overlay"></div>
+<section class="ftco-section ftco-no-pt ftco-no-pb">
     <div class="container">
         <div class="row justify-content-center mb-5">
             <div class="col-md-7 heading-section text-center ftco-animate">
                 <span class="subheading">Testimony</span>
-                <h2 class="mb-4">Customers Says</h2>
+                <h2 class="mb-4">Customers Say</h2>
                 <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
             </div>
         </div>
-    </div>
-    <div class="container-wrap">
-        <div class="row d-flex no-gutters">
-            <?php foreach ($allReviews as $review) : ?>
-                <div class="col-md-3 align-self-sm-end ftco-animate">
-                    <div class="testimony">
-                        <blockquote>
-                            <p>&ldquo;<?php echo $review->review; ?>.&rdquo;</p>
-                        </blockquote>
-                        <div class="rating">
-                            <?php
-                            // Display stars based on the user rating
-                            for ($i = 5; $i >= 1; $i--) {
-                                echo '<input type="radio" id="star' . $i . '_review_' . $review->id . '" name="rating_' . $review->id . '" value="' . $i . '" disabled';
-                                if ($i == $review->rating) {
-                                    echo ' checked';
-                                }
-                                echo '>';
-                                echo '<label for="star' . $i . '_review_' . $review->id . '">&#9733;</label>';
-                            }
-                            ?>
-                        </div>
-                        <div class="author d-flex mt-4">
-                            <div class="name align-self-center">-<?php echo $review->username; ?></div>
-                        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="customerReviewsCarousel" class="carousel slide" data-ride="carousel" data-interval="3000"> <!-- Set data-interval to 2000 for 2 seconds -->
+                    <div class="carousel-inner">
+                        <?php
+                        $chunkedReviews = array_chunk($allReviews, 3);
+                        foreach ($chunkedReviews as $index => $reviewsChunk) :
+                        ?>
+                            <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
+                                <div class="row">
+                                    <?php foreach ($reviewsChunk as $review) : ?>
+                                        <div class="col-md-4">
+                                            <div class="testimony">
+                                                <blockquote>
+                                                    <p>&ldquo;<?php echo $review->review; ?>.&rdquo;</p>
+                                                </blockquote>
+                                                <div class="rating">
+                                                    <?php
+                                                    // Display stars based on the user rating
+                                                    for ($i = 5; $i >= 1; $i--) {
+                                                        echo '<input type="radio" id="star' . $i . '_review_' . $review->id . '" name="rating_' . $review->id . '" value="' . $i . '" disabled';
+                                                        if ($i == $review->rating) {
+                                                            echo ' checked';
+                                                        }
+                                                        echo '>';
+                                                        echo '<label for="star' . $i . '_review_' . $review->id . '">&#9733;</label>';
+                                                    }
+                                                    ?>
+                                                </div>
+                                                <div class="author d-flex mt-4">
+                                                    <div class="name align-self-center">-<?php echo $review->username; ?></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
-            <?php endforeach; ?>
+            </div>
         </div>
     </div>
 </section>
+
 
     <section class="ftco-section">
     	<div class="container">
