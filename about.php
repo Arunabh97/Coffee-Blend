@@ -8,69 +8,108 @@ $reviews->execute();
 $allReviews = $reviews->fetchAll(PDO::FETCH_OBJ);
 
 ?>
-    <section class="home-slider owl-carousel">
+    <!-- Add some CSS for styling the star rating -->
+<style>
+    .rating {
+        display: flex;
+        flex-direction: row-reverse;
+        margin-bottom: 10px;
+    }
 
-      <div class="slider-item" style="background-image: url(images/bg_8.jpg);" data-stellar-background-ratio="0.5">
-      	<div class="overlay"></div>
+    .rating input {
+        display: none;
+    }
+
+    .rating label {
+        cursor: pointer;
+        width: 30px;
+        height: 30px;
+        background-color: #ccc;
+        border-radius: 50%;
+        margin: 0 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    .rating input:checked+label,
+    .rating input:checked+label~label {
+        background-color: #ffcc00;
+        box-shadow: 0 0 10px rgba(255, 204, 0, 0.7);
+    }
+</style>
+
+<section class="home-slider owl-carousel">
+    <div class="slider-item" style="background-image: url(images/bg_8.jpg);" data-stellar-background-ratio="0.5">
+        <div class="overlay"></div>
         <div class="container">
-          <div class="row slider-text justify-content-center align-items-center">
-
-            <div class="col-md-7 col-sm-12 text-center ftco-animate">
-            	<h1 class="mb-3 mt-5 bread">About Us</h1>
-	            <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>About</span></p>
+            <div class="row slider-text justify-content-center align-items-center">
+                <div class="col-md-7 col-sm-12 text-center ftco-animate">
+                    <h1 class="mb-3 mt-5 bread">About Us</h1>
+                    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>About</span></p>
+                </div>
             </div>
-
-          </div>
         </div>
-      </div>
-    </section>
+    </div>
+</section>
 
-    <section class="ftco-about d-md-flex">
-    	<div class="one-half img" style="background-image: url(images/about.jpg);"></div>
-    	<div class="one-half ftco-animate">
-    		<div class="overlap">
-	        <div class="heading-section ftco-animate ">
-	        	<span class="subheading">Discover</span>
-	          <h2 class="mb-4">Our Story</h2>
-	        </div>
-	        <div>
-	  				<p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it would have been rewritten a thousand times and everything that was left from its origin would be the word "and" and the Little Blind Text should turn around and return to its own, safe country. But nothing the copy said could convince her and so it didn’t take long until a few insidious Copy Writers ambushed her, made her drunk with Longe and Parole and dragged her into their agency, where they abused her for their.</p>
-	  			</div>
-  			</div>
-    	</div>
-    </section>
+<section class="ftco-about d-md-flex">
+    <div class="one-half img" style="background-image: url(images/about.jpg);"></div>
+    <div class="one-half ftco-animate">
+        <div class="overlap">
+            <div class="heading-section ftco-animate ">
+                <span class="subheading">Discover</span>
+                <h2 class="mb-4">Our Story</h2>
+            </div>
+            <div>
+                <p>On her way, she met a copy. The copy warned the Little Blind Text, that where it came from it would have been rewritten a thousand times and everything that was left from its origin would be the word "and" and the Little Blind Text should turn around and return to its own, safe country. But nothing the copy said could convince her and so it didn’t take long until a few insidious Copy Writers ambushed her, made her drunk with Longe and Parole and dragged her into their agency, where they abused her for their.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <section class="ftco-section img" id="ftco-testimony" style="background-image: url(images/bg_1.jpg);"  data-stellar-background-ratio="0.5">
-    	<div class="overlay"></div>
-	    <div class="container">
-	      <div class="row justify-content-center mb-5">
-	        <div class="col-md-7 heading-section text-center ftco-animate">
-	        	<span class="subheading">Testimony</span>
-	          <h2 class="mb-4">Customers Says</h2>
-	          <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-	        </div>
-	      </div>
-	    </div>
-	    <div class="container-wrap">
-	      <div class="row d-flex no-gutters">
-		  <?php foreach($allReviews as $review) : ?>
-	        <div class="col-md-3 align-self-sm-end ftco-animate">
-	          <div class="testimony">
-	             <blockquote>
-	                <p>&ldquo;<?php echo $review->review; ?>.&rdquo;</p>
-	              </blockquote>
-	              <div class="author d-flex mt-4">
-	                
-	                <div class="name align-self-center">-<?php echo $review->username; ?></div>
-	              </div>
-	          </div>
-	        </div>
-	        
-			<?php endforeach; ?>
-	        
-	      </div>
-	    </div>
-	  </section>
+<section class="ftco-section img" id="ftco-testimony" style="background-image: url(images/bg_1.jpg);" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-7 heading-section text-center ftco-animate">
+                <span class="subheading">Testimony</span>
+                <h2 class="mb-4">Customers Says</h2>
+                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+            </div>
+        </div>
+    </div>
+    <div class="container-wrap">
+        <div class="row d-flex no-gutters">
+            <?php foreach ($allReviews as $review) : ?>
+                <div class="col-md-3 align-self-sm-end ftco-animate">
+                    <div class="testimony">
+                        <blockquote>
+                            <p>&ldquo;<?php echo $review->review; ?>.&rdquo;</p>
+                        </blockquote>
+                        <div class="rating">
+                            <?php
+                            // Display stars based on the user rating
+                            for ($i = 5; $i >= 1; $i--) {
+                                echo '<input type="radio" id="star' . $i . '_review_' . $review->id . '" name="rating_' . $review->id . '" value="' . $i . '" disabled';
+                                if ($i == $review->rating) {
+                                    echo ' checked';
+                                }
+                                echo '>';
+                                echo '<label for="star' . $i . '_review_' . $review->id . '">&#9733;</label>';
+                            }
+                            ?>
+                        </div>
+                        <div class="author d-flex mt-4">
+                            <div class="name align-self-center">-<?php echo $review->username; ?></div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
 
     <section class="ftco-section">
     	<div class="container">

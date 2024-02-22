@@ -17,8 +17,13 @@
 	$allReviews = $reviews->fetchAll(PDO::FETCH_OBJ);
 
 ?>
-
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlCq6M9YLPp+J9NUw9d9Q5qlenLRMwe8U08dR5LzC2wU" crossorigin="anonymous">
+<style>
+    .rating {
+        font-size: 24px;
+        color: #FFD700; /* Set the color of stars */
+    }
+</style>
 <script>
     function redirectToLogin() {
         window.location.href = 'login.php';
@@ -372,36 +377,43 @@
 
     
 
-    <section class="ftco-section img" id="ftco-testimony" style="background-image: url(images/bg_1.jpg);"  data-stellar-background-ratio="0.5">
-    	<div class="overlay"></div>
-	    <div class="container">
-	      <div class="row justify-content-center mb-5">
-	        <div class="col-md-7 heading-section text-center ftco-animate">
-	        	<span class="subheading">Testimony</span>
-	          <h2 class="mb-4">Customers Says</h2>
-	          <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-	        </div>
-	      </div>
-	    </div>
-	    <div class="container-wrap">
-	      <div class="row d-flex no-gutters">
-			<?php foreach($allReviews as $review) : ?>
-	        <div class="col-md-3 align-self-sm-end ftco-animate">
-	          <div class="testimony">
-	             <blockquote>
-	                <p>&ldquo;<?php echo $review->review; ?>.&rdquo;</p>
-	              </blockquote>
-	              <div class="author d-flex mt-4">
-	                
-	                <div class="name align-self-center"><?php echo $review->username; ?></div>
-	              </div>
-	          </div>
-	        </div>
-	        
-			<?php endforeach; ?>
-	      </div>
-	    </div>
-	  </section>
+    <section class="ftco-section img" id="ftco-testimony" style="background-image: url(images/bg_1.jpg);" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-7 heading-section text-center ftco-animate">
+                <span class="subheading">Testimony</span>
+                <h2 class="mb-4">Customers Says</h2>
+                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+            </div>
+        </div>
+    </div>
+    <div class="container-wrap">
+        <div class="row d-flex no-gutters">
+            <?php foreach ($allReviews as $review) : ?>
+                <div class="col-md-3 align-self-sm-end ftco-animate">
+                    <div class="testimony">
+                        <blockquote>
+                            <p>&ldquo;<?php echo $review->review; ?>.&rdquo;</p>
+                        </blockquote>
+                        <div class="rating">
+                            <?php
+                            // Display stars based on the user rating
+                            for ($i = 1; $i <= 5; $i++) {
+                                echo ($i <= $review->rating) ? '★' : '☆';
+                            }
+                            ?>
+                        </div>
+                        <div class="author d-flex mt-4">
+                            <div class="name align-self-center"><?php echo $review->username; ?></div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+
 
    
 <?php require "includes/footer.php"; ?>
