@@ -64,10 +64,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	              <p><span>Address:</span> Street 4, Dimna Chowk, Mango Jamshedpur, Jharkhand IN-831012</p>
 	            </div>
 	            <div class="col-md-12 mb-3">
-                <p><span>Phone:</span> <a href="tel:+917004396959">+91 7004 396 959</a></p> 
+                <p><span>Phone:</span> <a href="tel:+917004396959">+91 22 1234 5678</a></p> 
 	            </div>
 	            <div class="col-md-12 mb-3">
-	              <p><span>Email:</span> <a href="mailto:dasarunabh036@gmail.com">dasarunabh036@gmail.com</a></p>
+	              <p><span>Email:</span> <a href="mailto:dasarunabh036@gmail.com">coffee.blend@gmail.com</a></p>
 	            </div>
 	            <div class="col-md-12 mb-3">
 	              <p><span>Website:</span> <a href="index.php">coffee-blend.com</a></p>

@@ -35,7 +35,7 @@ if (isset($_SESSION['alert'])) {
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/boxicons/2.1.4/css/boxicons.min.css">
     <link rel="stylesheet" href="<?php echo APPURL; ?>/css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo APPURL; ?>/css/animate.css">
     
@@ -89,15 +89,26 @@ if (isset($_SESSION['alert'])) {
     </a>
 </li>
 
+ <!-- settings icon can delete this when needed -->
+<?php if(isset($_SESSION['username'])) : ?>
+        <!-- Add a separate list item for settings outside the dropdown menu -->
+        <li class="nav-item">
+            <a class="nav-link" href="<?php echo APPURL; ?>/users/user-settings.php">
+            <i class='bx bx-cog' style="font-size: 1.5rem;"></i>
+            </a>
+        </li>
+    <?php endif; ?>
+
+
               <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <?php echo $_SESSION['username']; ?>
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="<?php echo APPURL; ?>/users/bookings.php">Bookings</a></li>
-            <li><a class="dropdown-item" href="<?php echo APPURL; ?>/users/orders.php">Orders</a></li>
+            <li><a class="dropdown-item" href="<?php echo APPURL; ?>/users/bookings.php"><i class='bx bx-calendar'></i> Bookings</a></li>
+            <li><a class="dropdown-item" href="<?php echo APPURL; ?>/users/orders.php"><i class='bx bx-shopping-bag'></i> Orders</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<?php echo APPURL; ?>/logout.php">Logout</a></li>
+            <li><a class="dropdown-item" href="<?php echo APPURL; ?>/logout.php">Logout <i class='bx bx-log-in' ></i></a></li>
           </ul>
         </li>
         <?php else: ?>
