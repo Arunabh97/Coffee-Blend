@@ -1,6 +1,5 @@
 <?php 
 
-  // db.php
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -17,7 +16,6 @@ try {
     define("APPURL","http://localhost/coffee-blend");
     define("IMAGEPRODUCTS", "http://localhost/coffee-blend/admin-panel/products-admins/images");
 
-    // Check if alert message exists
 if (isset($_SESSION['alert'])) {
   echo "<script>alert('" . $_SESSION['alert'] . "');</script>";
   unset($_SESSION['alert']); // Clear the session variable
@@ -35,7 +33,7 @@ if (isset($_SESSION['alert'])) {
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/boxicons/2.1.4/css/boxicons.min.css">
+    
     <link rel="stylesheet" href="<?php echo APPURL; ?>/css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo APPURL; ?>/css/animate.css">
     
@@ -72,49 +70,38 @@ if (isset($_SESSION['alert'])) {
 	          <li class="nav-item"><a href="<?php echo APPURL; ?>/contact.php" class="nav-link">Contact</a></li>
 	          <?php if(isset($_SESSION['username'])) : ?>
               <li class="nav-item cart">
-    <a href="<?php echo APPURL; ?>/products/cart.php" class="nav-link">
-        <span class="icon icon-shopping_cart"></span>
-        <?php
-        // Fetch and display the count of items in the cart
-        $cartCount = 0; // Default value if the count is not available
-        if (isset($_SESSION['user_id'])) {
-            $cartQuery = $conn->query("SELECT COUNT(*) AS count FROM cart WHERE user_id = '$_SESSION[user_id]'");
-            $cartCountResult = $cartQuery->fetch(PDO::FETCH_ASSOC);
-            $cartCount = $cartCountResult['count'];
-        }
-        ?>
-        <?php if ($cartCount > 0) : ?>
-            <sup class="badge badge-pill badge-danger"><?php echo $cartCount; ?></sup>
-        <?php endif; ?>
-    </a>
-</li>
-
- <!-- settings icon can delete this when needed -->
-<?php if(isset($_SESSION['username'])) : ?>
-        <!-- Add a separate list item for settings outside the dropdown menu -->
-        <li class="nav-item">
-            <a class="nav-link" href="<?php echo APPURL; ?>/users/user-settings.php">
-            <i class='bx bx-cog' style="font-size: 1.5rem;"></i>
-            </a>
-        </li>
-    <?php endif; ?>
-
+                  <a href="<?php echo APPURL; ?>/products/cart.php" class="nav-link">
+                      <span class="icon icon-shopping_cart"></span>
+                      <?php
+                      // Fetch and display the count of items in the cart
+                      $cartCount = 0; // Default value if the count is not available
+                      if (isset($_SESSION['user_id'])) {
+                          $cartQuery = $conn->query("SELECT COUNT(*) AS count FROM cart WHERE user_id = '$_SESSION[user_id]'");
+                          $cartCountResult = $cartQuery->fetch(PDO::FETCH_ASSOC);
+                          $cartCount = $cartCountResult['count'];
+                      }
+                      ?>
+                      <?php if ($cartCount > 0) : ?>
+                          <sup class="badge badge-pill badge-danger"><?php echo $cartCount; ?></sup>
+                      <?php endif; ?>
+                  </a>
+              </li>
 
               <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <?php echo $_SESSION['username']; ?>
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="<?php echo APPURL; ?>/users/bookings.php"><i class='bx bx-calendar'></i> Bookings</a></li>
-            <li><a class="dropdown-item" href="<?php echo APPURL; ?>/users/orders.php"><i class='bx bx-shopping-bag'></i> Orders</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<?php echo APPURL; ?>/logout.php">Logout <i class='bx bx-log-in' ></i></a></li>
-          </ul>
-        </li>
-        <?php else: ?>
-			  <li class="nav-item"><a href="<?php echo APPURL; ?>/login.php" class="nav-link">login</a></li>
-			  <li class="nav-item"><a href="<?php echo APPURL; ?>/register.php" class="nav-link">register</a></li>
-        <?php endif; ?>
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <?php echo $_SESSION['username']; ?>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="<?php echo APPURL; ?>/users/bookings.php">Bookings</a></li>
+                  <li><a class="dropdown-item" href="<?php echo APPURL; ?>/users/orders.php">Orders</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="<?php echo APPURL; ?>/logout.php">Logout</a></li>
+                </ul>
+              </li>
+              <?php else: ?>
+              <li class="nav-item"><a href="<?php echo APPURL; ?>/login.php" class="nav-link">login</a></li>
+              <li class="nav-item"><a href="<?php echo APPURL; ?>/register.php" class="nav-link">register</a></li>
+              <?php endif; ?>
 	        </ul>
 	      </div>
 		</div>

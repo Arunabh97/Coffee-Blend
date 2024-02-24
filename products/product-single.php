@@ -53,7 +53,8 @@
 			$rowCount = $validateCart->rowCount();
 		}	
 	} else {
-		header("location: ".APPURL."/404.php");
+		//header("location: ".APPURL."/404.php");
+    echo "<script>window.location.href = '" . APPURL . "/404.php';</script>";
 	}
 ?>
 
@@ -181,7 +182,8 @@
 
 				<?php endif; ?>
 				<?php else :  ?>
-					<p style="margin-top: -270px; margin-left: 632px; height: 65px; font-weight: bold; color: white;">Login To Add Product To Cart</p>
+					<p><a href="<?php echo APPURL; ?>/login.php" style="color: blue; text-decoration: none;" onmouseover="this.style.color='red'" onmouseout="this.style.color='blue'">Login To Add Product To Cart</a>
+          </p>
 				<?php endif; ?>
 			</form>	
 		</div>

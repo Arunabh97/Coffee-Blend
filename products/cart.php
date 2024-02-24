@@ -22,7 +22,8 @@
 
 		$_SESSION['total_price'] = $_POST['total_price'];
 
-		header("location: checkout.php");
+		//header("location: checkout.php");
+		echo '<script>window.location.href="checkout.php";</script>';
 	}
 
 ?>

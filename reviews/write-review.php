@@ -28,7 +28,8 @@ if (isset($_POST['submit'])) {
         ]);
 
         echo "<script>alert('Review Submitted');</script>";
-        header("location: " . APPURL . "/users/orders.php");
+        //header("location: " . APPURL . "/users/orders.php");
+        echo "<script>window.history.go(-2);</script>";
     }
 }
 ?>

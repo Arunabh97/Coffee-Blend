@@ -37,7 +37,8 @@ if (isset($_POST['submit'])) {
             $_SESSION['alert'] = 'Choose a valid date, You cannot choose a date in the past';
         }
     }
-    header("location: ".APPURL."");
+    //header("location: ".APPURL."");
+    echo "<script>window.history.back();</script>";
     exit(); // Ensure script stops execution after the redirect
 }
 ?>

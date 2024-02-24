@@ -52,7 +52,8 @@ if (isset($_POST['submit'])) {
 
 		]);
 
-		header("location: pay.php");
+		//header("location: pay.php");
+		echo '<script>window.location.href="pay.php";</script>';
 	}
 }
 

@@ -12,8 +12,8 @@
        $delete = $conn->query("DELETE FROM cart WHERE id='$id'"); 
        $delete->execute();
 
-       header("location: cart.php");
-    
+       //header("location: cart.php");
+       echo "<script>alert('Added to cart successfully'); window.location.href = 'cart.php';</script>";
     }
 
 ?>
