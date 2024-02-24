@@ -79,44 +79,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $isUserLoggedIn) {
 					</div>
 					<div class="col-md-1"></div>
           <div class="col-md-6 ftco-animate">
-            <form action="contact.php" method="POST" class="contact-form">
-            	<div class="row">
-            		<div class="col-md-6">
-	                <div class="form-group">
-                  <input type="text" name="name" class="form-control" placeholder="Your Name">
-	                </div>
+          <form action="contact.php" method="POST" class="contact-form">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="email" name="email" class="form-control" placeholder="Your Email" required>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-6">
-	                <div class="form-group">
-                  <input type="text" name="email" class="form-control" placeholder="Your Email">
-	                </div>
-	                </div>
-              </div>
-              <div class="form-group">
-              <input type="text" name="subject" class="form-control" placeholder="Subject">
-              </div>
-              <div class="form-group">
-                <textarea name="message" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
-              </div>
-              <div class="form-group">
-                <?php
-                // Check if the user is logged in before rendering the submit button
-                if ($isUserLoggedIn) {
-                    echo '<input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">';
-                } else {
-                    echo '<button type="button" class="btn btn-secondary py-3 px-5" disabled>Send Message (Login Required)</button>';
-                }
-                ?>
-              </div>
+                <div class="form-group">
+                    <input type="text" name="subject" class="form-control" placeholder="Subject" required>
+                </div>
+                <div class="form-group">
+                    <textarea name="message" cols="30" rows="7" class="form-control" placeholder="Message" required></textarea>
+                </div>
+                <div class="form-group">
+                    <?php
+                    // Check if the user is logged in before rendering the submit button
+                    if ($isUserLoggedIn) {
+                        echo '<input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">';
+                    } else {
+                        echo '<button type="button" class="btn btn-secondary py-3 px-5" disabled>Send Message (Login Required)</button>';
+                    }
+                    ?>
+                </div>
             </form>
           </div>
         </div>
       </div>
     </section>
 
-    <div id="map" class="mt-5">
-  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1838.509069233807!2d86.22459362872881!3d22.83881842410478!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f5e23814400001%3A0x7f679b2fee79a1a9!2sDimna%20Residency!5e0!3m2!1sen!2sin!4v1708751807066!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-</div>
-
+    <div id="map"></div>
 
     <?php require "includes/footer.php"; ?>
