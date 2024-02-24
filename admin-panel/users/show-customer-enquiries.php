@@ -1,5 +1,3 @@
-<?php require "../layouts/header.php"; ?>
-<?php require "../../config/config.php"; ?>
 
 <?php
 if (!isset($_SESSION['admin_name'])) {
@@ -92,4 +90,3 @@ if (!isset($_SESSION['admin_name'])) {
     </div>
 </div>
 
-<?php require "../layouts/footer.php"; ?>

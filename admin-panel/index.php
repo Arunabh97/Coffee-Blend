@@ -96,5 +96,5 @@ $adminsCount = $admins->fetch(PDO::FETCH_OBJ);
     </div>
   </div>
 </div>
-
+<?php require "users/show-customer-enquiries.php"; ?>
 <?php require "layouts/footer.php"; ?>
