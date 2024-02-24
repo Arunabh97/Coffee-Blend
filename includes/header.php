@@ -63,6 +63,97 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="<?php echo APPURL; ?>/css/flaticon.css">
     <link rel="stylesheet" href="<?php echo APPURL; ?>/css/icomoon.css">
     <link rel="stylesheet" href="<?php echo APPURL; ?>/css/style.css">
+    <style>
+    /* Customize the modal appearance */
+    .modal-content {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .modal-header {
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 8px 8px 0 0;
+        padding: 15px;
+        text-align: center;
+    }
+
+    .modal-header h5 {
+        margin: 0;
+        font-size: 18px;
+    }
+
+    .modal-body {
+        padding: 15px;
+    }
+
+    .modal-footer {
+        border-top: 1px solid #ddd;
+        padding: 15px;
+        text-align: center;
+        border-radius: 0 0 8px 8px;
+    }
+
+    /* Customize the form inside the modal */
+    #editDetailsForm {
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    #editDetailsForm label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #333;
+        font-size: 14px;
+    }
+
+    #editDetailsForm input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 12px;
+        box-sizing: border-box;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+        transition: border-color 0.3s ease-in-out;
+    }
+
+    #editDetailsForm input:focus {
+        border-color: #007bff;
+    }
+
+    #saveChangesBtn,
+    #cancelEditBtn {
+        display: inline-block;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    }
+
+    #saveChangesBtn {
+        background-color: #28a745;
+        color: #fff;
+    }
+
+    #saveChangesBtn:hover {
+        background-color: #218838;
+    }
+
+    #cancelEditBtn {
+        color: #007bff;
+        margin-left: 10px;
+    }
+
+    #cancelEditBtn:hover {
+        color: #0056b3;
+    }
+</style>
+
   </head>
   <body>
   	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
