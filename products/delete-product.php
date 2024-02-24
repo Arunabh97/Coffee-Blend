@@ -13,7 +13,7 @@
        $delete->execute();
 
        //header("location: cart.php");
-       echo "<script>alert('Added to cart successfully'); window.location.href = 'cart.php';</script>";
+       echo "<script>alert('Removed from cart successfully'); window.location.href = 'cart.php';</script>";
     }
 
 ?>

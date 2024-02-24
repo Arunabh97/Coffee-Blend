@@ -4,7 +4,9 @@
 <?php
 
 if(isset ($_SESSION['username'])){
-  header("location: ".APPURL."");
+  //header("location: ".APPURL."");
+  echo "<script>window.location.href = '" . APPURL . "';</script>";
+
 }
 
 if (isset($_POST['submit'])) {
@@ -30,7 +32,9 @@ if (isset($_POST['submit'])) {
             $_SESSION['email'] = $fetch['email'];
             $_SESSION['user_id'] = $fetch['id'];
 
-            header("location: ".APPURL."");
+            //header("location: ".APPURL."");
+            echo "<script>window.location.href = '" . APPURL . "';</script>";
+
           } else {
             echo "<script>alert('Invalid email or password');</script>";
         }

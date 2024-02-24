@@ -122,8 +122,8 @@ if (isset($_POST['submit'])) {
 		            <!-- <div class="col-md-12">
 		            	<div class="form-group">
 	                  <input type="text" class="form-control" placeholder="Appartment, suite, unit etc: (optional)">
-	                </div> -->
-		            </div>
+	                </div>
+		            </div> -->
 		            <div class="w-100"></div>
 		            <div class="col-md-6">
 		            	<div class="form-group">

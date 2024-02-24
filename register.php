@@ -3,7 +3,8 @@ require "includes/header.php";
 require "config/config.php";
 
 if(isset($_SESSION['username'])){
-  header("location: ".APPURL."");
+  //header("location: ".APPURL."");
+  echo "<script>window.location.href = '" . APPURL . "';</script>";
 }
 
 if (isset($_POST['submit'])) {
