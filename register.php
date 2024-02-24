@@ -33,7 +33,9 @@ if (isset($_POST['submit'])) {
             ":last_name" => $last_name,
         ]);
 
-        header("location: login.php");
+        //header("location: login.php");
+        echo "<script>alert('Registered and created account successfully.');window.location.href = 'login.php';</script>";
+
         exit();
     }
 }
@@ -63,45 +65,59 @@ if (isset($_POST['submit'])) {
 			<form action="register.php" method="POST" class="billing-form ftco-bg-dark p-3 p-md-5">
 				<h3 class="mb-4 billing-heading">Register</h3>
 	          	<div class="row align-items-end">
+
               <div class="col-md-12">
-                  <div class="form-group">
-                      <label for="FirstName">First Name</label>
-                      <input type="text" name="first_name" class="form-control" placeholder="First Name">
-                  </div>
+                <div class="form-group">
+                    <label for="Username">Username</label>
+                    <input type="text" name="username" class="form-control" placeholder="Enter your desired username">
                 </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                      <label for="LastName">Last Name</label>
-                      <input type="text" name="last_name" class="form-control" placeholder="Last Name">
-                  </div>
-                </div>
+            </div>
 
-                 <div class="col-md-12">
-                        <div class="form-group">
-                            <label for="Username">Username</label>
-                            <input type="text" name="username" class="form-control" placeholder="Username">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="FirstName">First Name</label>
+                    <input type="text" name="first_name" class="form-control" placeholder="Enter your first name">
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="LastName">Last Name</label>
+                    <input type="text" name="last_name" class="form-control" placeholder="Enter your last name">
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="Email">Email</label>
+                    <input type="email" name="email" class="form-control" placeholder="Enter your email address">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="Password">Password</label>
+                    <div class="input-group">
+                        <input type="password" name="password" class="form-control" placeholder="Enter a strong password" id="passwordInput">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="togglePassword">Show</button>
                         </div>
-                 </div>
-	          	  <div class="col-md-12">
-	                <div class="form-group">
-	                	<label for="Email">Email</label>
-	                  <input type="text" name="email" class="form-control" placeholder="Email">
-	                </div>
-	              </div>
-                 
-	              <div class="col-md-12">
-	                <div class="form-group">
-	                	<label for="Password">Password</label>
-	                    <input type="password" name="password" class="form-control" placeholder="Password">
-	                </div>
+                    </div>
                 </div>
+            </div>
 
-                <div class="col-md-12">
-                  <div class="form-group">
-                      <label for="ConfirmPassword">Confirm Password</label>
-                      <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password">
-                  </div>
-              </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="ConfirmPassword">Confirm Password</label>
+                    <div class="input-group">
+                        <input type="password" name="confirm_password" class="form-control" placeholder="Re-enter your password" id="confirmPasswordInput">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword">Show</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
                 <div class="col-md-12">
                 	<div class="form-group mt-4">
@@ -119,5 +135,22 @@ if (isset($_POST['submit'])) {
         </div>
       </div>
     </section> <!-- .section -->
+    <script>
+    const passwordInput = document.getElementById('passwordInput');
+    const togglePassword = document.getElementById('togglePassword');
 
+    togglePassword.addEventListener('click', function () {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        togglePassword.textContent = type === 'password' ? 'Show' : 'Hide';
+    });
+    const confirmPasswordInput = document.getElementById('confirmPasswordInput');
+    const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+
+    toggleConfirmPassword.addEventListener('click', function () {
+        const type = confirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        confirmPasswordInput.setAttribute('type', type);
+        toggleConfirmPassword.textContent = type === 'password' ? 'Show' : 'Hide';
+    });
+</script>
    <?php require "includes/footer.php"; ?>

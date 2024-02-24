@@ -1,5 +1,6 @@
 <?php 
 
+  // db.php
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -16,11 +17,20 @@ try {
     define("APPURL","http://localhost/coffee-blend");
     define("IMAGEPRODUCTS", "http://localhost/coffee-blend/admin-panel/products-admins/images");
 
+    // Check if alert message exists
 if (isset($_SESSION['alert'])) {
   echo "<script>alert('" . $_SESSION['alert'] . "');</script>";
   unset($_SESSION['alert']); // Clear the session variable
 }
-    
+ 
+// Fetch user details if the user is logged in
+if (isset($_SESSION['user_id'])) {
+  $userId = $_SESSION['user_id'];
+
+  $userQuery = $conn->prepare("SELECT * FROM users WHERE id = ?");
+  $userQuery->execute([$userId]);
+  $userDetails = $userQuery->fetch(PDO::FETCH_ASSOC);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,7 +43,8 @@ if (isset($_SESSION['alert'])) {
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/boxicons/2.1.4/css/boxicons.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="<?php echo APPURL; ?>/css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo APPURL; ?>/css/animate.css">
     
@@ -70,42 +81,151 @@ if (isset($_SESSION['alert'])) {
 	          <li class="nav-item"><a href="<?php echo APPURL; ?>/contact.php" class="nav-link">Contact</a></li>
 	          <?php if(isset($_SESSION['username'])) : ?>
               <li class="nav-item cart">
-                  <a href="<?php echo APPURL; ?>/products/cart.php" class="nav-link">
-                      <span class="icon icon-shopping_cart"></span>
-                      <?php
-                      // Fetch and display the count of items in the cart
-                      $cartCount = 0; // Default value if the count is not available
-                      if (isset($_SESSION['user_id'])) {
-                          $cartQuery = $conn->query("SELECT COUNT(*) AS count FROM cart WHERE user_id = '$_SESSION[user_id]'");
-                          $cartCountResult = $cartQuery->fetch(PDO::FETCH_ASSOC);
-                          $cartCount = $cartCountResult['count'];
-                      }
-                      ?>
-                      <?php if ($cartCount > 0) : ?>
-                          <sup class="badge badge-pill badge-danger"><?php echo $cartCount; ?></sup>
-                      <?php endif; ?>
-                  </a>
-              </li>
+    <a href="<?php echo APPURL; ?>/products/cart.php" class="nav-link">
+        <span class="icon icon-shopping_cart"></span>
+        <?php
+        // Fetch and display the count of items in the cart
+        $cartCount = 0; // Default value if the count is not available
+        if (isset($_SESSION['user_id'])) {
+            $cartQuery = $conn->query("SELECT COUNT(*) AS count FROM cart WHERE user_id = '$_SESSION[user_id]'");
+            $cartCountResult = $cartQuery->fetch(PDO::FETCH_ASSOC);
+            $cartCount = $cartCountResult['count'];
+        }
+        ?>
+        <?php if ($cartCount > 0) : ?>
+            <sup class="badge badge-pill badge-danger"><?php echo $cartCount; ?></sup>
+        <?php endif; ?>
+    </a>
+</li>
+
+ <!-- settings icon can delete this when needed -->
+<?php if(isset($_SESSION['username'])) : ?>
+        <!-- Add a separate list item for settings outside the dropdown menu -->
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-toggle="modal" data-target="#userSettingsModal">
+            <i class='bx bx-cog' style="font-size: 1.5rem;"></i>
+          </a>
+        </li>
+    <?php endif; ?>
+
 
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <?php echo $_SESSION['username']; ?>
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="<?php echo APPURL; ?>/users/bookings.php">Bookings</a></li>
-                  <li><a class="dropdown-item" href="<?php echo APPURL; ?>/users/orders.php">Orders</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="<?php echo APPURL; ?>/logout.php">Logout</a></li>
-                </ul>
-              </li>
-              <?php else: ?>
-              <li class="nav-item"><a href="<?php echo APPURL; ?>/login.php" class="nav-link">login</a></li>
-              <li class="nav-item"><a href="<?php echo APPURL; ?>/register.php" class="nav-link">register</a></li>
-              <?php endif; ?>
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <?php echo $_SESSION['username']; ?>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="<?php echo APPURL; ?>/users/bookings.php"><i class='bx bx-calendar'></i> Bookings</a></li>
+            <li><a class="dropdown-item" href="<?php echo APPURL; ?>/users/orders.php"><i class='bx bx-shopping-bag'></i> Orders</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<?php echo APPURL; ?>/logout.php">Logout <i class='bx bx-log-in' ></i></a></li>
+          </ul>
+        </li>
+        <?php else: ?>
+			  <li class="nav-item"><a href="<?php echo APPURL; ?>/login.php" class="nav-link">login</a></li>
+			  <li class="nav-item"><a href="<?php echo APPURL; ?>/register.php" class="nav-link">register</a></li>
+        <?php endif; ?>
 	        </ul>
 	      </div>
 		</div>
 	  </nav>
     <!-- END nav -->
+    <div class="modal fade" id="userSettingsModal" tabindex="-1" role="dialog" aria-labelledby="userSettingsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userSettingsModalLabel">User Settings</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Display user details in the modal -->
+                    <div id="userDetailsContainer">
+                        <p>First Name: <span id="firstName"><?php echo $userDetails['first_name']; ?></span></p>
+                        <p>Last Name: <span id="lastName"><?php echo $userDetails['last_name']; ?></span></p>
+                        <p>Username: <span id="username"><?php echo $userDetails['username']; ?></span></p>
+                        <p>Email: <span id="email"><?php echo $userDetails['email']; ?></span></p>
+
+                        <!-- Add a link to edit details -->
+                        <a href="#" id="editDetailsBtn" class="btn btn-primary">Edit Details</a>
+                    </div>
+
+                    <!-- Editable form, initially hidden -->
+                    <form id="editDetailsForm" style="display: none;">
+                        <label for="editFirstName">First Name:</label>
+                        <input type="text" id="editFirstName" name="editFirstName" value="<?php echo $userDetails['first_name']; ?>">
+
+                        <label for="editLastName">Last Name:</label>
+                        <input type="text" id="editLastName" name="editLastName" value="<?php echo $userDetails['last_name']; ?>">
+
+                        <label for="editUsername">Username:</label>
+                        <input type="text" id="editUsername" name="editUsername" value="<?php echo $userDetails['username']; ?>" readonly>
+
+                        <label for="editEmail">Email:</label>
+                        <input type="email" id="editEmail" name="editEmail" value="<?php echo $userDetails['email']; ?>">
+
+                        <!-- Add a button to save changes -->
+                        <button type="button" class="btn btn-success" id="saveChangesBtn">Save Changes</button>
+                        <a href="#" id="cancelEditBtn">Cancel</a>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add this script at the end of the HTML body -->
+    <script>
+    $(document).ready(function () {
+        // Use jQuery to handle the button click events
+        $("#editDetailsBtn").click(function () {
+            // Hide details container, show the form
+            $("#userDetailsContainer").hide();
+            $("#editDetailsForm").show();
+        });
+
+        $("#cancelEditBtn").click(function () {
+            // Hide the form, show details container
+            $("#editDetailsForm").hide();
+            $("#userDetailsContainer").show();
+        });
+
+        $("#saveChangesBtn").click(function () {
+            // Prepare data for update
+            var updatedData = {
+                userId: <?php echo isset($userDetails['id']) ? $userDetails['id'] : 0; ?>,
+                firstName: $("#editFirstName").val(),
+                lastName: $("#editLastName").val(),
+                username: $("#editUsername").val(),
+                email: $("#editEmail").val()
+            };
+
+            // Send the updated data to the server via AJAX
+            $.ajax({
+                type: "POST",
+                url: "update_user_details.php", // Adjust the URL to your server-side script
+                data: updatedData,
+                success: function (response) {
+                    // Update displayed details with edited values
+                    $("#firstName").text(updatedData.firstName);
+                    $("#lastName").text(updatedData.lastName);
+                    $("#username").text(updatedData.username);
+                    $("#email").text(updatedData.email);
+
+                    // Hide the form, show details container
+                    $("#editDetailsForm").hide();
+                    $("#userDetailsContainer").show();
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX request error:", xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
+
+
 </body>
 </html>
