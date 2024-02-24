@@ -1,7 +1,10 @@
 <?php require "includes/header.php"; ?>
 <?php require "config/config.php"; ?>
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+// Assume you have a session variable indicating whether the user is logged in
+$isUserLoggedIn = isset($_SESSION['user_id']) && !empty($_SESSION['user_id']);
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && $isUserLoggedIn) {
   // Retrieve form data
   $name = $_POST["name"];
   $email = $_POST["email"];
@@ -96,14 +99,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <textarea name="message" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
               </div>
               <div class="form-group">
-                <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
-            </div>
+                <?php
+                // Check if the user is logged in before rendering the submit button
+                if ($isUserLoggedIn) {
+                    echo '<input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">';
+                } else {
+                    echo '<button type="button" class="btn btn-secondary py-3 px-5" disabled>Send Message (Login Required)</button>';
+                }
+                ?>
+              </div>
             </form>
           </div>
         </div>
       </div>
     </section>
 
-    <div id="map"></div>
+    <div id="map" class="mt-5">
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1838.509069233807!2d86.22459362872881!3d22.83881842410478!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f5e23814400001%3A0x7f679b2fee79a1a9!2sDimna%20Residency!5e0!3m2!1sen!2sin!4v1708751807066!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</div>
+
 
     <?php require "includes/footer.php"; ?>
