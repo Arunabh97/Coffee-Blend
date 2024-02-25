@@ -55,5 +55,7 @@
         </div>
     	</div>
     </section>
-
+    
+    <?php require "faq.php"; ?>
+    
     <?php require "includes/footer.php"; ?>
