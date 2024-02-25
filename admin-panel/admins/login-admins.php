@@ -52,87 +52,103 @@ if (isset($_POST['submit'])) {
 
     <style>
         body {
-            background: linear-gradient(to right, #3494e6, #ec6ead);
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-        }
+    background: linear-gradient(to right, #3494e6, #ec6ead);
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+}
 
-        .card {
-            margin: 50px auto;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
-            background-color: #ffffff;
-            border: 1px solid #ced4da;
-            box-sizing: border-box;
-        }
+.card {
+    margin: 50px auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border-radius: 25px;
+    background: linear-gradient(to bottom, #ffffff, #f0f0f0);
+    border: 1px solid #d1d1d1;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
 
-        .card-title {
-            color: #003366;
-            font-size: 24px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+.card:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, #003366, #3494e6);
+    clip-path: polygon(0 0, 100% 0, 100% 90%, 0% 100%);
+    z-index: -1;
+}
 
-        .admin-icon {
-            margin-right: 12px;
-        }
+.card-title {
+    color: #ffffff;
+    font-size: 32px;
+    margin: 20px 0;
+    text-align: center;
+}
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+.admin-icon {
+    margin-right: 12px;
+}
 
-        .form-control {
-            border-radius: 8px;
-            padding: 14px;
-            font-size: 18px;
-            border: 1px solid #ced4da;
-            transition: all 0.3s ease;
-        }
+.form-group {
+    margin-bottom: 30px;
+}
 
-        .form-control:hover,
-        .form-control:focus {
-            border-color: #003366;
-            box-shadow: 0 0 10px rgba(0, 51, 102, 0.5);
-        }
+.form-control {
+    border-radius: 15px;
+    padding: 18px;
+    font-size: 20px;
+    border: none;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #f5f5f5;
+}
 
-        .input-group-prepend span {
-            width: 2.5em;
-            background-color: #003366;
-            color: white;
-            border: 1px solid #003366;
-            border-radius: 8px 0 0 8px;
-            padding: 14px;
-        }
+.form-control:hover,
+.form-control:focus {
+    box-shadow: 0 0 15px rgba(0, 51, 102, 0.3);
+}
 
-        .input-group-append span {
-            cursor: pointer;
-        }
+.input-group-prepend span {
+    width: 3em;
+    background-color: #003366;
+    color: white;
+    border: none;
+    border-radius: 15px 0 0 15px;
+    padding: 18px;
+}
 
-        .input-group-append span:hover {
-            color: #003366;
-        }
+.input-group-append span {
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
 
-        .btn-primary {
-            background-color: #003366;
-            border-color: #003366;
-            width: 100%;
-            font-size: 18px;
-            padding: 14px;
-            border-radius: 8px;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
+.input-group-append span:hover {
+    color: #003366;
+}
 
-        .btn-primary:hover {
-            background-color: #001a33;
-            border-color: #001a33;
-        }
+.btn-primary {
+    background-color: #003366;
+    color: white;
+    font-size: 22px;
+    padding: 18px;
+    border-radius: 15px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
 
-        .container {
-            margin:0;
-            box-sizing: border-box;
-        }
+.btn-primary:hover {
+    background-color: #001a33;
+}
+
+.container {
+    margin: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
     </style>
 </head>
 

@@ -16,12 +16,33 @@
      <link href="<?php echo ADMINURL; ?>/styles/style.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+      .navbar {
+            background: linear-gradient(to right, #007bff, #6c757d); /* Adjust colors as needed */
+        }
+        .navbar-nav.side-nav {
+            background: linear-gradient(to right, #007bff, #6c757d);
+            margin: 20px 0; /* Adjust colors as needed */
+        }
+        .nav-item {
+            padding: 10px;
+            margin: 0;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-item:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+      </style>
 </head>
 <body>
 <div id="wrapper">
     <nav class="navbar header-top fixed-top navbar-expand-lg  navbar-dark bg-dark">
       <div class="container">
-      <a class="navbar-brand" href="#"><i class="fa-solid fa-mug-hot"></i> Coffee-Blend Admin Panel</a>
+      <a class="navbar-brand" href="#"><i class='bx bx-coffee-togo'></i> COFFEE BLEND Admin Panel</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
