@@ -31,7 +31,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'confirmDelete' && isset($_GET[
     $deleteUser->execute();
 
     // Redirect back to the users page after deletion
-    header("location: users.php");
+    //header("location: users.php");
+    echo "<script>window.location.href = 'users.php';</script>";
     exit();
 }
 

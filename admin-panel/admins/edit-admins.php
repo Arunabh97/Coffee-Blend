@@ -16,7 +16,8 @@ $admin = $adminQuery->fetch(PDO::FETCH_OBJ);
 
 if (!$admin) {
     // Admin not found, handle accordingly (e.g., redirect to admin list)
-    header("location: admins.php");
+    //header("location: admins.php");
+    echo "<script>window.location.href = 'admins.php';</script>";
     exit();
 }
 

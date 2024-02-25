@@ -23,7 +23,7 @@ if (isset($_POST['submit'])) {
           ":password" => $password,
       ]);
 
-      header("location: admins.php");
+      echo "<script>window.location.href = 'admins.php';</script>";
       exit(); 
   }
 }

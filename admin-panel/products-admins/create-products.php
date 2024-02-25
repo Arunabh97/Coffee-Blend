@@ -32,7 +32,8 @@ if (isset($_POST['submit'])) {
       ]);
 
       if(move_uploaded_file($_FILES['image']['tmp_name'], $dir)) {
-        header("location: show-products.php");
+        //header("location: show-products.php");
+        echo "<script>window.location.href = 'show-products.php';</script>";
       }
 
       exit(); 

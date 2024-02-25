@@ -10,8 +10,8 @@ if (isset($_GET['id'])) {
     $product = $stmt->fetch(PDO::FETCH_OBJ);
 } else {
     // Handle the case where no ID is provided
-    // Redirect or display an error message as needed
-    header("Location: show-products.php"); // Redirect to the products page
+    //header("Location: show-products.php"); 
+    echo "<script>window.location.href = 'show-products.php';</script>";
     exit();
 }
 
@@ -27,8 +27,8 @@ if (isset($_POST['delete'])) {
     $deleteStmt = $conn->prepare("DELETE FROM products WHERE id = ?");
     $deleteStmt->execute([$productId]);
 
-    // Redirect to the products page after deletion
-    header("Location: show-products.php");
+    //header("Location: show-products.php");
+    echo "<script>window.location.href = 'show-products.php';</script>";
     exit();
 }
 ?>

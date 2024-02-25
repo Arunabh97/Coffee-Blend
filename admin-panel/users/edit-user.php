@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if ($updateUserQuery->execute()) {
         // Redirect back to the users page after updating
-        header("location: users.php");
+        echo "<script>window.location.href = 'users.php';</script>";
         exit();
     } else {
         // Handle the update failure, if needed

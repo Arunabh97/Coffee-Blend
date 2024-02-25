@@ -11,7 +11,8 @@ if (isset($_GET['id'])) {
 } else {
     // Handle the case where no ID is provided
     // Redirect or display an error message as needed
-    header("Location: show-bookings.php"); // Redirect to the bookings page
+    //header("Location: show-bookings.php");
+    echo "<script>window.location.href = 'show-bookings.php';</script>";
     exit();
 }
 
@@ -21,8 +22,8 @@ if (isset($_POST['delete'])) {
     $deleteStmt = $conn->prepare("DELETE FROM bookings WHERE id = ?");
     $deleteStmt->execute([$bookingId]);
 
-    // Redirect to the bookings page after deletion
-    header("Location: show-bookings.php");
+    //header("Location: show-bookings.php");
+    echo "<script>window.location.href = 'show-bookings.php';</script>";
     exit();
 }
 ?>

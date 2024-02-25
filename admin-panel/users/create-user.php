@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($insertUser->execute()) {
         // Redirect to the users page after successful insertion
-        header("location: users.php");
+        echo "<script>window.location.href = 'users.php';</script>";
         exit();
     } else {
         // Handle error, you might want to display an error message or log the error

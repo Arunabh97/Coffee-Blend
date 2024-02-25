@@ -25,7 +25,9 @@ if(isset($_GET['id'])){
                 ":status" => $status,
             ]);
       
-            header("location: show-bookings.php");
+            //header("location: show-bookings.php");
+            echo "<script>window.location.href = 'show-bookings.php';</script>";
+
         }
       }
 }

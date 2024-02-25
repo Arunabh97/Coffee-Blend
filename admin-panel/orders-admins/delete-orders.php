@@ -11,7 +11,8 @@ if (isset($_GET['id'])) {
 } else {
     // Handle the case where no ID is provided
     // Redirect or display an error message as needed
-    header("Location: index.php"); // Redirect to the orders page
+    //header("Location: index.php"); 
+    echo "<script>window.location.href = 'index.php';</script>";
     exit();
 }
 
@@ -21,8 +22,8 @@ if (isset($_POST['delete'])) {
     $deleteStmt = $conn->prepare("DELETE FROM orders WHERE id = ?");
     $deleteStmt->execute([$orderId]);
 
-    // Redirect to the orders page after deletion
-    header("Location: show-orders.php");
+    //header("Location: show-orders.php");
+    echo "<script>window.location.href = 'show-orders.php';</script>";
     exit();
 }
 ?>

@@ -18,11 +18,13 @@ if ($_SESSION['admin_id'] == $adminIdToDelete) {
     session_destroy(); // Destroy all session data
 
     // Redirect to login page
-    header("location: " . ADMINURL . "/admins/login-admins.php");
+    //header("location: " . ADMINURL . "/admins/login-admins.php");
+    echo "<script>window.location.href = '" . ADMINURL . "/admins/login-admins.php';</script>";
     exit();
 } else {
     // Redirect to a safe location if unauthorized deletion attempt
     header("location: " . ADMINURL . "/admins/show-admins.php");
+    echo "<script>window.location.href = '" . ADMINURL . "/admins/show-admins.php';</script>";
     exit();
 }
 ?>
