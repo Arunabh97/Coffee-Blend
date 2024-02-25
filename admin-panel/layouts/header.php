@@ -42,7 +42,7 @@
 <div id="wrapper">
     <nav class="navbar header-top fixed-top navbar-expand-lg  navbar-dark bg-dark">
       <div class="container">
-      <a class="navbar-brand" href="#"><i class='bx bx-coffee-togo'></i> COFFEE BLEND Admin Panel</a>
+      <a class="navbar-brand" href="#"><i class='bx bx-coffee-togo' style='font-size: 1.5em;'></i> <span class="coffee-blend-text" style='font-size: 1.2em;'>COFFEE BLEND</span> Admin Panel</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

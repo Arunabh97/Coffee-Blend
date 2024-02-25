@@ -52,40 +52,41 @@ if (isset($_POST['submit'])) {
 
     <style>
         body {
-    background: linear-gradient(to right, #3494e6, #ec6ead);
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-}
+        background: linear-gradient(to right, #3494e6, #ec6ead);
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+    }
 
-.card {
-    margin: 50px auto;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-    border-radius: 25px;
-    background: linear-gradient(to bottom, #ffffff, #f0f0f0);
-    border: 1px solid #d1d1d1;
-    overflow: hidden;
-    position: relative;
-    z-index: 1;
-}
+    .card {
+        margin: 50px auto;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        border-radius: 25px;
+        background: linear-gradient(to bottom, #ffffff, #f0f0f0);
+        border: 1px solid #d1d1d1;
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+        width: 60%; /* You can adjust this value */
+    }
 
-.card:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, #003366, #3494e6);
-    clip-path: polygon(0 0, 100% 0, 100% 90%, 0% 100%);
-    z-index: -1;
-}
+    .card:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, #003366, #3494e6);
+        clip-path: polygon(0 0, 100% 0, 100% 90%, 0% 100%);
+        z-index: -1;
+    }
 
-.card-title {
-    color: #ffffff;
-    font-size: 32px;
-    margin: 20px 0;
-    text-align: center;
-}
+    .card-title {
+        color: #ffffff;
+        font-size: 32px;
+        margin: 20px 0;
+        text-align: center;
+    }
 
 .admin-icon {
     margin-right: 12px;
