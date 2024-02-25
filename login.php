@@ -76,12 +76,17 @@ if (isset($_POST['submit'])) {
 	              </div>
                  
 	              <div class="col-md-12">
-	                <div class="form-group">
-	                	<label for="Password">Password</label>
-	                    <input type="password" name="password" class="form-control" placeholder="Password">
-	                </div>
-
+                    <div class="form-group">
+                        <label for="Password">Password</label>
+                        <div class="input-group">
+                            <input type="password" name="password" class="form-control" placeholder="Password" id="passwordInput">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" id="togglePassword">Show</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="col-md-12">
                 	<div class="form-group mt-4">
 							<div class="radio">
@@ -98,5 +103,15 @@ if (isset($_POST['submit'])) {
         </div>
       </div>
     </section> <!-- .section -->
+    <script>
+    const passwordInput = document.getElementById('passwordInput');
+    const togglePassword = document.getElementById('togglePassword');
+
+    togglePassword.addEventListener('click', function () {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        togglePassword.textContent = type === 'password' ? 'Show' : 'Hide';
+    });
+</script>
 
     <?php require "includes/footer.php"; ?>

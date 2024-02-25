@@ -19,9 +19,19 @@
 ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlCq6M9YLPp+J9NUw9d9Q5qlenLRMwe8U08dR5LzC2wU" crossorigin="anonymous">
 <style>
+	#ftco-testimony {
+        margin: 0 40px; /* Adjust the value as needed */
+    }
     .rating {
         font-size: 24px;
         color: #FFD700; /* Set the color of stars */
+    }
+	.testimony {
+    position: relative;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
     }
 </style>
 <script>

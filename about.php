@@ -8,7 +8,6 @@ $reviews->execute();
 $allReviews = $reviews->fetchAll(PDO::FETCH_OBJ);
 
 ?>
-    <!-- Add some CSS for styling the star rating -->
 <style>
     .rating {
         display: flex;
@@ -37,6 +36,14 @@ $allReviews = $reviews->fetchAll(PDO::FETCH_OBJ);
     .rating input:checked+label~label {
         background-color: #ffcc00;
         box-shadow: 0 0 10px rgba(255, 204, 0, 0.7);
+    }
+    
+    .testimony {
+    position: relative;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
     }
 </style>
 
@@ -117,6 +124,11 @@ $allReviews = $reviews->fetchAll(PDO::FETCH_OBJ);
                             </div>
                         <?php endforeach; ?>
                     </div>
+                    <ol class="carousel-indicators">
+        <?php foreach ($chunkedReviews as $index => $reviewsChunk) : ?>
+            <li data-target="#customerReviewsCarousel" data-slide-to="<?php echo $index; ?>" class="<?php echo ($index === 0) ? 'active' : ''; ?>"></li>
+        <?php endforeach; ?>
+    </ol>
                 </div>
             </div>
         </div>
