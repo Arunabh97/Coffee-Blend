@@ -41,7 +41,7 @@
 }
 .quote-container {
     background: linear-gradient(45deg, #3498db, #9b59b6);
-    padding: 10px;
+    padding: 5px;
     border-radius: 20px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     color: #ecf0f1;
@@ -52,7 +52,7 @@
 
 .quote-text {
     font-family: 'Pacifico', cursive;
-    font-size: 42px;
+    font-size: 30px;
     font-weight: bold;
     line-height: 1.5;
     margin-bottom: 20px;
@@ -61,7 +61,7 @@
 
 .quote-author {
     font-style: italic;
-    font-size: 18px;
+    font-size: 10px;
     color: #ecf0f1;
 }
 
@@ -80,6 +80,34 @@
     }
     100% {
         transform: translateY(-50%) rotate(10deg);
+    }
+}
+.quote-icons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.quote-icons i {
+    font-size: 20px;
+    opacity: 0.7;
+    transition: opacity 0.3s ease; /* Add a smooth transition effect */
+
+    /* Add hover animation for quote icons */
+    animation: bounceIcon 0.5s ease-in-out infinite alternate;
+}
+
+.quote-icons i:hover {
+    opacity: 1; /* Increase opacity on hover */
+}
+
+@keyframes bounceIcon {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
     }
 }
 </style>
@@ -105,7 +133,7 @@
 <section class="quote-section">
     <div class="container">
         <div class="row justify-content-center align-items-center">
-            <div class="col-md-12 text-center">
+            <div class="col-md-8 text-center">
                 <div class="quote-container">
                     <p class="quote-text">"Sip, Savor, Repeat."</p>
                     <p class="quote-author">- Coffee Connoisseur</p>
