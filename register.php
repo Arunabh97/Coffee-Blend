@@ -15,7 +15,13 @@ if (isset($_POST['submit'])) {
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
 
-    if (empty($username) || empty($email) || empty($password) || empty($confirm_password) || empty($first_name) || empty($last_name)) {
+    // Check if the email already exists
+    $check_email = $conn->prepare("SELECT * FROM users WHERE email = :email");
+    $check_email->execute([':email' => $email]);
+
+    if ($check_email->rowCount() > 0) {
+        echo "<script>alert('This email is already registered. Please use a different email.');</script>";
+    } elseif (empty($username) || empty($email) || empty($password) || empty($confirm_password) || empty($first_name) || empty($last_name)) {
         echo "<script>alert('One or more inputs are empty');</script>";
     } elseif ($password !== $confirm_password) {
         echo "<script>alert('Password and Confirm Password do not match');</script>";
@@ -33,7 +39,6 @@ if (isset($_POST['submit'])) {
             ":last_name" => $last_name,
         ]);
 
-        //header("location: login.php");
         echo "<script>alert('Registered and created account successfully.');window.location.href = 'login.php';</script>";
 
         exit();
@@ -66,69 +71,67 @@ if (isset($_POST['submit'])) {
 				<h3 class="mb-4 billing-heading">Register</h3>
 	          	<div class="row align-items-end">
 
-              <div class="col-md-12">
-                <div class="form-group">
-                    <label for="Username">Username</label>
-                    <input type="text" name="username" class="form-control" placeholder="Enter your desired username">
-                </div>
-            </div>
-
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="FirstName">First Name</label>
-                    <input type="text" name="first_name" class="form-control" placeholder="Enter your first name">
-                </div>
-            </div>
-
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="LastName">Last Name</label>
-                    <input type="text" name="last_name" class="form-control" placeholder="Enter your last name">
-                </div>
-            </div>
-
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="Email">Email</label>
-                    <input type="email" name="email" class="form-control" placeholder="Enter your email address">
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="Password">Password</label>
-                    <div class="input-group">
-                        <input type="password" name="password" class="form-control" placeholder="Enter a strong password" id="passwordInput">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" id="togglePassword">Show</button>
-                        </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="Username">Username</label>
+                        <input type="text" name="username" class="form-control" placeholder="Enter your desired username" required>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="ConfirmPassword">Confirm Password</label>
-                    <div class="input-group">
-                        <input type="password" name="confirm_password" class="form-control" placeholder="Re-enter your password" id="confirmPasswordInput">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword">Show</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
 
                 <div class="col-md-12">
-                	<div class="form-group mt-4">
-							<div class="radio">
-                  <button type="submit" name="submit" class="btn btn-primary py-3 px-4">Register</button>
-                  <p class="mt-3">Already registered? <a href="login.php">Login here</a></p>
-						    </div>
-					</div>
+                    <div class="form-group">
+                        <label for="FirstName">First Name</label>
+                        <input type="text" name="first_name" class="form-control" placeholder="Enter your first name" required>
+                    </div>
                 </div>
 
-               
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="LastName">Last Name</label>
+                        <input type="text" name="last_name" class="form-control" placeholder="Enter your last name" required>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="Email">Email</label>
+                        <input type="email" name="email" class="form-control" placeholder="Enter your email address" required>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Password">Password</label>
+                        <div class="input-group">
+                            <input type="password" name="password" class="form-control" placeholder="Enter a strong password" id="passwordInput" required>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" id="togglePassword">Show</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="ConfirmPassword">Confirm Password</label>
+                        <div class="input-group">
+                            <input type="password" name="confirm_password" class="form-control" placeholder="Re-enter your password" id="confirmPasswordInput" required>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword">Show</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group mt-4">
+                        <div class="radio">
+                            <button type="submit" name="submit" class="btn btn-primary py-3 px-4">Register</button>
+                            <p class="mt-3">Already registered? <a href="login.php">Login here</a></p>
+                        </div>
+                    </div>
+                </div>
+
 	          </form><!-- END -->
           </div> <!-- .col-md-8 -->
           </div>
