@@ -152,6 +152,63 @@ if (isset($_SESSION['user_id'])) {
     #cancelEditBtn:hover {
         color: #0056b3;
     }
+    #changePasswordForm {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+#changePasswordForm label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+    font-size: 14px;
+}
+
+#changePasswordForm input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s ease-in-out;
+}
+
+#changePasswordForm input:focus {
+    border-color: #007bff;
+}
+
+#savePasswordBtn,
+#cancelPasswordBtn {
+    display: inline-block;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+#savePasswordBtn {
+    background-color: #28a745;
+    color: #fff;
+}
+
+#savePasswordBtn:hover {
+    background-color: #218838;
+}
+
+#cancelPasswordBtn {
+    color: #007bff;
+    margin-left: 10px;
+}
+
+#cancelPasswordBtn:hover {
+    color: #0056b3;
+}
+
 </style>
 
   </head>
@@ -239,6 +296,7 @@ if (isset($_SESSION['user_id'])) {
 
                         <!-- Add a link to edit details -->
                         <a href="#" id="editDetailsBtn" class="btn btn-primary">Edit Details</a>
+                        <a href="#" id="changePasswordBtn" class="btn btn-secondary">Change Password</a>
                     </div>
 
                     <!-- Editable form, initially hidden -->
@@ -258,6 +316,22 @@ if (isset($_SESSION['user_id'])) {
                         <!-- Add a button to save changes -->
                         <button type="button" class="btn btn-success" id="saveChangesBtn">Save Changes</button>
                         <a href="#" id="cancelEditBtn">Cancel</a>
+                    </form>
+
+                    <!-- Editable form for changing password, initially hidden -->
+                    <form id="changePasswordForm" style="display: none;">
+                        <label for="currentPassword">Current Password:</label>
+                        <input type="password" id="currentPassword" name="currentPassword" required>
+
+                        <label for="newPassword">New Password:</label>
+                        <input type="password" id="newPassword" name="newPassword" required>
+
+                        <label for="confirmPassword">Confirm New Password:</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" required>
+
+                        <!-- Add a button to save changes -->
+                        <button type="button" class="btn btn-success" id="savePasswordBtn">Save Password</button>
+                        <a href="#" id="cancelPasswordBtn">Cancel</a>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -315,6 +389,53 @@ if (isset($_SESSION['user_id'])) {
             });
         });
     });
+</script>
+
+    <script>
+    $(document).ready(function () {
+    // Handle "Change Password" button click
+    $("#changePasswordBtn").click(function () {
+        // Hide details container, show the password change form
+        $("#userDetailsContainer").hide();
+        $("#changePasswordForm").show();
+    });
+
+    // Handle "Cancel Password Change" button click
+    $("#cancelPasswordBtn").click(function () {
+        // Hide the password change form, show details container
+        $("#changePasswordForm").hide();
+        $("#userDetailsContainer").show();
+    });
+
+    // Handle "Save Password" button click
+    $("#savePasswordBtn").click(function () {
+        // Prepare data for password update
+        var passwordData = {
+            userId: <?php echo isset($userDetails['id']) ? $userDetails['id'] : 0; ?>,
+            currentPassword: $("#currentPassword").val(),
+            newPassword: $("#newPassword").val(),
+            confirmPassword: $("#confirmPassword").val()
+        };
+
+        // Send the password update request to the server via AJAX
+        $.ajax({
+            type: "POST",
+            url: "update_password.php", // Adjust the URL to your server-side script
+            data: passwordData,
+            success: function (response) {
+                // Handle the server response (e.g., display success or error message)
+                console.log(response);
+
+                // Hide the password change form, show details container
+                $("#changePasswordForm").hide();
+                $("#userDetailsContainer").show();
+            },
+            error: function (xhr, status, error) {
+                console.error("AJAX request error:", xhr.responseText);
+            }
+        });
+    });
+});
 </script>
 
 

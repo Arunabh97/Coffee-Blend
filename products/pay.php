@@ -1,45 +1,37 @@
-<?php 
+<?php require "../includes/header.php"; ?>
+<?php require "../config/config.php"; ?>
+<?php
 
-
-
-
-
-
-if(!isset($_SESSION['user_id'])){
-    header("location: ".APPURL."");
+if(!isset($_SERVER['HTTP_REFERER'])){
+	//header('location: http://localhost/coffee-blend');
+    echo "<script>window.location.href = 'http://localhost/coffee-blend';</script>";
+	exit;
 }
 
-
-
+if(!isset($_SESSION['user_id'])){
+	header("location: ".APPURL."");
+}
 
 ?>
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<section class="home-slider owl-carousel">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/5c5946fe44.js" crossorigin="anonymous"></script>
-    <title>Pay Page</title>
-  </head>
-  <body>
+<div class="slider-item" style="background-image: url(<?php echo APPURL; ?>/images/bg_3.jpg);" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+  <div class="container">
+    <div class="row slider-text justify-content-center align-items-center">
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-dark" >
-    <div class="container" style="margin-top: none">
-        <a class="navbar-brand  text-white" href="#">Pay Page</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="col-md-7 col-sm-12 text-center ftco-animate">
+          <h1 class="mb-3 mt-5 bread">Payment</h1>
+          <p class="breadcrumbs"><span class="mr-2"><a href="<?php echo APPURL; ?>">Home</a></span> <span>Payment</span></p>
+      </div>
+
       
-        </div>
     </div>
-    </nav>
+  </div>
+</div>
+</section>
 
-    <div class="container">  
+<div class="container">  
                     <!-- Replace "test" with your own sandbox Business account app client ID -->
                     <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
                     <!-- Set up a container element for the button -->
@@ -51,7 +43,7 @@ if(!isset($_SESSION['user_id'])){
                             return actions.order.create({
                             purchase_units: [{
                                 amount: {
-                                value: '300' // Can also reference a variable or function
+                                value: '<?php echo $_SESSION['total_price']; ?>' // Can also reference a variable or function
                                 }
                             }]
                             });
@@ -60,16 +52,12 @@ if(!isset($_SESSION['user_id'])){
                         onApprove: (data, actions) => {
                             return actions.order.capture().then(function(orderData) {
                           
-                             window.location.href='index.php';
+                             window.location.href='delete-cart.php';
                             });
                         }
                         }).render('#paypal-button-container');
                     </script>
                   
-                </div>
-            </div>
-        </div>
+    </div>
 
-
-    <body>
-</html>
+<?php require "../includes/footer.php"; ?>

@@ -3,7 +3,8 @@
 <?php
 
 if(!isset($_SERVER['HTTP_REFERER'])){
-	header('location: http://localhost/coffee-blend');
+	//header('location: http://localhost/coffee-blend');
+    echo "<script>window.location.href = 'http://localhost/coffee-blend';</script>";
 	exit;
 }
 
