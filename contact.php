@@ -114,6 +114,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $isUserLoggedIn) {
       </div>
     </section>
 
-    <div id="map"></div>
+    <div>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7354.148032828638!2d86.223882!3d22.83675095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f5e2482e216525%3A0x7dfcde2b66421e05!2sDimna%2C%20Mango%2C%20Jamshedpur%2C%20Jharkhand!5e0!3m2!1sen!2sin!4v1709137598160!5m2!1sen!2sin" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <div>
 
     <?php require "includes/footer.php"; ?>
