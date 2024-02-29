@@ -77,7 +77,10 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
                     <td><?php echo $order->street_address; ?></td>
                     <td><?php echo $order->total_price; ?></td>
 
-                    <td><?php echo $order->status; ?></td>
+                    <td style="color: <?php echo $order->status === 'Delivered' ? 'green' : ($order->status === 'Pending' ? 'orange' : 'black'); ?>; font-weight: bold;">
+                        <?php echo $order->status; ?>
+                    </td>
+
                     <td><a href="change-status.php?id=<?php echo $order->id; ?>" class="btn btn-warning  text-white text-center "><i class="fas fa-sync-alt"></i> Update Status</a></td>
                     <td><a href="delete-orders.php?id=<?php echo $order->id; ?>" class="btn btn-danger  text-center"><i class="fas fa-trash-alt"></i> Delete</a></td>
                   </tr>

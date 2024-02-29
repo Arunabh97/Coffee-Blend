@@ -73,7 +73,9 @@ $allBookings = $bookings->fetchAll(PDO::FETCH_OBJ);
                     <td><?php echo $booking->time; ?></td>
                     <td><?php echo $booking->phone; ?></td>
                     <td><?php echo $booking->message; ?></td>
-                    <td><?php echo $booking->status; ?></td>
+                    <td style="color: <?php echo $booking->status === 'Pending' ? 'orange' : ($booking->status === 'Confirmed' ? 'green' : ($booking->status === 'Done' ? 'blue' : 'black')); ?>; font-weight: bold;">
+                        <?php echo $booking->status; ?>
+                    </td>
                     <td><a href="change-status.php?id=<?php echo $booking->id; ?>" class="btn btn-warning  text-white text-center "><i class="fas fa-sync-alt"></i> Change Status</a></td>
                     <td><?php echo $booking->created_at; ?></td>
                     

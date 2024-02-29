@@ -6,6 +6,16 @@ if(!isset($_SESSION['user_id'])){
 	header("location: ".APPURL."");
 }
 
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cancel_booking'])) {
+    $bookingId = $_POST['booking_id'];
+
+    // Update the booking status to "Cancelled"
+    $cancelBooking = $conn->prepare("UPDATE bookings SET status='Cancelled' WHERE id=:bookingId AND user_id=:userId");
+    $cancelBooking->bindParam(':bookingId', $bookingId, PDO::PARAM_INT);
+    $cancelBooking->bindParam(':userId', $_SESSION['user_id'], PDO::PARAM_INT);
+    $cancelBooking->execute();
+}
+
     $bookings = $conn->query("SELECT * FROM bookings WHERE user_id='$_SESSION[user_id]'");
     $bookings->execute();
 
@@ -67,12 +77,21 @@ if(!isset($_SESSION['user_id'])){
 					            </td>
 						        
 						        <td class="total"><?php echo $booking->status; ?></td>
-								
-								<?php if($booking->status == "Done") : ?>
-                                    <td class="total"><a class="btn btn-primary" href="<?php echo APPURL; ?>/reviews/write-review.php">Write Review</a></td>
-                                <?php endif; ?>
-
-						      </tr>
+									<?php if ($booking->status == "Done") : ?>
+										<td class="total"><a class="btn btn-primary" href="<?php echo APPURL; ?>/reviews/write-review.php">Write Review</a></td>
+									<?php elseif ($booking->status == "Pending" || $booking->status == "Confirmed") : ?>
+										<td class="total">
+											<form method="post" action="" onsubmit="return confirm('Are you sure you want to cancel this booking?');">
+												<input type="hidden" name="booking_id" value="<?php echo $booking->id; ?>">
+												<button type="submit" name="cancel_booking" class="btn btn-link">
+													<img src="../images/cancel-icon.png" alt="Cancel Booking" width="40" height="40">
+												</button>
+											</form>
+										</td>
+									<?php else : ?>
+										<td class="total">N/A</td>
+									<?php endif; ?>
+								</tr>
 
 						      <?php endforeach; ?>
 						    </tbody>
