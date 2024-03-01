@@ -59,6 +59,7 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
                                         <th>Total Price</th>
                                         <th>Status</th>
                                         <th>Action</th>
+										<th>Invoice</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -74,20 +75,27 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
                                             <td>₹<?php echo $order->total_price; ?></td>
                                             <td class="total"><?php echo $order->status; ?></td>
                                             <td class="total">
-    <?php if ($order->status == "Delivered") : ?>
-        <a class="btn btn-primary" href="<?php echo APPURL; ?>/reviews/write-review.php">Write Review</a>
-    <?php elseif ($order->status == "Pending" || $order->status == "Processing") : ?>
-        <form method="post" action="" onsubmit="return confirm('Are you sure you want to cancel this order?');">
-            <input type="hidden" name="order_id" value="<?php echo $order->id; ?>">
-            <button type="submit" name="cancel_order" class="btn btn-link">
-    <img src="../images/cancel-icon.png" alt="Cancel Order" width="40" height="40">
-    
-</button>
-        </form>
-    <?php else : ?>
-        N/A
-    <?php endif; ?>
-</td>
+												<?php if ($order->status == "Delivered") : ?>
+													<a class="btn btn-primary" href="<?php echo APPURL; ?>/reviews/write-review.php">Write Review</a>
+												<?php elseif ($order->status == "Pending" || $order->status == "Processing") : ?>
+													<form method="post" action="" onsubmit="return confirm('Are you sure you want to cancel this order?');">
+														<input type="hidden" name="order_id" value="<?php echo $order->id; ?>">
+														<button type="submit" name="cancel_order" class="btn btn-link">
+												<img src="../images/cancel-icon.png" alt="Cancel Order" width="40" height="40">
+												
+											</button>
+													</form>
+												<?php else : ?>
+													N/A
+												<?php endif; ?>
+											</td>
+											<td class="total">
+												<?php if ($order->status == "Delivered") : ?>
+													<a class="btn btn-success" href="<?php echo APPURL; ?>/users/download-invoice.php?order_id=<?php echo $order->id; ?>" target="_blank">Download</a>
+												<?php else : ?>
+													N/A
+												<?php endif; ?>
+											</td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
