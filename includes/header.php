@@ -374,6 +374,7 @@ if (isset($_SESSION['user_id'])) {
                 data: updatedData,
                 success: function (response) {
                     // Update displayed details with edited values
+                    alert(response);
                     $("#firstName").text(updatedData.firstName);
                     $("#lastName").text(updatedData.lastName);
                     $("#username").text(updatedData.username);
@@ -423,12 +424,13 @@ if (isset($_SESSION['user_id'])) {
             url: "update_password.php", // Adjust the URL to your server-side script
             data: passwordData,
             success: function (response) {
-                // Handle the server response (e.g., display success or error message)
-                console.log(response);
+                // Display a pop-up message based on the server response
+                alert(response);
 
-                // Hide the password change form, show details container
-                $("#changePasswordForm").hide();
-                $("#userDetailsContainer").show();
+                if (response.includes("successfully")) {
+                    $("#changePasswordForm").hide();
+                    $("#userDetailsContainer").show();
+                }
             },
             error: function (xhr, status, error) {
                 console.error("AJAX request error:", xhr.responseText);
