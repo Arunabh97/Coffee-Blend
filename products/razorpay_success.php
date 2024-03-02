@@ -12,6 +12,16 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+if (!isset($_SERVER['HTTP_REFERER'])) {
+    echo "<script>window.location.href = 'http://localhost/coffee-blend';</script>";
+    exit;
+}
+
+if (!isset($_SESSION['user_id'])) {
+   // header("location: " . APPURL . "");
+   echo "<script>window.location.href = '" . APPURL . "';</script>";
+}
+
 if(isset($_GET['id'])) {
     $payment_id = $_GET['id'];
 
