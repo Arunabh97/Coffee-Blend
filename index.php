@@ -147,12 +147,11 @@
 		    				</div>
 	    				</div>
 	    				<div class="d-md-flex">
-		    				<div class="form-group">
-		    					<div class="input-wrap">
-		            		<div class="icon"><span class="ion-md-calendar"></span></div>
-		            		<input name="date" type="text" class="form-control appointment_date" placeholder="Date">
-	            		</div>
-		    				</div>
+							<div class="form-group">
+								<div class="input-wrap">
+								<input name="date" type="date" class="form-control" placeholder="Date" min="<?php echo date('Y-m-d'); ?>" required>
+								</div>
+            				</div>
 		    				<div class="form-group ml-md-4">
 		    					<div class="input-wrap">
 		            		<div class="icon"><span class="ion-ios-clock"></span></div>

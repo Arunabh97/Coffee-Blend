@@ -17,22 +17,31 @@ if (isset($_POST['submit'])) {
         $message = $_POST['message'];
         $user_id = $_SESSION['user_id'];
 
-        if($date > date("n/j/Y")){
+        if($date > date("Y-m-d")){
 
-            $insert = $conn->prepare("INSERT INTO bookings (first_name,last_name,date,time,phone,message,user_id)
-            VALUES (:first_name, :last_name, :date, :time, :phone, :message, :user_id)");
+            // Validate time between 8 am and 9 pm
+            $validTime = strtotime($time) >= strtotime("8:00 AM") && strtotime($time) <= strtotime("9:00 PM");
 
-            $insert->execute([
-                ":first_name" => $first_name,
-                ":last_name" => $last_name,
-                ":date" => $date,
-                ":time" => $time,
-                ":phone" => $phone,
-                ":message" => $message,
-                ":user_id" => $user_id,
-            ]);
+            if($validTime) {
+                $formattedDate = (new DateTime($date))->format('Y-m-d');
 
-            $_SESSION['alert'] = 'You booked this table successfully';
+                $insert = $conn->prepare("INSERT INTO bookings (first_name,last_name,date,time,phone,message,user_id)
+                VALUES (:first_name, :last_name, :date, :time, :phone, :message, :user_id)");
+
+                $insert->execute([
+                    ":first_name" => $first_name,
+                    ":last_name" => $last_name,
+                    ":date" => $formattedDate,
+                    ":time" => $time,
+                    ":phone" => $phone,
+                    ":message" => $message,
+                    ":user_id" => $user_id,
+                ]);
+
+                $_SESSION['alert'] = 'You booked this table successfully';
+            } else {
+                $_SESSION['alert'] = 'Choose a valid time between 8 am and 9 pm';
+            }
         } else {
             $_SESSION['alert'] = 'Choose a valid date, You cannot choose a date in the past';
         }
