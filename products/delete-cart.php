@@ -15,6 +15,7 @@ if(!isset($_SESSION['user_id'])){
 $deleteAll = $conn->query("DELETE FROM cart WHERE user_id='$_SESSION[user_id]'");
 $deleteAll->execute();
 
-header("location: cart.php");
+//header("location: cart.php");
+echo "<script>window.location.href = 'cart.php';</script>";
 
 ?>
