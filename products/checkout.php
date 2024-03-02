@@ -12,6 +12,21 @@ if(!isset($_SESSION['user_id'])){
 	header("location: ".APPURL."");
 }
 
+// Fetch user details from the database
+$user_id = $_SESSION['user_id'];
+$user_query = $conn->prepare("SELECT first_name, last_name, email FROM users WHERE id = :user_id");
+$user_query->execute([':user_id' => $user_id]);
+$user_data = $user_query->fetch(PDO::FETCH_ASSOC);
+
+if (!$user_data) {
+    // Handle the case where user data is not found
+    die("User data not found");
+}
+
+$logged_in_first_name = $user_data['first_name'];
+$logged_in_last_name = $user_data['last_name'];
+$logged_in_email = $user_data['email'];
+
 if (isset($_POST['submit'])) {
 
     if (empty($_POST['first_name']) || empty($_POST['last_name']) || empty($_POST['state'])
@@ -87,13 +102,13 @@ if (isset($_POST['submit'])) {
 	          		<div class="col-md-6">
 	                <div class="form-group">
 	                	<label for="first_name">First Name</label>
-	                  <input name="first_name" type="text" class="form-control" placeholder="" required>
+	                  <input name="first_name" type="text" class="form-control" value="<?php echo htmlspecialchars($logged_in_first_name); ?>" placeholder="Enter your first name" required>
 	                </div>
 	              </div>
 	              <div class="col-md-6">
 	                <div class="form-group">
 	                	<label for="last_name">Last Name</label>
-	                  <input name="last_name" type="text" class="form-control" placeholder="" required>
+	                  <input name="last_name" type="text" class="form-control" value="<?php echo htmlspecialchars($logged_in_last_name); ?>" placeholder="Enter your last name" required>
 	                </div>
                 </div>
                 <div class="w-100"></div>
@@ -129,26 +144,31 @@ if (isset($_POST['submit'])) {
 		            <div class="col-md-6">
 		            	<div class="form-group">
 	                	<label for="town">Town / City</label>
-	                  <input name="town" type="text" class="form-control" placeholder="" required>
+	                  <input name="town" type="text" class="form-control" placeholder="Enter your town / city" required>
 	                </div>
 		            </div>
 		            <div class="col-md-6">
 		            	<div class="form-group">
 		            		<label for="zip_code">Postcode / ZIP *</label>
-	                  <input name="zip_code" type="text" class="form-control" placeholder="" required>
+	                  <input name="zip_code" type="text" class="form-control" placeholder="Enter your zip code" required>
 	                </div>
 		            </div>
 		            <div class="w-100"></div>
 		            <div class="col-md-6">
-	                <div class="form-group">
-	                	<label for="phone">Phone</label>
-	                  <input name="phone" type="text" class="form-control" placeholder="" required>
-	                </div>
-	              </div>
+						<div class="form-group">
+							<label for="phone">Phone</label>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text">+91</span>
+								</div>
+								<input name="phone" type="text" class="form-control" placeholder="Enter your phone number" minlength="10" maxlength="10" required>
+							</div>
+						</div>
+					</div>
 	              <div class="col-md-6">
 	                <div class="form-group">
 	                	<label for="email">Email Address</label>
-	                  <input name="email" type="text" class="form-control" placeholder="" required>
+	                  <input name="email" type="text" class="form-control" value="<?php echo htmlspecialchars($logged_in_email); ?>" placeholder="Enter your email address" readonly required>
 	                </div>
                 </div>
                 <div class="w-100"></div>
@@ -161,75 +181,14 @@ if (isset($_POST['submit'])) {
 					</div>
                 </div>
 	            </div>
-	          </form><!-- END -->
-
-
-<!-- 
-	          <div class="row mt-5 pt-3 d-flex">
-	          	<div class="col-md-6 d-flex">
-	          		<div class="cart-detail cart-total ftco-bg-dark p-3 p-md-4">
-	          			<h3 class="billing-heading mb-4">Cart Total</h3>
-	          			<p class="d-flex">
-		    						<span>Subtotal</span>
-		    						<span>$20.60</span>
-		    					</p>
-		    					<p class="d-flex">
-		    						<span>Delivery</span>
-		    						<span>$0.00</span>
-		    					</p>
-		    					<p class="d-flex">
-		    						<span>Discount</span>
-		    						<span>$3.00</span>
-		    					</p>
-		    					<hr>
-		    					<p class="d-flex total-price">
-		    						<span>Total</span>
-		    						<span>$17.60</span>
-		    					</p>
-								</div>
-	          	</div>
-	          	<div class="col-md-6">
-	          		<div class="cart-detail ftco-bg-dark p-3 p-md-4">
-	          			<h3 class="billing-heading mb-4">Payment Method</h3>
-									<div class="form-group">
-										<div class="col-md-12">
-											<div class="radio">
-											   <label><input type="radio" name="optradio" class="mr-2"> Direct Bank Tranfer</label>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<div class="col-md-12">
-											<div class="radio">
-											   <label><input type="radio" name="optradio" class="mr-2"> Check Payment</label>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<div class="col-md-12">
-											<div class="radio">
-											   <label><input type="radio" name="optradio" class="mr-2"> Paypal</label>
-											</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<div class="col-md-12">
-											<div class="checkbox">
-											   <label><input type="checkbox" value="" class="mr-2"> I have read and accept the terms and conditions</label>
-											</div>
-										</div>
-									</div>
-									<p><a href="#"class="btn btn-primary py-3 px-4">Place an order</a></p>
-								</div>
-	          	</div>
-	          </div> -->
-          </div> <!-- .col-md-8 -->
+	          </form>
+          </div> 
 
            
           </div>
 
         </div>
       </div>
-    </section> <!-- .section -->
+    </section> 
 
 <?php require "../includes/footer.php"; ?>
