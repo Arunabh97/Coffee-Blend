@@ -47,7 +47,8 @@ if (isset($_SESSION['user_id'])) {
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="<?php echo APPURL; ?>/css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo APPURL; ?>/css/animate.css">
-    
+    <link rel="icon" href="<?php echo APPURL; ?>/images/icon.png" type="image/x-icon">
+
     <link rel="stylesheet" href="<?php echo APPURL; ?>/css/owl.carousel.min.css">
     <link rel="stylesheet" href="<?php echo APPURL; ?>/css/owl.theme.default.min.css">
     <link rel="stylesheet" href="<?php echo APPURL; ?>/css/magnific-popup.css">
