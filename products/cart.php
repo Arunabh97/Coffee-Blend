@@ -27,6 +27,30 @@
 	}
 
 ?>
+<style>
+  #cart-icon {
+    font-size: 70px;
+    bottom: 40px;
+    color: #3498db;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  #cart-icon:hover {
+    transform: scale(1.1);
+  }
+
+  #empty-cart-message {
+    font-size: 18px;
+    font-weight: bold;
+    color: #555;
+    margin-top: 10px;
+  }
+
+  #menu-link:hover {
+    color: #3498db;
+  }
+</style>
     <section class="home-slider owl-carousel">
 
       <div class="slider-item" style="background-image: url(<?php echo APPURL; ?>/images/bg_3.jpg);" data-stellar-background-ratio="0.5">
@@ -64,8 +88,11 @@
 						    <tbody>
 								<?php foreach($allProducts as $product) : ?>
 						      <tr class="text-center">
-						        <td class="product-remove"><a href="delete-product.php?id=<?php echo $product->id; ?>"><span class="icon-close"></span></a></td>
-						        
+							  <td class="product-remove">
+									<a href="delete-product.php?id=<?php echo $product->id; ?>" onclick="return confirm('Are you sure you want to delete this product?');">
+										<span class="icon-close"></span>
+									</a>
+								</td>
 						        <td class="image-prod"><div class="img" style="background-image:url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $product->image; ?>);"></div></td>
 						        
 						        <td class="product-name">
@@ -88,9 +115,13 @@
 						    </tbody>
 						  </table>
 						  <?php else : ?>
-							<p>Your cart is empty, add products</p>
+							<i id="cart-icon" class="icon-shopping-cart"></i>
+							<div id="empty-cart-message">
+								Coffee shop cart is empty! ☕️
+								</div>
 							<?php endif; ?>
 					  </div>
+					  <a href="<?php echo APPURL; ?>/menu.php" id="menu-link">Click here to Explore Menu</a>
     			</div>
     		</div>
     		<div class="row justify-content-end">
@@ -117,13 +148,12 @@
 							<?php endif; ?>
 						</p>
     				</div>
-					<form method="POST" action="cart.php">
-					<input type="hidden" name="total_price" value="<?php echo $allCartTotal->total + 50 - 5; ?>">
-					<?php if($allCartTotal->total > 0) : ?>
-						<button name="checkout" type="submit" style="padding: 12px 46px; background-color: #e74c3c; color: #ffffff; font-weight: bold; border: none; cursor: pointer; transition: background-color 0.3s, color 0.3s;" onmouseover="this.style.backgroundColor='transparent'; this.style.color='#3498db'" onmouseout="this.style.backgroundColor='#e74c3c'; this.style.color='#ffffff'">Proceed to Checkout</button>
-
-					<?php endif; ?>
-				</form>
+					<form method="POST" action="cart.php" onsubmit="return confirm('Are you sure you want to proceed to checkout?');">
+						<input type="hidden" name="total_price" value="<?php echo $allCartTotal->total + 50 - 5; ?>">
+						<?php if($allCartTotal->total > 0) : ?>
+							<button name="checkout" type="submit" style="padding: 12px 46px; background-color: #e74c3c; color: #ffffff; font-weight: bold; border: none; cursor: pointer; transition: background-color 0.3s, color 0.3s;" onmouseover="this.style.backgroundColor='transparent'; this.style.color='#3498db'" onmouseout="this.style.backgroundColor='#e74c3c'; this.style.color='#ffffff'">Proceed to Checkout</button>
+						<?php endif; ?>
+					</form>
 				</div>
     		</div>
 			</div>
