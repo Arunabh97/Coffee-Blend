@@ -40,7 +40,14 @@
     			":user_id" => $user_id,
 			]);
 
-			echo "<script>alert('Added to cart successfully'); window.location.href = 'cart.php';</script>";
+      echo "<script>
+      var confirmationDialog = confirm('Added to cart successfully. Click OK to go to the CART or CANCEL to EXPLORE MENU.?');
+      if (confirmationDialog) {
+        window.location.href = 'cart.php'; // Go to Cart
+      } else {
+        window.location.href = '../menu.php'; // Explore Menu
+      }
+    </script>";
 
 		}
 
