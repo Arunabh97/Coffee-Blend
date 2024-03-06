@@ -227,7 +227,7 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
 										<div class="text">
 											<h3><a href="products/product-single.php?id=<?php echo $drink->id; ?>"><?php echo $drink->name; ?></a></h3>
 											<p><?php echo $drink->description; ?></p>
-											<p class="price"><span><?php echo $drink->price; ?></span></p>
+											<p class="price"><span>₹<?php echo $drink->price; ?></span></p>
 											<p><a href="products/product-single.php?id=<?php echo $drink->id; ?>" class="btn btn-primary btn-outline-primary">Show</a></p>
 										</div>
 									</div>
@@ -262,7 +262,7 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
 										<div class="text">
 											<h3><a href="products/product-single.php?id=<?php echo $dessert->id; ?>"><?php echo $dessert->name; ?></a></h3>
 											<p><?php echo $dessert->description; ?></p>
-											<p class="price"><span><?php echo $dessert->price; ?></span></p>
+											<p class="price"><span>₹<?php echo $dessert->price; ?></span></p>
 											<p><a href="products/product-single.php?id=<?php echo $dessert->id; ?>" class="btn btn-primary btn-outline-primary">Show</a></p>
 										</div>
 									</div>
@@ -297,7 +297,7 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
 										<div class="text">
 											<h3><a href="products/product-single.php?id=<?php echo $appetizer->id; ?>"><?php echo $appetizer->name; ?></a></h3>
 											<p><?php echo $appetizer->description; ?></p>
-											<p class="price"><span><?php echo $appetizer->price; ?></span></p>
+											<p class="price"><span>₹<?php echo $appetizer->price; ?></span></p>
 											<p><a href="products/product-single.php?id=<?php echo $appetizer->id; ?>" class="btn btn-primary btn-outline-primary">Show</a></p>
 										</div>
 									</div>
