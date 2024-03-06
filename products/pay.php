@@ -118,6 +118,7 @@ $razorpay = new Razorpay\Api\Api('rzp_test_FaDquQvryAR0L8', 'NkcrCAQCRWIq0mHz7De
                 currency: 'INR',
                 name: 'Coffee-Blend',
                 description: 'Payment for your purchase',
+                image: '../images/icon.png',
                 handler: function(response) {
                     // Handle the success response and redirect if needed
                     window.location.href = 'delete-cart.php';
