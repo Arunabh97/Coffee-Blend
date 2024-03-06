@@ -1,4 +1,3 @@
-User
 <?php require "../includes/header.php"; ?>
 <?php require "../config/config.php"; ?>
 <?php require "../razorpay-php-master/Razorpay.php"; ?>
