@@ -78,15 +78,33 @@
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-<!-- JavaScript for quantity adjustment -->
 <script>
   $(document).ready(function () {
+    function updatePrice() {
+      var quantity = parseInt($('#quantity').val());
+      // Validate quantity against max limit (10 in this case)
+      if (quantity > 10) {
+        alert('Maximum quantity allowed is 10.');
+        $('#quantity').val(10);
+        quantity = 10;
+      }
+
+      var pricePerItem = <?php echo $singleProduct->price; ?>;
+      var totalPrice = quantity * pricePerItem;
+      $('#updatedPrice').text('₹' + totalPrice.toFixed(2));
+    }
+
     // Plus button
     $('.quantity-right-plus').click(function (e) {
       e.preventDefault();
       if (!isItemAddedToCart()) {
         var quantity = parseInt($('#quantity').val());
-        $('#quantity').val(quantity + 1);
+        if (quantity < 10) {
+          $('#quantity').val(quantity + 1);
+          updatePrice();
+        } else {
+          alert('Maximum quantity allowed is 10.');
+        }
       }
     });
 
@@ -97,11 +115,11 @@
         var quantity = parseInt($('#quantity').val());
         if (quantity > 1) {
           $('#quantity').val(quantity - 1);
+          updatePrice();
         }
       }
     });
 
-    // Function to check if the item is added to the cart
     function isItemAddedToCart() {
       <?php if (isset($_SESSION['user_id']) && $rowCount > 0) : ?>
         alert('Item is already added to the cart. Quantity adjustment is disabled.');
@@ -110,6 +128,8 @@
         return false;
       <?php endif; ?>
     }
+
+    updatePrice();
   });
 </script>
 
@@ -131,24 +151,21 @@
     </section>
 
     <section class="ftco-section">
-    	<div class="container">
-    		<div class="row">
-    			<div class="col-lg-6 mb-5 ftco-animate">
-				<a href="<?php echo IMAGEPRODUCTS; ?>/<?php echo $singleProduct->image; ?>" class="image-popup">
-    			<img src="<?php echo IMAGEPRODUCTS; ?>/<?php echo $singleProduct->image; ?>" class="img-fluid " alt="Colorlib Template">
-				</a>
-
-    			</div>
-    			<div class="col-lg-6 product-details pl-md-5 ftco-animate">
-    				<h3><?php echo $singleProduct->name; ?></h3>
-    				<p class="price"><span>₹<?php echo $singleProduct->price; ?></span></p>
-    				<p>
-					<?php echo $singleProduct->description; ?>
-					</p>
-
-    				<form method="POST" action="product-single.php?id=<?php echo $id; ?>">
-
-					<div class="row mt-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 mb-5 ftco-animate">
+            <a href="<?php echo IMAGEPRODUCTS; ?>/<?php echo $singleProduct->image; ?>" class="image-popup">
+              <img src="<?php echo IMAGEPRODUCTS; ?>/<?php echo $singleProduct->image; ?>" class="img-fluid " alt="Colorlib Template">
+            </a>
+          </div>
+          <div class="col-lg-6 product-details pl-md-5 ftco-animate">
+            <h3><?php echo $singleProduct->name; ?></h3>
+            <p class="price"><span id="updatedPrice">₹<?php echo $singleProduct->price; ?></span></p>
+            <p>
+              <?php echo $singleProduct->description; ?>
+            </p>
+            <form method="POST" action="product-single.php?id=<?php echo $id; ?>">
+              <div class="row mt-4">
     <!-- <div class="col-md-6">
         <div class="form-group d-flex">
             <div class="select-wrap">
@@ -161,21 +178,21 @@
             </div>
         </div>
 							</div> -->
-							<div class="w-100"></div>
-							<div class="input-group col-md-6 d-flex mb-3">
-    <span class="input-group-btn mr-2">
-        <button type="button" class="quantity-left-minus btn" data-type="minus" data-field="">
-            <i class="icon-minus"></i>
-        </button>
-    </span>
-        <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="100">
-        <span class="input-group-btn ml-2">
-            <button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
-                <i class="icon-plus"></i>
-            </button>
-        </span>
-</div>
-          	</div>
+              <div class="w-100"></div>
+                <div class="input-group col-md-6 d-flex mb-3">
+                  <span class="input-group-btn mr-2">
+                    <button type="button" class="quantity-left-minus btn" data-type="minus" data-field="">
+                      <i class="icon-minus"></i>
+                    </button>
+                  </span>
+                  <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="5" onchange="updatePrice()">
+                  <span class="input-group-btn ml-2">
+                    <button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
+                      <i class="icon-plus"></i>
+                    </button>
+                  </span>
+                </div>
+              </div>
 				<input name="name" value="<?php echo $singleProduct->name; ?>" type="hidden">
 				<input name="image" value="<?php echo $singleProduct->image; ?>" type="hidden">
 				<input name="price" value="<?php echo $singleProduct->price; ?>" type="hidden">
