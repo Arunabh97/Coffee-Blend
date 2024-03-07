@@ -91,7 +91,7 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
 											</td>
 											<td class="total">
 												<?php if ($order->status == "Delivered") : ?>
-													<a class="btn btn-success" href="<?php echo APPURL; ?>/users/download-invoice.php?order_id=<?php echo $order->id; ?>" target="_blank">Download</a>
+                                                    <a class="btn btn-success" href="print.php?order_id=<?php echo $order->id; ?>" target="_blank">Download</a>
 												<?php else : ?>
 													N/A
 												<?php endif; ?>
