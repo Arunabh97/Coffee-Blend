@@ -1,9 +1,9 @@
 <?php require "../layouts/header.php"; ?>
 <?php require "../../config/config.php"; ?>
-<?php 
 
+<?php
 if (!isset($_SESSION['admin_name'])) {
-  header("location: " . ADMINURL . "/admins/login-admins.php");
+    header("location: " . ADMINURL . "/admins/login-admins.php");
 }
 
 // Set the number of products to display per page
@@ -15,10 +15,34 @@ $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 // Calculate the offset for the SQL query
 $offset = ($page - 1) * $productsPerPage;
 
-// Fetch products with pagination
-$products = $conn->prepare("SELECT * FROM products LIMIT :offset, :per_page");
+// Check if a search term is provided in the URL
+$searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
+$productType = isset($_GET['productType']) ? $_GET['productType'] : '';
+
+$query = "SELECT * FROM products WHERE 1";
+
+if (!empty($searchTerm)) {
+    $query .= " AND name LIKE :searchTerm";
+}
+
+if (!empty($productType)) {
+    $query .= " AND type = :productType";
+}
+
+$query .= " LIMIT :offset, :per_page";
+
+$products = $conn->prepare($query);
 $products->bindParam(':offset', $offset, PDO::PARAM_INT);
 $products->bindParam(':per_page', $productsPerPage, PDO::PARAM_INT);
+
+if (!empty($searchTerm)) {
+    $products->bindValue(':searchTerm', '%' . $searchTerm . '%');
+}
+
+if (!empty($productType)) {
+    $products->bindValue(':productType', $productType);
+}
+
 $products->execute();
 
 $allProducts = $products->fetchAll(PDO::FETCH_OBJ);
@@ -86,8 +110,45 @@ $totalPages = ceil($totalProducts / $productsPerPage);
     <div class="col">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title mb-4 d-inline"><i class="fas fa-shopping-bag"></i> Products</h5>
-                <a href="create-products.php" class="btn btn-primary mb-4 text-center float-right"><i class="fa-solid fa-plus"></i> Create Products</a>
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <h5 class="card-title mb-4 d-inline"><i class="fas fa-shopping-bag"></i> Products</h5>
+                    </div>
+                    <div class="col-md-4">
+                        <form action="" method="GET" class="form-inline">
+                            <div class="form-group mx-sm-3 mb-2">
+                                <label for="search" class="sr-only">Search</label>
+                                <input type="text" class="form-control" id="search" name="search" placeholder="Search">
+                            </div>
+                            <button type="submit" class="btn btn-primary mb-2"><i class="fas fa-search"></i> Search</button>
+                        </form>
+                    </div>
+                    <div class="col-md-2">
+                        <form action="" method="GET" class="form-inline">
+                            <div class="form-group mb-2 mr-1">
+                                <label for="productType" class="sr-only">Product Type</label>
+                                <select class="form-control" id="productType" name="productType">
+                                    <option value="">All Types</option>
+                                    <option value="drink">Drinks</option>
+                                    <option value="dessert">Desserts</option>
+                                    <option value="appetizer">Appetizers</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary mb-2"><i class="fa-solid fa-filter"></i></button>
+                        </form>
+                    </div>
+                    <div class="col-md-2 text-right">
+                        <a href="create-products.php" class="btn btn-primary mb-4"><i class="fa-solid fa-plus"></i> Create Products</a>
+                    </div>
+                </div>
+    
+                    <?php if (!empty($searchTerm)) : ?>
+                        <p class="lead">Search results for: <strong><?php echo htmlspecialchars($searchTerm); ?></strong></p>
+                    <?php endif; ?>
+
+                    <?php if (!empty($productType)) : ?>
+                        <p class="lead">Filtering by product type: <strong><?php echo htmlspecialchars($productType); ?></strong></p>
+                    <?php endif; ?>
 
                 <table class="table">
                     <thead>
