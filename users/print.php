@@ -92,8 +92,87 @@ if (isset($_GET['order_id'])) {
 
     $pdf->Ln(10);
 
-    $pdf->SetFont('dejavusans','', 18);
+    $pdf->SetFont('dejavusans', 'B', 15);
     // Display order details
+    // Display order details
+$headers = array('Product Name', 'Quantity', 'Unit Price', 'Subtotal');
+
+// Fetch product details for the order
+$productQuery = $conn->prepare("SELECT * FROM order_items WHERE order_id=:orderId");
+$productQuery->bindParam(':orderId', $orderId, PDO::PARAM_INT);
+$productQuery->execute();
+$products = $productQuery->fetchAll(PDO::FETCH_OBJ);
+
+ // Check if there are products in the order
+ if (count($products) > 0) {
+    // Define table data for product details
+    $productData = array();
+    $subtotal = 0; // Initialize subtotal variable
+
+    foreach ($products as $product) {
+        $productSubtotal = $product->quantity * $product->price;
+        $subtotal += $productSubtotal;
+
+        $productData[] = array(
+            $product->product_name,
+            $product->quantity,
+            html_entity_decode('&#8377;') . number_format($product->price, 2),
+            html_entity_decode('&#8377;') . number_format($productSubtotal, 2)
+        );
+    }
+// Additional charges and discount
+$deliveryCharge = 50;
+$discount = 5;
+
+// Apply discount
+$total -= $discount;
+
+// Add delivery charges to the total
+$total += $deliveryCharge;
+    // Set column widths for product details
+    $productColumnWidths = array(70, 40, 40, 40);
+
+    // Display table headers for product details
+    foreach ($headers as $key => $header) {
+        $pdf->Cell($productColumnWidths[$key], 7, $header, 1);
+    }
+
+    $pdf->Ln(10);
+
+    $pdf->SetFont('dejavusans','', 15);
+    // Display table data for product details
+    foreach ($productData as $row) {
+        foreach ($row as $key => $value) {
+            $pdf->Cell($productColumnWidths[$key], 7, $value, 0);
+        }
+        $pdf->Ln();
+    }
+
+    // Display subtotal
+    $pdf->Ln(5); // Adjust spacing
+    $pdf->SetFont('dejavusans', 'B', 13);
+    $pdf->Cell($productColumnWidths[0] + $productColumnWidths[1] + $productColumnWidths[2], 7, 'Subtotal', 0, 0, 'R');
+    $pdf->Cell($productColumnWidths[3], 7, html_entity_decode('&#8377;') . number_format($subtotal, 2), 0, 1, 'C');
+
+    $total = $subtotal + $deliveryCharge - $discount;
+
+    // Display additional charges and discount
+    $pdf->Cell($productColumnWidths[0] + $productColumnWidths[1] + $productColumnWidths[2], 7, 'Delivery Charge', 0, 0, 'R');
+    $pdf->Cell($productColumnWidths[3], 7, html_entity_decode('&#8377;') . number_format($deliveryCharge, 2), 0, 1, 'C');
+
+    $pdf->Cell($productColumnWidths[0] + $productColumnWidths[1] + $productColumnWidths[2], 7, 'Discount', 0, 0, 'R');
+    $pdf->Cell($productColumnWidths[3], 7, html_entity_decode('&#8377;') . number_format($discount, 2), 0, 1, 'C');
+
+    // Add a line to separate additional charges and discount from the total
+    $pdf->Line(10, $pdf->GetY(), 200, $pdf->GetY());
+
+    // Display total
+    $pdf->Cell($productColumnWidths[0] + $productColumnWidths[1] + $productColumnWidths[2], 7, 'Total', 0, 0, 'R');
+    $pdf->Cell($productColumnWidths[3], 7, html_entity_decode('&#8377;') . number_format($total, 2), 0, 1, 'C');
+
+    // Adjust the Y-coordinate for the next section
+    $pdf->Ln(10);
+}
     $headers = array('Order ID', 'Total Price', 'Status', 'Order Date');
 
 // Define table data
@@ -112,16 +191,17 @@ foreach ($headers as $key => $header) {
 $pdf->Ln(10);
 
 // Display table data
+$pdf->SetFont('dejavusans','', 15);
 foreach ($data as $row) {
     foreach ($row as $key => $value) {
         $pdf->Cell($columnWidths[$key], 7, $value, 1);
     }
-    $pdf->Ln(100);
+    $pdf->Ln(33);
     $pdf->Line(10, $pdf->GetY(), 200, $pdf->GetY());
 }
     // Set background color
 $pdf->SetFillColor(200, 220, 255); // Adjust the RGB values as needed
-$pdf->Rect(0, 236, $pdf->GetPageWidth(), 58, 'F');
+$pdf->Rect(0, 236, $pdf->GetPageWidth(), 60, 'F');
 $pdf->Cell(0, 10, 'Follow Us:', 0, 1, 'R'); // Add background color and align to the right
 
 $pdf->SetFont('dejavusans','', 13);
