@@ -68,6 +68,30 @@ if (isset($_POST['submit'])) {
 
 		]);
 
+		// Get the last inserted order ID
+		$order_id = $conn->lastInsertId();
+
+		// Retrieve cart items
+		$cartItemsQuery = $conn->prepare("SELECT * FROM cart WHERE user_id = :user_id");
+		$cartItemsQuery->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+		$cartItemsQuery->execute();
+		$cartItems = $cartItemsQuery->fetchAll(PDO::FETCH_ASSOC);
+
+		// Insert order items into the 'order_items' table
+		$insertOrderItems = $conn->prepare("INSERT INTO order_items (order_id, product_id, product_name, product_image, quantity, price)
+											VALUES (:order_id, :product_id, :product_name, :product_image, :quantity, :price)");
+
+		foreach ($cartItems as $cartItem) {
+			$insertOrderItems->execute([
+				':order_id'   => $order_id,
+				':product_id' => $cartItem['pro_id'], // adjust this based on your cart structure
+				':quantity'   => $cartItem['quantity'],
+				':price'      => $cartItem['price'],
+				':product_name' => $cartItem['name'],
+				':product_image'      => $cartItem['image'],
+
+			]);
+		}
 		//header("location: pay.php");
 		echo '<script>window.location.href="pay.php";</script>';
 	}
