@@ -73,7 +73,33 @@ if ($filter == 'all') {
     }
     #bookingChart {
         max-width: 100%;
-        max-height: 40%;
+        max-height: 100%;
+    }
+    /* Add these styles to your existing styles */
+    .dashboard-container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .canvas-container {
+        width: 50%;
+        box-sizing: border-box;
+    }
+
+    .dashboard-overview {
+        width: 45%; /* Adjust the width as needed */
+        box-sizing: border-box;
+    }
+    .overview-info {
+        font-family: Arial, sans-serif;
+        color: #333;
+        font-size: 16px;
+    }
+
+    .overview-value {
+        font-family: 'Roboto', sans-serif;
+        font-weight: bold;
+        color: #007bff;
     }
 </style>
 
@@ -83,8 +109,46 @@ if ($filter == 'all') {
             <div class="card-body">
               <h5 class="card-title mb-4 d-inline"><i class="far fa-calendar"></i> Bookings</h5>
 
-            <canvas id="bookingChart" width="200" height="100"></canvas>
+            <div class="dashboard-container">
+                <!-- Canvas on the left -->
+                <div class="canvas-container">
+                    <canvas id="bookingChart" width="200" height="100"></canvas>
+                </div>
 
+                <!-- Dashboard Overview on the right -->
+                <div class="dashboard-overview">
+                    <h3>Bookings Dashboard Overview</h3>
+                    <?php
+                    // Total Number of Bookings
+                    $totalBookings = count($allBookings);
+                    echo "<p class='overview-info'>Total Number of Bookings: <span class='overview-value'>$totalBookings</span></p>";
+
+                    // Bookings per Day
+                    $bookingsPerDay = [];
+                    foreach ($allBookings as $booking) {
+                        $bookingDate = $booking->date;
+                        $bookingsPerDay[$bookingDate] = isset($bookingsPerDay[$bookingDate]) ? $bookingsPerDay[$bookingDate] + 1 : 1;
+                    }
+
+                    echo "<p class='overview-info'>Bookings per Day:</p>";
+                    echo "<ul>";
+                    foreach ($bookingsPerDay as $date => $count) {
+                        echo "<li class='overview-value'>$date: $count bookings</li>";
+                    }
+                    echo "</ul>";
+
+                    // Revenue Generated
+                    $totalRevenue = 0;
+                    foreach ($allBookings as $booking) {
+                        if (property_exists($booking, 'price')) {
+                            $totalRevenue += $booking->price;
+                        }
+                    }
+
+                    echo "<p class='overview-info'>Total Revenue Generated: <span class='overview-value'>$totalRevenue</span></p>";
+                    ?>
+                </div>
+            </div>
              <!-- Search Bar and Filters -->
              <div class="mb-3">
                     <input type="text" id="searchInput" class="form-control" placeholder="Search by name">
