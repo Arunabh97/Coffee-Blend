@@ -9,108 +9,148 @@
     flex-wrap: wrap;
     justify-content: space-around;
     border-radius: 8px;
-    margin: 20px; /* Adjust the margin as needed */
-}
-
-.gallery img {
-    border: 2px solid #333; /* Border color */
-    margin: 10px; /* Adjust the margin between images */
-    padding: 5px; /* Adjust the padding inside the frame */
-    border-radius: 8px; /* Add rounded corners */
-    transition: all 0.3s ease; /* Transition for smooth effects */
-}
-
-.gallery img:hover {
-    opacity: 0.8; /* Adjust the opacity as desired */
-    transform: scale(1.1); /* Adjust the scale factor as desired */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add a subtle box shadow on hover */
-    background-color: #f5f5f5; /* Add a background color on hover */
-}
-
-@media (max-width: 768px) {
-    .gallery {
-        margin: 10px; /* Adjust the margin for smaller screens */
+    margin: 20px; 
     }
 
     .gallery img {
-        margin: 5px; /* Adjust the margin between images for smaller screens */
+        border: 2px solid #333; 
+        margin: 10px; 
+        padding: 5px; 
+        border-radius: 8px; 
+        transition: all 0.3s ease; 
     }
-}
-.quote-section{
-    margin-top: 10px;
-}
-.quote-container {
-    background: linear-gradient(45deg, #3498db, #9b59b6);
-    padding: 5px;
-    border-radius: 20px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-    color: #ecf0f1;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-}
 
-.quote-text {
-    font-family: 'Pacifico', cursive;
-    font-size: 30px;
-    font-weight: bold;
-    line-height: 1.5;
-    margin-bottom: 20px;
-    color: #ecf0f1;
-}
-
-.quote-author {
-    font-style: italic;
-    font-size: 10px;
-    color: #ecf0f1;
-}
-
-/* Animated Coffee Cup */
-.coffee-cup {
-    position: absolute;
-    top: 50%;
-    left: -10%;
-    transform: translateY(-50%);
-    animation: floatCoffee 5s ease-in-out infinite alternate;
-}
-
-@keyframes floatCoffee {
-    0% {
-        transform: translateY(-50%) rotate(0deg);
+    .gallery img:hover {
+        opacity: 0.8; 
+        transform: scale(1.1); 
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
+        background-color: #f5f5f5; 
     }
-    100% {
-        transform: translateY(-50%) rotate(10deg);
+
+    @media (max-width: 768px) {
+        .gallery {
+            margin: 10px; 
+        }
+
+        .gallery img {
+            margin: 5px; 
+        }
     }
-}
-.quote-icons {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.quote-icons i {
-    font-size: 20px;
-    opacity: 0.7;
-    transition: opacity 0.3s ease; /* Add a smooth transition effect */
-
-    /* Add hover animation for quote icons */
-    animation: bounceIcon 0.5s ease-in-out infinite alternate;
-}
-
-.quote-icons i:hover {
-    opacity: 1; /* Increase opacity on hover */
-}
-
-@keyframes bounceIcon {
-    0%, 100% {
-        transform: translateY(0);
+    .quote-section{
+        margin-top: 10px;
     }
-    50% {
-        transform: translateY(-10px);
+    .quote-container {
+        background: linear-gradient(45deg, #3498db, #9b59b6);
+        padding: 5px;
+        border-radius: 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        color: #ecf0f1;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
     }
-}
+
+    .quote-text {
+        font-family: 'Pacifico', cursive;
+        font-size: 30px;
+        font-weight: bold;
+        line-height: 1.5;
+        margin-bottom: 20px;
+        color: #ecf0f1;
+    }
+
+    .quote-author {
+        font-style: italic;
+        font-size: 10px;
+        color: #ecf0f1;
+    }
+
+    .coffee-cup {
+        position: absolute;
+        top: 50%;
+        left: -10%;
+        transform: translateY(-50%);
+        animation: floatCoffee 5s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatCoffee {
+        0% {
+            transform: translateY(-50%) rotate(0deg);
+        }
+        100% {
+            transform: translateY(-50%) rotate(10deg);
+        }
+    }
+    .quote-icons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .quote-icons i {
+        font-size: 20px;
+        opacity: 0.7;
+        transition: opacity 0.3s ease; /* Add a smooth transition effect */
+
+        animation: bounceIcon 0.5s ease-in-out infinite alternate;
+    }
+
+    .quote-icons i:hover {
+        opacity: 1; 
+    }
+
+    @keyframes bounceIcon {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    /* Style for the Lightbox Modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        padding-top: 50px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.9);
+    }
+
+    .modal-content {
+        margin: auto;
+        display: block;
+        max-width: 60%;
+        max-height: 95%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+    }
+
+    .close {
+        position: absolute;
+        top: 20px;
+        right: 150px;
+        color: #fff;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .modal-content, .close {
+        animation: fadeIn 0.5s;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
 </style>
+
 <section class="home-slider owl-carousel">
 
       <div class="slider-item" style="background-image: url(images/bg_9.jpg);" data-stellar-background-ratio="0.5">
@@ -128,7 +168,6 @@
       </div>
 
 </section>
-<!-- Add this HTML section after your gallery section -->
 
 <section class="quote-section">
     <div class="container">
@@ -159,7 +198,7 @@
                 $imageUrl = "images/" . $filename;
                 echo '
                 <div class="col-md-3 ftco-animate">
-                    <a href="gallery.php" class="gallery img d-flex align-items-center" style="background-image: url(' . $imageUrl . ');">
+                    <a href="javascript:void(0);" onclick="openModal(\'' . $imageUrl . '\')" class="gallery img d-flex align-items-center" style="background-image: url(' . $imageUrl . ');">
                         <div class="icon mb-4 d-flex align-items-center justify-content-center">
                             <span class="icon-search"></span>
                         </div>
@@ -170,5 +209,29 @@
         </div>
     </div>
 </section>
+
+<!-- Modal for Lightbox -->
+<div id="imageModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImage">
+</div>
+
+<!-- Add this script after your other scripts -->
+<script>
+    // Function to open the modal and display the selected image
+    function openModal(imageSrc) {
+        var modal = document.getElementById('imageModal');
+        var modalImage = document.getElementById('modalImage');
+
+        modal.style.display = 'block';
+        modalImage.src = imageSrc;
+    }
+
+    // Function to close the modal
+    function closeModal() {
+        var modal = document.getElementById('imageModal');
+        modal.style.display = 'none';
+    }
+</script>
 
 <?php require "includes/footer.php"; ?>
