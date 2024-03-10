@@ -3,7 +3,8 @@
 <?php
 
 if(isset ($_SESSION['admin_name'])){
-  header("location: ".ADMINURL."");
+  //header("location: ".ADMINURL."");
+  echo "<script>window.location.href = '" . ADMINURL . "';</script>";
 }
 
 if (isset($_POST['submit'])) {
@@ -29,7 +30,8 @@ if (isset($_POST['submit'])) {
             $_SESSION['email'] = $fetch['email'];
             $_SESSION['admin_id'] = $fetch['id'];
 
-            header("location: ".ADMINURL."");
+            //header("location: ".ADMINURL."");
+            echo "<script>window.location.href = '" . ADMINURL . "';</script>";
 
           } else {
             echo "<script>alert('Invalid email or password');</script>";

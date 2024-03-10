@@ -4,25 +4,22 @@ require "../../config/config.php";
 if (isset($_GET['id'])) {
     $orderId = $_GET['id'];
     
-    // Fetch the order details based on the provided ID
     $stmt = $conn->prepare("SELECT * FROM orders WHERE id = ?");
     $stmt->execute([$orderId]);
     $order = $stmt->fetch(PDO::FETCH_OBJ);
 } else {
-    // Handle the case where no ID is provided
-    // Redirect or display an error message as needed
-    //header("Location: index.php"); 
     echo "<script>window.location.href = 'index.php';</script>";
     exit();
 }
 
-// Check if the form is submitted for deletion
 if (isset($_POST['delete'])) {
-    // Perform the actual deletion
+
+    $deleteOrderItemsStmt = $conn->prepare("DELETE FROM order_items WHERE order_id = ?");
+    $deleteOrderItemsStmt->execute([$orderId]);
+
     $deleteStmt = $conn->prepare("DELETE FROM orders WHERE id = ?");
     $deleteStmt->execute([$orderId]);
 
-    //header("Location: show-orders.php");
     echo "<script>window.location.href = 'show-orders.php';</script>";
     exit();
 }
@@ -35,9 +32,9 @@ if (isset($_POST['delete'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delete Order</title>
-    <!-- Include Bootstrap CSS -->
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <!-- Custom CSS -->
+
     <style>
         body {
             background-color: #f8f9fa;
@@ -54,7 +51,7 @@ if (isset($_POST['delete'])) {
             border: 1px solid #007bff;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 400px; /* Adjust the width as needed */
+            width: 400px; 
         }
 
         .modal-header {
@@ -99,18 +96,15 @@ if (isset($_POST['delete'])) {
         </div>
     </div>
 
-    <!-- Include Bootstrap and jQuery scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <script>
-        // Show the modal when the page is loaded
         $(document).ready(function () {
             $('#deleteOrderModal').modal('show');
         });
 
-        // Function to go back to the previous page
         function goBack() {
             window.history.back();
         }
