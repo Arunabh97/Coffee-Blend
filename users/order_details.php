@@ -65,6 +65,9 @@ $orderedItems = $orderItemsQuery->fetchAll(PDO::FETCH_OBJ);
                             <?php endforeach; ?>
                         </tbody>
                     </table>
+                    <div class="text-right mb-4">
+                        <a href="<?php echo APPURL . '/users/orders.php'; ?>" class="btn btn-primary">&lt; Back to Orders</a>
+                    </div>
                     </div>
                 </div>
             </div>
