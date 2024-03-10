@@ -66,14 +66,12 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
                                 <tbody>
                                     <?php foreach ($allOrders as $order) : ?>
                                         <tr class="text-center">
-                                            <td class="product-remove"><?php echo $order->first_name; ?></td>
-                                            <td class="image-prod"><?php echo $order->last_name; ?></td>
-                                            <td class="product-name">
-                                                <h3><?php echo $order->town; ?></h3>
-                                            </td>
-                                            <td class="price"><?php echo $order->street_address; ?></td>
+                                            <td class="first_name"><?php echo $order->first_name; ?></td>
+                                            <td class="last_name"><?php echo $order->last_name; ?></td>
+                                            <td class="price"><?php echo $order->town; ?></td>
+                                            <td class="street_add"><?php echo $order->street_address; ?></td>
                                             <td class="price"><?php echo $order->phone; ?></td>
-                                            <td>₹<?php echo $order->total_price; ?></td>
+                                            <td class="price">₹<?php echo $order->total_price; ?></td>
                                             <td class="total"><?php echo $order->status; ?></td>
                                             <td class="total">
                                                 <a href="order_details.php?order_id=<?php echo $order->id; ?>" class="btn btn-info">View Details</a>
