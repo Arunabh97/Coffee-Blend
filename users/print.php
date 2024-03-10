@@ -92,17 +92,16 @@ if (isset($_GET['order_id'])) {
 
     $pdf->SetFont('times', 'B', 15);
 
-    // Fetch address details from orders table
-    $addressQuery = $conn->prepare("SELECT CONCAT(street_address, ', ', town, ', ', zip_code) AS fullAddress FROM orders WHERE id=:orderId");
+   // Fetch address details from orders table
+    $addressQuery = $conn->prepare("SELECT CONCAT(street_address, ', ', town) AS fullAddress, zip_code FROM orders WHERE id=:orderId");
     $addressQuery->bindParam(':orderId', $orderId, PDO::PARAM_INT);
     $addressQuery->execute();
     $addressResult = $addressQuery->fetch(PDO::FETCH_OBJ);
 
     if ($addressResult) {
         $fullAddress = $addressResult->fullAddress;
-
-        // Display the fetched address details
-        $pdf->Cell(0, 10, $fullAddress, 0, 0, 'L');
+        $pincode = $addressResult->zip_code;
+        $pdf->Cell(0, 10, $fullAddress . ', IN- ' . $pincode, 0, 0, 'L');
     } else {
         $pdf->Cell(0, 10, 'Address: N/A', 0, 0, 'L'); 
     }
