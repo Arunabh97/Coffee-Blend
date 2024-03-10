@@ -153,10 +153,10 @@ if (isset($_GET['order_id'])) {
             );
         }
 
+    $total = 0;
     $deliveryCharge = 50;
     $discount = 5;
-    $total -= $discount;
-    $total += $deliveryCharge;
+    $total = $subtotal + $deliveryCharge - $discount;
 
     $productColumnWidths = array(70, 40, 40, 40);
 
@@ -224,14 +224,22 @@ foreach ($data as $row) {
     foreach ($row as $key => $value) {
         $pdf->Cell($columnWidths[$key], 7, $value, 1);
     }
-    $pdf->Ln(33);
-    $pdf->Line(10, $pdf->GetY(), 200, $pdf->GetY());
+    $pdf->Ln(15);
+    
 }
 
-$pdf->SetFont('dejavusans','B', 15);
+// Move to the bottom of the page
+$pdf->SetY(-71);
+$signatureLabel = 'Authorized Signature:';
+    $pdf->SetFont('dejavusans', '', 12);
+    $pdf->Cell(0, 10, $signatureLabel, 0, 1, 'L');
+
+$pdf->Line(10, $pdf->GetY(), 200, $pdf->GetY());
+// Add a fixed footer for contact information
+$pdf->SetFont('dejavusans', 'B', 15);
 $pdf->SetFillColor(255, 99, 71);
 
-$pdf->Rect(0, 236, $pdf->GetPageWidth(), 60, 'F');
+$pdf->Rect(0, $pdf->GetY(), $pdf->GetPageWidth(), 60, 'F');
 $pdf->Cell(0, 10, 'Contact Us:', 0, 0, 'L');
 $pdf->Cell(0, 10, 'Follow Us:', 0, 1, 'R'); 
 
