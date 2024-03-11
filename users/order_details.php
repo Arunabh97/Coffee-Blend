@@ -39,19 +39,18 @@ $orderedItems = $orderItemsQuery->fetchAll(PDO::FETCH_OBJ);
             <div class="col-md-12 ftco-animate">
                 <div class="cart-list">
                     <h2>Order Details - Order #<?php echo $orderDetails->id; ?></h2>
-                    <!-- Display order details, shipping information, etc. -->
                     <p>Status: <?php echo $orderDetails->status; ?></p>
                     <p>Total Price: ₹<?php echo $orderDetails->total_price; ?></p>
 
-                    <!-- Display items within the order -->
                     <div class="table-responsive">
-                        <table class="table table-borderless table-striped">
+                        <table class="table table-bordered table-hover">
                             <thead class="thead-dark">
                                 <tr>
                                 <th>Image</th>
                                 <th>Product Name</th>
                                 <th>Quantity</th>
                                 <th>Price</th>
+                                <th>Total Price</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -61,6 +60,7 @@ $orderedItems = $orderItemsQuery->fetchAll(PDO::FETCH_OBJ);
                                     <td><?php echo $item->product_name; ?></td>
                                     <td><?php echo $item->quantity; ?></td>
                                     <td>₹<?php echo $item->price; ?></td>
+                                    <td>₹<?php echo number_format($item->quantity * $item->price, 2); ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
