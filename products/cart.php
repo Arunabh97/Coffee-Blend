@@ -151,7 +151,7 @@
 					<form method="POST" action="cart.php" onsubmit="return confirm('Are you sure you want to proceed to checkout?');">
 						<input type="hidden" name="total_price" value="<?php echo $allCartTotal->total + 50 - 5; ?>">
 						<?php if($allCartTotal->total > 0) : ?>
-							<button name="checkout" type="submit" style="padding: 12px 46px; background-color: #e74c3c; color: #ffffff; font-weight: bold; border: none; cursor: pointer; transition: background-color 0.3s, color 0.3s;" onmouseover="this.style.backgroundColor='transparent'; this.style.color='#3498db'" onmouseout="this.style.backgroundColor='#e74c3c'; this.style.color='#ffffff'">Proceed to Checkout</button>
+							<button name="checkout" type="submit" class="btn btn-primary" style="color: white !important; z-index: 1; font-weight: bold;">Proceed to Checkout</button>
 						<?php endif; ?>
 					</form>
 				</div>
