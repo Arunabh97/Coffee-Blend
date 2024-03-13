@@ -26,7 +26,7 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
     overflow-y: auto;
 	margin: 20px 0;
 }
-
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </style>
     <section class="home-slider owl-carousel">
 
@@ -123,6 +123,40 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
     <section class="ftco-section">
     <div class="container">
         <div class="row">
+			<div class="col-md-6 product-category-container">
+                <h3 class="mb-5 heading-pricing ftco-animate">Drinks</h3>
+                <?php foreach($allDrinks as $drink) : ?>
+                    <div class="pricing-entry d-flex ftco-animate">
+                        <div class="img" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $drink->image; ?>);"></div>
+                        <div class="desc pl-3">
+                            <div class="d-flex text align-items-center">
+                                <h3><span><?php echo $drink->name; ?></span></h3>
+                                <span class="price">₹<?php echo $drink->price; ?></span>
+                            </div>
+                            <div class="d-block">
+                                <p><?php echo $drink->description; ?></p>
+								<?php
+									$productId = isset($drink) ? $drink->id : null;
+
+									if ($productId !== null) {
+										$checkIfExists = $conn->prepare("SELECT * FROM cart WHERE user_id = ? AND pro_id = ?");
+										$checkIfExists->execute([$_SESSION['user_id'], $productId]);
+										$productInCart = $checkIfExists->fetch();
+										?>
+										<button class="btn btn-primary float-right add-to-cart-btn" data-product-id="<?php echo $productId; ?>" <?php echo ($productInCart ? 'disabled' : ''); ?>>
+											<?php echo $productInCart ? 'Added to Cart' : 'Add to Cart'; ?>
+										</button>
+										<?php
+									} else {
+										echo "Product information not available.";
+									}
+									?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+
             <div class="col-md-6 product-category-container">
                 <h3 class="mb-5 heading-pricing ftco-animate">Desserts</h3>
                 <?php foreach($allDesserts as $dessert) : ?>
@@ -135,24 +169,22 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
                             </div>
                             <div class="d-block">
                                 <p><?php echo $dessert->description; ?></p>
-                            </div>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
+								<?php
+								$productId = isset($dessert) ? $dessert->id : null;
 
-            <div class="col-md-6 product-category-container">
-                <h3 class="mb-5 heading-pricing ftco-animate">Drinks</h3>
-                <?php foreach($allDrinks as $drink) : ?>
-                    <div class="pricing-entry d-flex ftco-animate">
-                        <div class="img" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $drink->image; ?>);"></div>
-                        <div class="desc pl-3">
-                            <div class="d-flex text align-items-center">
-                                <h3><span><?php echo $drink->name; ?></span></h3>
-                                <span class="price">₹<?php echo $drink->price; ?></span>
-                            </div>
-                            <div class="d-block">
-                                <p><?php echo $drink->description; ?></p>
+								if ($productId !== null) {
+									$checkIfExists = $conn->prepare("SELECT * FROM cart WHERE user_id = ? AND pro_id = ?");
+									$checkIfExists->execute([$_SESSION['user_id'], $productId]);
+									$productInCart = $checkIfExists->fetch();
+									?>
+									<button class="btn btn-primary float-right add-to-cart-btn" data-product-id="<?php echo $productId; ?>" <?php echo ($productInCart ? 'disabled' : ''); ?>>
+										<?php echo $productInCart ? 'Added to Cart' : 'Add to Cart'; ?>
+									</button>
+									<?php
+								} else {
+									echo "Product information not available.";
+								}
+								?>
                             </div>
                         </div>
                     </div>
@@ -171,6 +203,22 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
                             </div>
                             <div class="d-block">
                                 <p><?php echo $appetizer->description; ?></p>
+								<?php
+								$productId = isset($appetizer) ? $appetizer->id : null;
+
+								if ($productId !== null) {
+									$checkIfExists = $conn->prepare("SELECT * FROM cart WHERE user_id = ? AND pro_id = ?");
+									$checkIfExists->execute([$_SESSION['user_id'], $productId]);
+									$productInCart = $checkIfExists->fetch();
+									?>
+									<button class="btn btn-primary float-right add-to-cart-btn" data-product-id="<?php echo $productId; ?>" <?php echo ($productInCart ? 'disabled' : ''); ?>>
+										<?php echo $productInCart ? 'Added to Cart' : 'Add to Cart'; ?>
+									</button>
+									<?php
+								} else {
+									echo "Product information not available.";
+								}
+								?>
                             </div>
                         </div>
                     </div>
@@ -320,4 +368,30 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
     	</div>
     </section>
 
-    <?php require "includes/footer.php"; ?>
+<script>
+$(document).ready(function() {
+    $(".btn-primary").on("click", function() {
+        var button = $(this);
+        var productId = button.data("product-id");
+
+        $.ajax({
+            type: "POST",
+            url: "addToCart.php",
+            data: { product_id: productId },
+            success: function(response) {
+                if (response === "added") {
+                    button.prop("disabled", true);
+                    alert("Product added to the cart.");
+					location.reload();
+                } else if (response === "exists") {
+                    alert("Product is already in the cart.");
+                } else {
+                    alert("Error adding product to cart.");
+                }
+            }
+        });
+    });
+});
+</script>
+
+<?php require "includes/footer.php"; ?>
