@@ -50,6 +50,20 @@
   #menu-link:hover {
     color: #3498db;
   }
+
+  .trash {
+  display: inline-block;
+  width: 20px; 
+  height: 20px; 
+  background-image: url('../images/trash.png'); 
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.trash:hover {
+  filter: brightness(150%);
+}
 </style>
     <section class="home-slider owl-carousel">
 
@@ -77,7 +91,11 @@
 	    				<table class="table">
 						    <thead class="thead-primary">
 						      <tr class="text-center">
-						        <th>&nbsp;</th>
+							  	<th class="product-remove-all">
+								<a href="delete-cart.php" onclick="return confirm('Are you sure you want to remove all items from the cart?');">
+									<span class="trash" title="Remove all items"></span>
+								</a>
+								</th>
 						        <th>&nbsp;</th>
 						        <th>Product</th>
 						        <th>Price</th>
