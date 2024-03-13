@@ -202,7 +202,7 @@
 				<?php if($rowCount > 0) : ?>
 					<button name="submit" type="submit" class="btn btn-secondary py-3 px-5" disabled>Added to Cart</button>
 				<?php else : ?>
-					<button name="submit" type="submit" class="btn btn-warning py-3 px-5" style="background-color: #ffc107; color: #fff; border: 1px solid #ffc107;" onmouseover="this.style.backgroundColor='transparent'; this.style.color='#ffc107'" onmouseout="this.style.backgroundColor='#ffc107'; this.style.color='#fff'">Add to Cart</button>
+					<button name="submit" type="submit" class="btn btn-primary py-3 px-5" style="color: white !important; z-index: 1;font-size: 15px;">Add to Cart</button>
 
 				<?php endif; ?>
 				<?php else :  ?>
