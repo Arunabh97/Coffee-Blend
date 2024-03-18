@@ -437,4 +437,18 @@
     </div>
 </section>
 
+<script>
+    $(document).ready(function() {
+        $('.appointment_time').timepicker({
+            timeFormat: 'H:i',
+            interval: 30,
+            minTime: '08:00am',
+            maxTime: '09:00pm',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
+    });
+</script>
+
 <?php require "includes/footer.php"; ?>
