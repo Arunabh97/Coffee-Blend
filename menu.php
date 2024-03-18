@@ -124,55 +124,54 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
     <div class="container">
         <div class="row">
 			<div class="col-md-6 product-category-container">
-                <h3 class="mb-5 heading-pricing ftco-animate">Drinks</h3>
-                <?php foreach($allDrinks as $drink) : ?>
-                    <div class="pricing-entry d-flex ftco-animate">
-                        <div class="img" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $drink->image; ?>);"></div>
-                        <div class="desc pl-3">
-                            <div class="d-flex text align-items-center">
-                                <h3><span><?php echo $drink->name; ?></span></h3>
-                                <span class="price">₹<?php echo $drink->price; ?></span>
-                            </div>
-                            <div class="d-block">
-                                <p><?php echo $drink->description; ?></p>
+				<h3 class="mb-5 heading-pricing ftco-animate">Drinks</h3>
+				<?php foreach($allDrinks as $drink) : ?>
+					<div class="pricing-entry d-flex ftco-animate">
+						<div class="img" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $drink->image; ?>);"></div>
+						<div class="desc pl-3">
+							<div class="d-flex text align-items-center">
+								<h3><span><?php echo $drink->name; ?></span></h3>
+								<span class="price">₹<?php echo $drink->price; ?></span>
+							</div>
+							<div class="d-block">
+								<p><?php echo $drink->description; ?></p>
 								<?php
-									$productId = isset($drink) ? $drink->id : null;
+								$productId = isset($drink) ? $drink->id : null;
 
-									if ($productId !== null) {
-										$checkIfExists = $conn->prepare("SELECT * FROM cart WHERE user_id = ? AND pro_id = ?");
-										$checkIfExists->execute([$_SESSION['user_id'], $productId]);
-										$productInCart = $checkIfExists->fetch();
-										?>
-										<button class="btn btn-primary float-right add-to-cart-btn" data-product-id="<?php echo $productId; ?>" <?php echo ($productInCart ? 'disabled' : ''); ?>>
-											<?php echo $productInCart ? 'Added to Cart' : 'Add to Cart'; ?>
-										</button>
-										<?php
-									} else {
-										echo "Product information not available.";
-									}
+								if ($productId !== null && isset($_SESSION['user_id'])) { // Check if user is logged in
+									$checkIfExists = $conn->prepare("SELECT * FROM cart WHERE user_id = ? AND pro_id = ?");
+									$checkIfExists->execute([$_SESSION['user_id'], $productId]);
+									$productInCart = $checkIfExists->fetch();
 									?>
-                            </div>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
+									<button class="btn btn-primary float-right add-to-cart-btn" data-product-id="<?php echo $productId; ?>" <?php echo ($productInCart ? 'disabled' : ''); ?>>
+										<?php echo $productInCart ? 'Added to Cart' : 'Add to Cart'; ?>
+									</button>
+									<?php
+								}
+								?>
+							</div>
+						</div>
+					</div>
+				<?php endforeach; ?>
+			</div>
+
 
             <div class="col-md-6 product-category-container">
-                <h3 class="mb-5 heading-pricing ftco-animate">Desserts</h3>
-                <?php foreach($allDesserts as $dessert) : ?>
-                    <div class="pricing-entry d-flex ftco-animate">
-                        <div class="img" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $dessert->image; ?>);"></div>
-                        <div class="desc pl-3">
-                            <div class="d-flex text align-items-center">
-                                <h3><span><?php echo $dessert->name; ?></span></h3>
-                                <span class="price">₹<?php echo $dessert->price; ?></span>
-                            </div>
-                            <div class="d-block">
-                                <p><?php echo $dessert->description; ?></p>
+				<h3 class="mb-5 heading-pricing ftco-animate">Desserts</h3>
+				<?php foreach($allDesserts as $dessert) : ?>
+					<div class="pricing-entry d-flex ftco-animate">
+						<div class="img" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $dessert->image; ?>);"></div>
+						<div class="desc pl-3">
+							<div class="d-flex text align-items-center">
+								<h3><span><?php echo $dessert->name; ?></span></h3>
+								<span class="price">₹<?php echo $dessert->price; ?></span>
+							</div>
+							<div class="d-block">
+								<p><?php echo $dessert->description; ?></p>
 								<?php
 								$productId = isset($dessert) ? $dessert->id : null;
 
-								if ($productId !== null) {
+								if ($productId !== null && isset($_SESSION['user_id'])) { // Check if user is logged in
 									$checkIfExists = $conn->prepare("SELECT * FROM cart WHERE user_id = ? AND pro_id = ?");
 									$checkIfExists->execute([$_SESSION['user_id'], $productId]);
 									$productInCart = $checkIfExists->fetch();
@@ -181,32 +180,31 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
 										<?php echo $productInCart ? 'Added to Cart' : 'Add to Cart'; ?>
 									</button>
 									<?php
-								} else {
-									echo "Product information not available.";
 								}
 								?>
-                            </div>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
+							</div>
+						</div>
+					</div>
+				<?php endforeach; ?>
+			</div>
+
 
             <div class="col-md-6 product-category-container">
-                <h3 class="mb-5 heading-pricing ftco-animate">Appetizers</h3>
-                <?php foreach($allAppetizers as $appetizer) : ?>
-                    <div class="pricing-entry d-flex ftco-animate">
-                        <div class="img" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $appetizer->image; ?>);"></div>
-                        <div class="desc pl-3">
-                            <div class="d-flex text align-items-center">
-                                <h3><span><?php echo $appetizer->name; ?></span></h3>
-                                <span class="price">₹<?php echo $appetizer->price; ?></span>
-                            </div>
-                            <div class="d-block">
-                                <p><?php echo $appetizer->description; ?></p>
+				<h3 class="mb-5 heading-pricing ftco-animate">Appetizers</h3>
+				<?php foreach($allAppetizers as $appetizer) : ?>
+					<div class="pricing-entry d-flex ftco-animate">
+						<div class="img" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $appetizer->image; ?>);"></div>
+						<div class="desc pl-3">
+							<div class="d-flex text align-items-center">
+								<h3><span><?php echo $appetizer->name; ?></span></h3>
+								<span class="price">₹<?php echo $appetizer->price; ?></span>
+							</div>
+							<div class="d-block">
+								<p><?php echo $appetizer->description; ?></p>
 								<?php
 								$productId = isset($appetizer) ? $appetizer->id : null;
 
-								if ($productId !== null) {
+								if ($productId !== null && isset($_SESSION['user_id'])) { // Check if user is logged in
 									$checkIfExists = $conn->prepare("SELECT * FROM cart WHERE user_id = ? AND pro_id = ?");
 									$checkIfExists->execute([$_SESSION['user_id'], $productId]);
 									$productInCart = $checkIfExists->fetch();
@@ -215,15 +213,13 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
 										<?php echo $productInCart ? 'Added to Cart' : 'Add to Cart'; ?>
 									</button>
 									<?php
-								} else {
-									echo "Product information not available.";
 								}
 								?>
-                            </div>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
+							</div>
+						</div>
+					</div>
+				<?php endforeach; ?>
+			</div>
         </div>
     </div>
 </section>
