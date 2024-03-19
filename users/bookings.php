@@ -9,7 +9,6 @@ if(!isset($_SESSION['user_id'])){
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cancel_booking'])) {
     $bookingId = $_POST['booking_id'];
 
-    // Update the booking status to "Cancelled"
     $cancelBooking = $conn->prepare("UPDATE bookings SET status='Cancelled' WHERE id=:bookingId AND user_id=:userId");
     $cancelBooking->bindParam(':bookingId', $bookingId, PDO::PARAM_INT);
     $cancelBooking->bindParam(':userId', $_SESSION['user_id'], PDO::PARAM_INT);
@@ -22,6 +21,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cancel_booking'])) {
     $allBookings = $bookings->fetchAll(PDO::FETCH_OBJ);
 
 ?>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/boxicons/2.0.7/css/boxicons.min.css">
+
+<style>
+        .no-bookings {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            background-color: #f0e68c;
+        }
+
+        .no-bookings p {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .no-bookings i {
+            font-size: 64px;
+            color: #007bff;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+            border-color: #007bff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+</style>	
 
 <section class="home-slider owl-carousel">
 
@@ -39,6 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cancel_booking'])) {
         </div>
       </div>
     </section>
+
     <section class="ftco-section ftco-cart">
 			<div class="container">
 				<div class="row">
@@ -90,17 +130,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cancel_booking'])) {
 									<?php endif; ?>
 								</tr>
 
-						      <?php endforeach; ?>
+						    <?php endforeach; ?>
 						    </tbody>
-						  </table>
-						  <?php else : ?>
-							<p>You do not have any bookings for now</p>
+						</table>
+							<?php else : ?>
+							<div class="no-bookings">
+								<p><i class='bx bx-calendar'></i> You do not have any bookings for now.</p>
+								<p>Ready to book your next appointment?</p>
+								<a href="<?php echo APPURL; ?>/menu.php" class="btn btn-primary"><i class='bx bx-plus-circle'></i> Book Now</a>
+							</div>
 							<?php endif; ?>
 					  </div>
     			</div>
-    		</div>
-    		
-			</div>
-		</section>
+    		</div>	
+		</div>
+	</section>
 
 <?php require "../includes/footer.php"; ?>
