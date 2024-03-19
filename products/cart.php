@@ -27,6 +27,9 @@
 	}
 
 ?>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <style>
   #cart-icon {
     font-size: 70px;
@@ -64,8 +67,6 @@
 .trash:hover {
   filter: brightness(150%);
 }
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </style>
     <section class="home-slider owl-carousel">
@@ -125,7 +126,7 @@
 						        
 						        <td>
 									<div class="input-group mb-3">
-										<input type="number" name="quantity_<?php echo $product->id; ?>" class="quantity form-control input-number" value="<?php echo $product->quantity; ?>" min="1" max="100" data-product-id="<?php echo $product->id; ?>">
+										<input type="number" name="quantity_<?php echo $product->id; ?>" class="quantity form-control input-number" value="<?php echo $product->quantity; ?>" min="1" max="10" data-product-id="<?php echo $product->id; ?>">
 									</div>
 								</td>
 				        
