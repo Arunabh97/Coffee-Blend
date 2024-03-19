@@ -20,14 +20,17 @@ $appetizers->execute();
 $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
 
 ?>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 <style>
 	.product-category-container {
     max-height: 650px;
     overflow-y: auto;
 	margin: 20px 0;
 }
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </style>
+
     <section class="home-slider owl-carousel">
 
       <div class="slider-item" style="background-image: url(images/bg_6.jpg);" data-stellar-background-ratio="0.5">
@@ -121,7 +124,11 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
     </section>
 
     <section class="ftco-section">
-    <div class="container">
+    	<div class="container">
+
+		<input type="text" id="searchInput" placeholder="Search for products">
+		<div id="searchResults"></div>
+
         <div class="row">
 			<div class="col-md-6 product-category-container">
 				<h3 class="mb-5 heading-pricing ftco-animate">Drinks</h3>
@@ -400,6 +407,49 @@ $(document).ready(function() {
             scrollbar: true
         });
     });
+
+</script>
+
+<script>
+$(document).ready(function() {
+    $('#searchInput').on('input', function() {
+        var query = $(this).val();
+        if (query.length >= 2) { // Minimum characters to start search
+            searchProducts(query);
+        } else {
+            $('#searchResults').empty(); // Clear search results if query is too short
+        }
+    });
+});
+
+function searchProducts(query) {
+    $.ajax({
+        type: 'GET',
+        url: 'searchProducts.php',
+        data: { query: query },
+        dataType: 'json',
+        success: function(response) {
+            displaySearchResults(response);
+        },
+        error: function() {
+            console.log('Error fetching search results');
+        }
+    });
+}
+
+function displaySearchResults(results) {
+    var searchResultsDiv = $('#searchResults');
+    searchResultsDiv.empty();
+
+    if (results.length > 0) {
+        $.each(results, function(index, product) {
+            var productLink = '<a href="products/product-single.php?id=' + product.id + '">' + product.name + '</a>';
+            searchResultsDiv.append('<div>' + productLink + '</div>');
+        });
+    } else {
+        searchResultsDiv.append('<div>No results found</div>');
+    }
+}
 
 </script>
 
