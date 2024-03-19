@@ -48,8 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cancel_booking'])) {
 	    				<table class="table">
 						    <thead class="thead-primary">
 						      <tr class="text-center">
-						        <th>First Name</th>
-						        <th>Last Name</th>
+							  	<th>Name</th>
 						        <th>Date</th>
 						        <th>Time</th>
 						        <th>Phone</th>
@@ -61,9 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cancel_booking'])) {
 						    <tbody>
 								<?php foreach($allBookings as $booking) : ?>
 						      <tr class="text-center">
-						        <td class="product-remove"><?php echo $booking->first_name; ?></td>
-						        
-						        <td class="image-prod"><?php echo $booking->last_name; ?></td>
+							  	<td class="name"><?php echo $booking->first_name . ' ' . $booking->last_name; ?></td>
 						        
 						        <td class="product-name">
 						        	<h3><?php echo $booking->date; ?></h3>

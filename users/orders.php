@@ -51,8 +51,7 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
                             <table class="table">
                                 <thead class="thead-primary">
                                     <tr class="text-center">
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
+                                        <th>Name</th>
                                         <th>Town</th>
                                         <th>Street Address</th>
                                         <th>Phone</th>
@@ -66,8 +65,7 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
                                 <tbody>
                                     <?php foreach ($allOrders as $order) : ?>
                                         <tr class="text-center">
-                                            <td class="first_name"><?php echo $order->first_name; ?></td>
-                                            <td class="last_name"><?php echo $order->last_name; ?></td>
+                                            <td class="name"><?php echo $order->first_name . ' ' . $order->last_name; ?></td>
                                             <td class="price"><?php echo $order->town; ?></td>
                                             <td class="street_add"><?php echo $order->street_address; ?></td>
                                             <td class="price"><?php echo $order->phone; ?></td>
