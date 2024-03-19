@@ -64,6 +64,9 @@
 .trash:hover {
   filter: brightness(150%);
 }
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </style>
     <section class="home-slider owl-carousel">
 
@@ -122,11 +125,12 @@
 						        
 						        <td>
 									<div class="input-group mb-3">
-										<input disabled type="text" name="quantity" class="quantity form-control input-number" value="<?php echo $product->quantity; ?>" min="1" max="100">
-									 </div>
-					            </td>
-						        
-						        <td class="total">₹<?php echo $product->price * $product->quantity; ?></td>
+										<input type="number" name="quantity_<?php echo $product->id; ?>" class="quantity form-control input-number" value="<?php echo $product->quantity; ?>" min="1" max="100" data-product-id="<?php echo $product->id; ?>">
+									</div>
+								</td>
+				        
+								<td class="total">₹<?php echo $product->price * $product->quantity; ?></td>
+								
 						      </tr>
 
 						      <?php endforeach; ?>
@@ -160,9 +164,9 @@
     					</p>
     					<hr>
     					<p class="d-flex total-price">
-    						<span>Total</span>
+							<span>Total</span>
 							<?php if($allCartTotal->total > 0) : ?>
-    							<span>₹<?php echo $allCartTotal->total + 50 - 5; ?></span>
+								<span>₹<?php echo $allCartTotal->total + 50 - 5; ?></span>
 							<?php endif; ?>
 						</p>
     				</div>
@@ -177,6 +181,40 @@
 			</div>
 		</section>
 
-    
+<script>
+
+	$(document).ready(function() {
+		$('.quantity').on('change', function() {
+			var productId = $(this).data('product-id');
+			var newQuantity = $(this).val();
+
+			$.ajax({
+				url: 'update-cart.php',
+				method: 'POST',
+				data: { product_id: productId, quantity: newQuantity },
+				success: function(response) {
+
+					var total = parseFloat(response);
+					var row = $(this).closest('tr');
+					row.find('.total').text('₹' + total.toFixed(2));
+
+					var subtotal = 0;
+					$('.total').each(function() {
+						subtotal += parseFloat($(this).text().replace('₹', ''));
+					});
+					var totalWithDelivery = subtotal + 50 - 5;
+					$('.cart-total span:contains("Subtotal")').next().text('₹' + subtotal.toFixed(2));
+					$('.cart-total span:contains("Total")').next().text('₹' + totalWithDelivery.toFixed(2));
+
+					location.reload();
+				},
+				error: function(xhr, status, error) {
+					console.error(xhr.responseText);
+				}
+			});
+		});
+	});
+
+</script>
 
 <?php require "../includes/footer.php"; ?>
