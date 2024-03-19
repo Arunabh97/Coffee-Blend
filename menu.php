@@ -29,6 +29,57 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
     overflow-y: auto;
 	margin: 20px 0;
 }
+
+#searchInput {
+    padding: 12px;
+    border: 2px solid #3498db;
+    border-radius: 25px;
+    font-size: 15px;
+    width: 300px;
+    margin-bottom: 20px;
+    outline: none;
+    transition: border-color 0.3s ease-in-out;
+}
+
+#searchInput:focus {
+    border-color: #2ecc71;
+}
+
+#searchResults {
+    background-color: #ffffff;
+    border-radius: 5px;
+	padding: none;
+    padding-left: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.searchResult {
+    padding: 8px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.searchResult:hover {
+    background-color: #f9f9f9;
+}
+
+::placeholder {
+    color: #aaa;
+    opacity: 1; 
+}
+
+#searchResults::-webkit-scrollbar {
+    width: 8px;
+}
+
+#searchResults::-webkit-scrollbar-thumb {
+    background-color: #3498db;
+    border-radius: 10px;
+}
+
 </style>
 
     <section class="home-slider owl-carousel">
