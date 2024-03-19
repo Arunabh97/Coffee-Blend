@@ -126,7 +126,7 @@
 						        
 						        <td>
 									<div class="input-group mb-3">
-										<input type="number" name="quantity_<?php echo $product->id; ?>" class="quantity form-control input-number" value="<?php echo $product->quantity; ?>" min="1" max="10" data-product-id="<?php echo $product->id; ?>">
+										<input type="number" name="quantity_<?php echo $product->id; ?>" class="quantity form-control input-number" value="<?php echo $product->quantity; ?>" min="1" max="10" data-product-id="<?php echo $product->id; ?>" style="padding: 7px;">
 									</div>
 								</td>
 				        
