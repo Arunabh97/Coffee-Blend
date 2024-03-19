@@ -65,10 +65,10 @@
             <a class="nav-link" href="<?php echo ADMINURL; ?>/users/users.php" style="margin-left: 20px;"><i class="fa-solid fa-user"></i> Users</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo ADMINURL; ?>/orders-admins/show-orders.php" style="margin-left: 20px;"><i class="fa-solid fa-cart-shopping"></i> Orders</a>
+            <a class="nav-link" href="<?php echo ADMINURL; ?>/products-admins/show-products.php" style="margin-left: 20px;"><i class="fas fa-shopping-bag"></i> Products</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo ADMINURL; ?>/products-admins/show-products.php" style="margin-left: 20px;"><i class="fas fa-shopping-bag"></i> Products</a>
+            <a class="nav-link" href="<?php echo ADMINURL; ?>/orders-admins/show-orders.php" style="margin-left: 20px;"><i class="fa-solid fa-cart-shopping"></i> Orders</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="<?php echo ADMINURL; ?>/bookings-admins/show-bookings.php" style="margin-left: 20px;"><i class="far fa-calendar"></i> Bookings</a>
