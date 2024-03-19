@@ -327,8 +327,8 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
 										<div class="menu-wrap">
 											<a href="products/product-single.php?id=<?php echo $drink->id; ?>" class="menu-img img mb-4" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $drink->image; ?>);"></a>
 											<div class="text">
-												<h3><a href="products/product-single.php?id=<?php echo $drink->id; ?>"><?php echo $drink->name; ?></a></h3>
-												<p><?php echo $drink->description; ?></p>
+											<h3><a href="products/product-single.php?id=<?php echo $drink->id; ?>"><?php echo strlen($drink->name) > 15 ? substr($drink->name, 0, 15) . '...' : $drink->name; ?></a></h3>
+												<p><?php echo strlen($drink->description) > 50 ? substr($drink->description, 0, 50) . '...' : $drink->description; ?></p>
 												<p class="price"><span>₹<?php echo $drink->price; ?></span></p>
 												<p><a href="products/product-single.php?id=<?php echo $drink->id; ?>" class="btn btn-primary btn-outline-primary">Show</a></p>
 											</div>
@@ -362,8 +362,8 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
 										<div class="menu-wrap">
 											<a href="products/product-single.php?id=<?php echo $dessert->id; ?>" class="menu-img img mb-4" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $dessert->image; ?>);"></a>
 											<div class="text">
-												<h3><a href="products/product-single.php?id=<?php echo $dessert->id; ?>"><?php echo $dessert->name; ?></a></h3>
-												<p><?php echo $dessert->description; ?></p>
+											<h3><a href="products/product-single.php?id=<?php echo $dessert->id; ?>"><?php echo strlen($dessert->name) > 15 ? substr($dessert->name, 0, 15) . '...' : $dessert->name; ?></a></h3>
+												<p><?php echo strlen($dessert->description) > 50 ? substr($dessert->description, 0, 50) . '...' : $dessert->description; ?></p>
 												<p class="price"><span>₹<?php echo $dessert->price; ?></span></p>
 												<p><a href="products/product-single.php?id=<?php echo $dessert->id; ?>" class="btn btn-primary btn-outline-primary">Show</a></p>
 											</div>
@@ -397,8 +397,8 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
 										<div class="menu-wrap">
 											<a href="products/product-single.php?id=<?php echo $appetizer->id; ?>" class="menu-img img mb-4" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $appetizer->image; ?>);"></a>
 											<div class="text">
-												<h3><a href="products/product-single.php?id=<?php echo $appetizer->id; ?>"><?php echo $appetizer->name; ?></a></h3>
-												<p><?php echo $appetizer->description; ?></p>
+											<h3><a href="products/product-single.php?id=<?php echo $appetizer->id; ?>"><?php echo strlen($appetizer->name) > 15 ? substr($appetizer->name, 0, 15) . '...' : $appetizer->name; ?></a></h3>
+												<p><?php echo strlen($appetizer->description) > 50 ? substr($appetizer->description, 0, 50) . '...' : $appetizer->description; ?></p>
 												<p class="price"><span>₹<?php echo $appetizer->price; ?></span></p>
 												<p><a href="products/product-single.php?id=<?php echo $appetizer->id; ?>" class="btn btn-primary btn-outline-primary">Show</a></p>
 											</div>

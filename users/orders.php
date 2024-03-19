@@ -23,8 +23,28 @@ $orders->execute();
 $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
 
 ?>
-<!-- Include Font Awesome CSS in your HTML -->
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<style>
+    .cart-list tbody tr:hover {
+        background-color: #d4edda; 
+    }
+
+    .cart-list tbody tr:hover td {
+        color: #000; 
+    }
+
+    .btn:hover {
+        background-color: #007bff; 
+        color: #fff;
+    }
+
+    .btn-cancel:hover {
+        background-color: #dc3545; 
+        color: #fff; 
+    }
+</style>
 
 <section class="home-slider owl-carousel">
 
