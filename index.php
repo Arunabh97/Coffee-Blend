@@ -17,23 +17,146 @@
 	$allReviews = $reviews->fetchAll(PDO::FETCH_OBJ);
 
 ?>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlCq6M9YLPp+J9NUw9d9Q5qlenLRMwe8U08dR5LzC2wU" crossorigin="anonymous">
+
 <style>
 	#ftco-testimony {
-        margin: 0 40px; /* Adjust the value as needed */
+        margin: 0 40px; 
     }
     .rating {
         font-size: 24px;
-        color: #FFD700; /* Set the color of stars */
+        color: #FFD700; 
     }
 	.testimony {
-    position: relative;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    }
+		position: relative;
+		padding: 10px;
+		border-radius: 20px;
+		margin-bottom: 40px;
+		background: #4CAF50; 
+		color: #fff; 
+		overflow: hidden;
+		font-family: 'Open Sans', sans-serif; 
+		box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2); 
+	}
+
+	.testimony blockquote {
+		font-size: 20px;
+		font-style: italic;
+		margin-bottom: 20px;
+		border-left: 4px solid #fff; 
+		padding-left: 20px;
+	}
+
+	.testimony .rating {
+		font-size: 24px;
+		color: #fff;
+		margin-bottom: 15px;
+	}
+
+	.testimony .author {
+		margin-top: 15px;
+		font-size: 18px;
+		font-weight: bold;
+	}
+
+	.testimony .icon {
+		position: absolute;
+		top: -25px;
+		left: 50%;
+		transform: translateX(-50%);
+		background-color: #fff;
+		padding: 10px;
+		border-radius: 50%;
+	}
+
+	.testimony .icon i {
+		color: #4CAF50;
+		font-size: 24px;
+	}
+
+	.testimony .overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(255, 255, 255, 0.3); 
+		pointer-events: none; 
+		transition: opacity 0.3s ease; 
+		opacity: 0; 
+	}
+
+	.testimony:hover .overlay {
+		opacity: 1; 
+	}
+
+	@keyframes fadeInOverlay {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+
+	.carousel-control-prev, .carousel-control-next {
+		color: #fff;
+		font-size: 30px;
+		opacity: 0.8;
+		transition: opacity 0.3s ease; 
+	}
+
+	.carousel-control-prev:hover, .carousel-control-next:hover {
+		color: #fff;
+		opacity: 1;
+	}
+
+	.testimony:before {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: -50px;
+		width: 100px;
+		height: 100px;
+		background: rgba(255, 255, 255, 0.2);
+		border-radius: 50%;
+		transform: translateY(-50%);
+		animation: moveUpDown 2s infinite alternate; 
+	}
+
+	.testimony:after {
+		content: "";
+		position: absolute;
+		bottom: -30px;
+		right: -50px;
+		width: 150px;
+		height: 150px;
+		background: rgba(255, 255, 255, 0.2);
+		border-radius: 50%;
+		transform: rotate(45deg);
+		animation: rotateScale 3s infinite; 
+	}
+
+	@keyframes moveUpDown {
+		from {
+			top: 50%;
+		}
+		to {
+			top: 40%;
+		}
+	}
+
+	@keyframes rotateScale {
+		from {
+			transform: rotate(45deg) scale(1);
+		}
+		to {
+			transform: rotate(45deg) scale(1.2);
+		}
+	}
 </style>
+
 <script>
     function redirectToLogin() {
         window.location.href = 'login.php';
@@ -101,11 +224,10 @@
                         <?php endif; ?>
                         <a href="menu.php" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a></p>
             </div>
-
           </div>
         </div>
-      </div>
-    </section>
+    </div>
+</section>
 
     <section class="ftco-intro">
     	<div class="container-wrap">
@@ -419,7 +541,7 @@
 											?>
 										</div>
 										<div class="author d-flex mt-4">
-											<div class="name align-self-center"><?php echo $review->username; ?></div>
+											<div class="name align-self-center">~ <?php echo $review->username; ?></div>
 										</div>
 									</div>
 								</div>
