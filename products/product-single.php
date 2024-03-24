@@ -239,7 +239,7 @@
                                     <a href="<?php echo APPURL; ?>/products/product-single.php?id=<?php echo $relatedProduct->id; ?>" class="img" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $relatedProduct->image; ?>);"></a>
                                     <div class="text text-center pt-4">
                                         <h3><a href="<?php echo APPURL; ?>/products/product-single.php?id=<?php echo $relatedProduct->id; ?>"><?php echo $relatedProduct->name; ?></a></h3>
-                                        <p><?php echo $relatedProduct->description; ?></p>
+                                        <p><?php echo strlen($relatedProduct->description) > 50 ? substr($relatedProduct->description, 0, 50) . '...' : $relatedProduct->description; ?></p>
                                         <p class="price"><span>₹<?php echo $relatedProduct->price; ?></span></p>
                                         <p><a href="<?php echo APPURL; ?>/products/product-single.php?id=<?php echo $relatedProduct->id; ?>" class="btn btn-primary btn-outline-primary">Show</a></p>
                                     </div>
