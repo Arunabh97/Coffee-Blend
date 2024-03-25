@@ -151,22 +151,22 @@ $allReviews = $reviews->fetchAll(PDO::FETCH_OBJ);
     				<div class="row">
     					<div class="col-md-6">
     						<div class="menu-entry">
-		    					<a href="#" class="img" style="background-image: url(images/menu-1.jpg);"></a>
+							<a href="<?php echo APPURL; ?>/products/product-single.php?id=1" class="img" style="background-image: url(images/menu-1.jpg);"></a>
 		    				</div>
     					</div>
     					<div class="col-md-6">
     						<div class="menu-entry mt-lg-4">
-		    					<a href="#" class="img" style="background-image: url(images/menu-2.jpg);"></a>
+		    					<a href="<?php echo APPURL; ?>/products/product-single.php?id=21" class="img" style="background-image: url(images/dessert-4.jpg);"></a>
 		    				</div>
     					</div>
     					<div class="col-md-6">
     						<div class="menu-entry">
-		    					<a href="#" class="img" style="background-image: url(images/menu-3.jpg);"></a>
+		    					<a href="<?php echo APPURL; ?>/products/product-single.php?id=14" class="img" style="background-image: url(images/image_6.jpg);"></a>
 		    				</div>
     					</div>
     					<div class="col-md-6">
     						<div class="menu-entry mt-lg-4">
-		    					<a href="#" class="img" style="background-image: url(images/menu-4.jpg);"></a>
+		    					<a href="<?php echo APPURL; ?>/products/product-single.php?id=34" class="img" style="background-image: url(images/menu-9.jpeg);"></a>
 		    				</div>
     					</div>
     				</div>

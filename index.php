@@ -326,8 +326,8 @@
               	<span class="flaticon-choices"></span>
               </div>
               <div class="media-body">
-                <h3 class="heading">Easy to Order</h3>
-                <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
+                <h3 class="heading">Effortless Ordering</h3>
+                <p>Dive into the finest blends with just a few clicks. Your coffee journey begins here. Start Your Coffee Adventure Today!</p>
               </div>
             </div>      
           </div>
@@ -337,8 +337,8 @@
               	<span class="flaticon-delivery-truck"></span>
               </div>
               <div class="media-body">
-                <h3 class="heading">Fastest Delivery</h3>
-                <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
+                <h3 class="heading">Express Delivery</h3>
+                <p>Savor the aroma sooner than you think. We're committed to bringing your favorite brew to your doorstep.</p>
               </div>
             </div>      
           </div>
@@ -347,8 +347,8 @@
               <div class="icon d-flex justify-content-center align-items-center mb-5">
               	<span class="flaticon-coffee-bean"></span></div>
               <div class="media-body">
-                <h3 class="heading">Quality Coffee</h3>
-                <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
+                <h3 class="heading">Crafted with Care</h3>
+                <p>From bean to cup, our dedication to quality shines through. Experience the taste of perfection in every sip.</p>
               </div>
             </div>    
           </div>
@@ -386,7 +386,7 @@
     					</div>
     					<div class="col-md-6">
     						<div class="menu-entry mt-lg-4">
-		    					<a href="<?php echo APPURL; ?>/products/product-single.php?id=26" class="img" style="background-image: url(images/drink-7.jpg);"></a>
+		    					<a href="<?php echo APPURL; ?>/products/product-single.php?id=34" class="img" style="background-image: url(images/menu-9.jpeg);"></a>
 		    				</div>
     					</div>
     				</div>
