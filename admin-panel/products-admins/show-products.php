@@ -6,16 +6,12 @@ if (!isset($_SESSION['admin_name'])) {
     header("location: " . ADMINURL . "/admins/login-admins.php");
 }
 
-// Set the number of products to display per page
 $productsPerPage = 10;
 
-// Get the current page number
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
-// Calculate the offset for the SQL query
 $offset = ($page - 1) * $productsPerPage;
 
-// Check if a search term is provided in the URL
 $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
 $productType = isset($_GET['productType']) ? $_GET['productType'] : '';
 
@@ -47,17 +43,16 @@ $products->execute();
 
 $allProducts = $products->fetchAll(PDO::FETCH_OBJ);
 
-// Count total number of products
 $totalProducts = $conn->query("SELECT COUNT(*) FROM products")->fetchColumn();
 
-// Calculate total number of pages
 $totalPages = ceil($totalProducts / $productsPerPage);
-?>
 
+?>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <style>
+    
     .card {
         border-radius: 15px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -81,29 +76,31 @@ $totalPages = ceil($totalProducts / $productsPerPage);
     .btn-action {
         margin-right: 5px;
     }
+
     .pagination {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-        .pagination a {
-            color: #007bff;
-            padding: 8px 16px;
-            text-decoration: none;
-            background-color: #fff;
-            border: 1px solid #007bff;
-            border-radius: 5px;
-            margin: 0 5px;
-            transition: background-color 0.3s;
-        }
+    .pagination a {
+        color: #007bff;
+        padding: 8px 16px;
+        text-decoration: none;
+        background-color: #fff;
+        border: 1px solid #007bff;
+        border-radius: 5px;
+        margin: 0 5px;
+        transition: background-color 0.3s;
+    }
 
-        .pagination a.active,
-        .pagination a:hover {
-            background-color: #007bff;
-            color: #fff;
-        }
+    .pagination a.active,
+    .pagination a:hover {
+        background-color: #007bff;
+        color: #fff;
+    }
+
 </style>
 
 <div class="row">
@@ -180,9 +177,15 @@ $totalPages = ceil($totalProducts / $productsPerPage);
 
                 <!-- Add pagination links -->
                 <div class="pagination">
+                    <?php if ($page > 1) : ?>
+                        <a href="?page=<?php echo $page - 1; ?>" class="prev"><i class="fas fa-chevron-left"></i></a>
+                    <?php endif; ?>
                     <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
                         <a href="?page=<?php echo $i; ?>" class="<?php echo ($i == $page) ? 'active' : ''; ?>"><?php echo $i; ?></a>
                     <?php endfor; ?>
+                    <?php if ($page < $totalPages) : ?>
+                        <a href="?page=<?php echo $page + 1; ?>" class="next"><i class="fas fa-chevron-right"></i></a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
