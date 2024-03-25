@@ -115,6 +115,10 @@ if (!isset($_SESSION['admin_name'])) {
         background-color: #0056b3;
         border-color: #0056b3;
     }
+
+    .table{
+        margin-top: 20px;
+    }
 </style>
 
 <div class="row">
@@ -153,6 +157,7 @@ if (!isset($_SESSION['admin_name'])) {
                 <table class="table">
                     <thead>
                     <tr>
+                    <th scope="col">S No.</th>
                     <th scope="col"><i class="fas fa-user"></i> First Name</th>
                     <th scope="col"><i class="fas fa-user"></i> Last Name</th>
                     <th scope="col"><i class="fas fa-city"></i> Town</th>
@@ -168,28 +173,29 @@ if (!isset($_SESSION['admin_name'])) {
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach($allOrders as $order) : ?>
-                    <tr>
-                        <td><?php echo $order->first_name; ?></td>
-                        <td><?php echo $order->last_name; ?></td>
-                        <td><?php echo $order->town; ?></td>
-                        <td><?php echo $order->state; ?></td>
-                        <td>
-                        <?php echo $order->zip_code; ?>
-                        </td>
-                        <td><?php echo $order->phone; ?></td>
-                        <td><?php echo $order->street_address; ?></td>
-                        <td>₹<?php echo $order->total_price; ?></td>
+                        <?php 
+                        $serial = 1; // Initialize the serial number
+                        foreach($allOrders as $order) : ?>
+                            <tr>
+                                <td><?php echo $serial++; ?></td> <!-- Add the serial number -->
+                                <td><?php echo $order->first_name; ?></td>
+                                <td><?php echo $order->last_name; ?></td>
+                                <td><?php echo $order->town; ?></td>
+                                <td><?php echo $order->state; ?></td>
+                                <td><?php echo $order->zip_code; ?></td>
+                                <td><?php echo $order->phone; ?></td>
+                                <td><?php echo $order->street_address; ?></td>
+                                <td>₹<?php echo $order->total_price; ?></td>
 
-                        <td style="color: <?php echo $order->status === 'Delivered' ? 'green' : ($order->status === 'Pending' ? 'orange' : 'black'); ?>; font-weight: bold;">
-                            <?php echo $order->status; ?>
-                        </td>
+                                <td style="color: <?php echo $order->status === 'Delivered' ? 'green' : ($order->status === 'Pending' ? 'orange' : 'black'); ?>; font-weight: bold;">
+                                    <?php echo $order->status; ?>
+                                </td>
 
-                        <td><a href="change-status.php?id=<?php echo $order->id; ?>" class="btn btn-warning  text-white text-center "><i class="fas fa-sync-alt"></i> Update Status</a></td>
-                        <td><a href="delete-orders.php?id=<?php echo $order->id; ?>" class="btn btn-danger  text-center"><i class="fas fa-trash-alt"></i> Delete</a></td>
-                        <td><a class="btn btn-success" href="../../users/print.php?order_id=<?php echo $order->id; ?>" target="_blank"><i class="fas fa-download"></i></a>OrdId: <?php echo $order->id; ?></td>
-                    </tr>
-                    <?php endforeach; ?>
+                                <td><a href="change-status.php?id=<?php echo $order->id; ?>" class="btn btn-warning  text-white text-center "><i class="fas fa-sync-alt"></i> Update Status</a></td>
+                                <td><a href="delete-orders.php?id=<?php echo $order->id; ?>" class="btn btn-danger  text-center"><i class="fas fa-trash-alt"></i> Delete</a></td>
+                                <td><a class="btn btn-success" href="../../users/print.php?order_id=<?php echo $order->id; ?>" target="_blank"><i class="fas fa-download"></i></a>OrdId: <?php echo $order->id; ?></td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
@@ -226,6 +232,6 @@ if (!isset($_SESSION['admin_name'])) {
     </div>
 </div>
 
-      <?php require "../layouts/footer.php"; ?>
+<?php require "../layouts/footer.php"; ?>
 
   
