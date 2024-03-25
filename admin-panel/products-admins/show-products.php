@@ -84,13 +84,6 @@ $totalPages = ceil($totalProducts / $productsPerPage);
         align-items: center;
     }
 
-    .pagination {
-        margin-top: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
     .pagination a {
         color: #007bff;
         padding: 8px 12px;
