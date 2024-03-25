@@ -1,15 +1,25 @@
 <?php require "../layouts/header.php"; ?>
 <?php require "../../config/config.php"; ?>
+
 <?php 
 
-if(!isset ($_SESSION['admin_name'])){
-  header("location: ".ADMINURL."/admins/login-admins.php");
+if (!isset($_SESSION['admin_name'])) {
+  header("location: " . ADMINURL . "/admins/login-admins.php");
 }
 
-$orders = $conn->query("SELECT * FROM orders");
-$orders->execute();
+// Pagination
+$ordersPerPage = 10;
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$offset = ($page - 1) * $ordersPerPage;
 
-$allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
+$ordersQuery = $conn->prepare("SELECT * FROM orders LIMIT :offset, :per_page");
+$ordersQuery->bindParam(':offset', $offset, PDO::PARAM_INT);
+$ordersQuery->bindParam(':per_page', $ordersPerPage, PDO::PARAM_INT);
+$ordersQuery->execute();
+$allOrders = $ordersQuery->fetchAll(PDO::FETCH_OBJ);
+
+$totalOrders = $conn->query("SELECT COUNT(*) FROM orders")->fetchColumn();
+$totalPages = ceil($totalOrders / $ordersPerPage);
 
 ?>
 
@@ -38,6 +48,48 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
 
     .btn-action {
         margin-right: 5px;
+    }
+
+    .pagination {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .pagination a {
+        color: #007bff;
+        padding: 8px 12px;
+        text-decoration: none;
+        background-color: #f5f5f5;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin: 0 5px;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .pagination a.active,
+    .pagination a:hover {
+        background-color: #007bff;
+        color: #fff;
+        border-color: #007bff;
+    }
+
+    .pagination .prev,
+    .pagination .next {
+        padding: 8px 16px;
+        margin: 0 5px;
+        background-color: #007bff;
+        color: #fff;
+        border: 1px solid #007bff;
+        border-radius: 5px;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .pagination .prev:hover,
+    .pagination .next:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
     }
 </style>
 
@@ -88,7 +140,36 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
                   </tr>
                   <?php endforeach; ?>
                 </tbody>
-              </table> 
+              </table>
+              
+              <div class="pagination justify-content-center">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <?php if ($page > 1) : ?>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=<?php echo $page - 1; ?>" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                </li>
+                            <?php endif; ?>
+                            <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
+                                <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
+                                    <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                                </li>
+                            <?php endfor; ?>
+                            <?php if ($page < $totalPages) : ?>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=<?php echo $page + 1; ?>" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </li>
+                            <?php endif; ?>
+                        </ul>
+                    </nav>
+                </div>
+                
             </div>
           </div>
         </div>

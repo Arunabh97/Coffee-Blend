@@ -2,15 +2,14 @@
 <?php require "../../config/config.php"; ?>
 
 <?php
-if(!isset ($_SESSION['admin_name'])){
-    header("location: ".ADMINURL."/admins/login-admins.php");
-  }
 
-// Check if delete action is requested
+if (!isset($_SESSION['admin_name'])) {
+    header("location: " . ADMINURL . "/admins/login-admins.php");
+}
+
 if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
     $userId = $_GET['id'];
 
-    // Display delete confirmation modal
     echo "<script>
             if(confirm('Are you sure you want to delete this user?')) {
                 window.location.href = 'users.php?action=confirmDelete&id={$userId}';
@@ -21,24 +20,32 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
     exit();
 }
 
-// Check if confirm delete action is requested
 if (isset($_GET['action']) && $_GET['action'] == 'confirmDelete' && isset($_GET['id'])) {
     $userId = $_GET['id'];
 
-    // Perform deletion here (you need to implement this part)
     $deleteUser = $conn->prepare("DELETE FROM users WHERE id = :id");
     $deleteUser->bindParam(":id", $userId);
     $deleteUser->execute();
 
-    // Redirect back to the users page after deletion
     //header("location: users.php");
     echo "<script>window.location.href = 'users.php';</script>";
     exit();
 }
 
-$usersQuery = $conn->query("SELECT id, username, email, first_name, last_name FROM users");
+$usersPerPage = 10;
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$offset = ($page - 1) * $usersPerPage;
+
+$usersQuery = $conn->prepare("SELECT id, username, email, first_name, last_name FROM users LIMIT :offset, :per_page");
+$usersQuery->bindParam(':offset', $offset, PDO::PARAM_INT);
+$usersQuery->bindParam(':per_page', $usersPerPage, PDO::PARAM_INT);
 $usersQuery->execute();
 $allUsers = $usersQuery->fetchAll(PDO::FETCH_OBJ);
+
+// Count total number of users
+$totalUsers = $conn->query("SELECT COUNT(*) FROM users")->fetchColumn();
+$totalPages = ceil($totalUsers / $usersPerPage);
+
 ?>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -66,6 +73,48 @@ $allUsers = $usersQuery->fetchAll(PDO::FETCH_OBJ);
 
     .btn-action {
         margin-right: 5px;
+    }
+
+    .pagination {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .pagination a {
+        color: #007bff;
+        padding: 8px 12px;
+        text-decoration: none;
+        background-color: #f5f5f5;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin: 0 5px;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .pagination a.active,
+    .pagination a:hover {
+        background-color: #007bff;
+        color: #fff;
+        border-color: #007bff;
+    }
+
+    .pagination .prev,
+    .pagination .next {
+        padding: 8px 16px;
+        margin: 0 5px;
+        background-color: #007bff;
+        color: #fff;
+        border: 1px solid #007bff;
+        border-radius: 5px;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .pagination .prev:hover,
+    .pagination .next:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
     }
 </style>
 
@@ -105,6 +154,35 @@ $allUsers = $usersQuery->fetchAll(PDO::FETCH_OBJ);
                     <?php endforeach; ?>
                     </tbody>
                 </table>
+
+                <div class="pagination justify-content-center">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <?php if ($page > 1) : ?>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=<?php echo $page - 1; ?>" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                </li>
+                            <?php endif; ?>
+                            <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
+                                <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
+                                    <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                                </li>
+                            <?php endfor; ?>
+                            <?php if ($page < $totalPages) : ?>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=<?php echo $page + 1; ?>" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </li>
+                            <?php endif; ?>
+                        </ul>
+                    </nav>
+                </div>
+
             </div>
         </div>
     </div>
