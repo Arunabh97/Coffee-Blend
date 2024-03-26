@@ -24,7 +24,7 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <style>
-	.product-category-container {
+.product-category-container {
     max-height: 650px;
     overflow-y: auto;
 	margin: 20px 0;

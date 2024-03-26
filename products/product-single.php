@@ -246,6 +246,11 @@
                                         <h3><a href="<?php echo APPURL; ?>/products/product-single.php?id=<?php echo $relatedProduct->id; ?>"><?php echo $relatedProduct->name; ?></a></h3>
                                         <p><?php echo strlen($relatedProduct->description) > 50 ? substr($relatedProduct->description, 0, 50) . '...' : $relatedProduct->description; ?></p>
                                         <p class="price"><span>₹<?php echo $relatedProduct->price; ?></span></p>
+                                        <?php if ($relatedProduct->stock_quantity > 0) : ?>
+                                          <p class="availability"><span style="color: yellow;">In Stock (<?php echo $relatedProduct->stock_quantity; ?> available)</span></p>
+                                        <?php else : ?>
+                                          <p class="availability"><span class="text-danger">Out of Stock</span></p>
+                                        <?php endif; ?>
                                         <p><a href="<?php echo APPURL; ?>/products/product-single.php?id=<?php echo $relatedProduct->id; ?>" class="btn btn-primary btn-outline-primary">Show</a></p>
                                     </div>
                                 </div>
