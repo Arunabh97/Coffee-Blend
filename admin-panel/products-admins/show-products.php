@@ -119,6 +119,12 @@ $totalPages = ceil($totalProducts / $productsPerPage);
         border-color: #0056b3;
     }
 
+    @keyframes blinker {
+        50% {
+            opacity: 0;
+        }
+    }
+
 </style>
 
 <div class="row">
@@ -185,7 +191,17 @@ $totalPages = ceil($totalProducts / $productsPerPage);
                                 <td><img src="images/<?php echo $product->image; ?>" style="width: 60px; height:60px;"></td>
                                 <td>₹<?php echo $product->price; ?></td>
                                 <td><?php echo $product->type; ?></td>
-                                <td><?php echo $product->stock_quantity; ?></td>
+                                <td <?php echo ($product->stock_quantity <= 10) ? 'class="text-danger"' : ''; ?>>
+                                    <?php 
+                                        if ($product->stock_quantity == 0) {
+                                            echo '<span style="animation: blinker 1s linear infinite;">Out of Stock</span>';
+                                        } else if ($product->stock_quantity <= 10) {
+                                            echo '<span class="text-danger">Stock Low : ' . $product->stock_quantity . '</span>';
+                                        } else {
+                                            echo $product->stock_quantity;
+                                        }
+                                    ?>
+                                </td>
                                 <td>
                                     <a href="delete-products.php?id=<?php echo $product->id; ?>" class="btn btn-danger  text-center"><i class="fas fa-trash-alt"></i> Delete</a>
                                     <a href="edit-products.php?id=<?php echo $product->id; ?>" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
