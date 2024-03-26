@@ -41,57 +41,48 @@ if (isset($_POST['submit'])) {
 
 ?>
 
-       <div class="row">
-        <div class="col">
-          <div class="card">
+<div class="row">
+    <div class="col">
+        <div class="card">
             <div class="card-body">
-              <h5 class="card-title mb-5 d-inline">Create Product</h5>
-          <form method="POST" action="create-products.php" enctype="multipart/form-data">
-                <!-- Email input -->
-                <div class="form-outline mb-4 mt-4">
-                  <input type="text" name="name" id="form2Example1" class="form-control" placeholder="Name" />
-                 
-                </div>
-                <div class="form-outline mb-4 mt-4">
-                  <input type="text" name="price" id="form2Example1" class="form-control" placeholder="Price" />
-                 
-                </div>
-                <div class="form-outline mb-4 mt-4">
-                  <input type="file" name="image" id="form2Example1" class="form-control"  />
-                 
-                </div>
-                <div class="form-group">
-                  <label for="exampleFormControlTextarea1">Description</label>
-                  <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                </div>
-               
-                <div class="form-outline mb-4 mt-4">
+                <h5 class="card-title mb-5 d-inline">Create Product</h5>
+                <form method="POST" action="create-products.php" enctype="multipart/form-data">
+                    <!-- Email input -->
+                    <div class="form-outline mb-4 mt-4">
+                        <input type="text" name="name" id="form2Example1" class="form-control" placeholder="Name" />
+                    </div>
+                    <div class="form-outline mb-4 mt-4">
+                        <input type="text" name="price" id="form2Example1" class="form-control" placeholder="Price" />
+                    </div>
+                    <div class="form-outline mb-4 mt-4">
+                        <input type="file" name="image" id="form2Example1" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Description</label>
+                        <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-outline mb-4 mt-4">
                         <input type="text" name="stock_quantity" class="form-control" placeholder="Stock Quantity" />
-                </div>
+                    </div>
 
-                <div class="form-outline mb-4 mt-4">
+                    <div class="form-outline mb-4 mt-4">
+                        <select name="type" class="form-select form-control" aria-label="Default select example">
+                            <option selected>Choose Type</option>
+                            <option value="drink">Drink</option>
+                            <option value="dessert">Dessert</option>
+                            <option value="appetizer">Appetizer</option>
+                        </select>
+                    </div>
 
-                  <select name="type" class="form-select  form-control" aria-label="Default select example">
-                    <option selected>Choose Type</option>
-                    <option value="drink">Drink</option>
-                    <option value="dessert">Dessert</option>
-                    <option value="appetizer">Appetizer</option>
-                  </select>
-                </div>
+                    <br />
 
-                <br>
-              
-
-      
-                <!-- Submit button -->
-                <button type="submit" name="submit" class="btn btn-primary  mb-4 text-center"><i class="fa-solid fa-plus"></i> Create</button>
-
-          
-              </form>
-
+                    <!-- Submit button -->
+                    <button type="submit" name="submit" class="btn btn-primary mb-4 text-center"><i class="fa-solid fa-plus"></i> Create</button>
+                </form>
             </div>
-          </div>
         </div>
-      </div>
+    </div>
+</div>
 
 <?php require "../layouts/footer.php"; ?>
