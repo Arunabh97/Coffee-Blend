@@ -199,12 +199,17 @@
 				<input name="pro_id" value="<?php echo $singleProduct->id; ?>" type="hidden">
 				<input name="description" value="<?php echo $singleProduct->description; ?>" type="hidden">
 				<?php if(isset($_SESSION['user_id'])) :?>
+          <?php if ($singleProduct->stock_quantity > 0) : ?>
+            <p class="availability" style="color: yellow;">In Stock (<?php echo $singleProduct->stock_quantity; ?> available)</p>
 				<?php if($rowCount > 0) : ?>
 					<button name="submit" type="submit" class="btn btn-secondary py-3 px-5" disabled>Added to Cart</button>
 				<?php else : ?>
 					<button name="submit" type="submit" class="btn btn-primary py-3 px-5" style="color: white !important; z-index: 1;font-size: 15px;">Add to Cart</button>
 
 				<?php endif; ?>
+        <?php else : ?>
+          <p class="availability" style="color: red;">Out of Stock</p>
+<?php endif; ?>
 				<?php else :  ?>
 					<p><a href="<?php echo APPURL; ?>/login.php" style="color: blue; text-decoration: none;" onmouseover="this.style.color='red'" onmouseout="this.style.color='blue'">Login To Add Product To Cart</a>
           </p>
@@ -263,4 +268,4 @@
     </div>
 </section>
 
-	<?php require "../includes/footer.php"; ?>
+<?php require "../includes/footer.php"; ?>

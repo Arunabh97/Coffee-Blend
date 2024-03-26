@@ -193,27 +193,31 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
 							</div>
 							<div class="d-block">
 								<p><?php echo $drink->description; ?></p>
-								<?php
-								$productId = isset($drink) ? $drink->id : null;
-
-								if ($productId !== null && isset($_SESSION['user_id'])) { // Check if user is logged in
-									$checkIfExists = $conn->prepare("SELECT * FROM cart WHERE user_id = ? AND pro_id = ?");
-									$checkIfExists->execute([$_SESSION['user_id'], $productId]);
-									$productInCart = $checkIfExists->fetch();
-									?>
-									<button class="btn btn-primary float-right add-to-cart-btn" data-product-id="<?php echo $productId; ?>" <?php echo ($productInCart ? 'disabled' : ''); ?>>
-										<?php echo $productInCart ? 'Added to Cart' : 'Add to Cart'; ?>
-									</button>
+								<?php if ($drink->stock_quantity > 0) : ?>
+									<span class="availability" style="color: yellow;">In Stock (<?php echo $drink->stock_quantity; ?> available)</span>
 									<?php
-								}
-								?>
+									$productId = $drink->id;
+									if (isset($_SESSION['user_id'])) { // Check if user is logged in
+										$checkIfExists = $conn->prepare("SELECT * FROM cart WHERE user_id = ? AND pro_id = ?");
+										$checkIfExists->execute([$_SESSION['user_id'], $productId]);
+										$productInCart = $checkIfExists->fetch();
+										?>
+										<button class="btn btn-primary float-right add-to-cart-btn" data-product-id="<?php echo $productId; ?>" <?php echo ($productInCart ? 'disabled' : ''); ?>>
+											<?php echo $productInCart ? 'Added to Cart' : 'Add to Cart'; ?>
+										</button>
+									<?php
+									}
+									?>
+								<?php else : ?>
+									<p class="availability"><span class="text-danger">Out of Stock</span></p>
+								<?php endif; ?>
 							</div>
 						</div>
 					</div>
 				<?php endforeach; ?>
 			</div>
 
-
+			
             <div class="col-md-6 product-category-container">
 				<h3 class="mb-5 heading-pricing ftco-animate">Desserts</h3>
 				<?php foreach($allDesserts as $dessert) : ?>
@@ -226,20 +230,24 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
 							</div>
 							<div class="d-block">
 								<p><?php echo $dessert->description; ?></p>
-								<?php
-								$productId = isset($dessert) ? $dessert->id : null;
-
-								if ($productId !== null && isset($_SESSION['user_id'])) { // Check if user is logged in
-									$checkIfExists = $conn->prepare("SELECT * FROM cart WHERE user_id = ? AND pro_id = ?");
-									$checkIfExists->execute([$_SESSION['user_id'], $productId]);
-									$productInCart = $checkIfExists->fetch();
-									?>
-									<button class="btn btn-primary float-right add-to-cart-btn" data-product-id="<?php echo $productId; ?>" <?php echo ($productInCart ? 'disabled' : ''); ?>>
-										<?php echo $productInCart ? 'Added to Cart' : 'Add to Cart'; ?>
-									</button>
+								<?php if ($dessert->stock_quantity > 0) : ?>
+									<span class="availability" style="color: yellow;">In Stock (<?php echo $dessert->stock_quantity; ?> available)</span>
 									<?php
-								}
-								?>
+									$productId = $dessert->id;
+									if (isset($_SESSION['user_id'])) { // Check if user is logged in
+										$checkIfExists = $conn->prepare("SELECT * FROM cart WHERE user_id = ? AND pro_id = ?");
+										$checkIfExists->execute([$_SESSION['user_id'], $productId]);
+										$productInCart = $checkIfExists->fetch();
+										?>
+										<button class="btn btn-primary float-right add-to-cart-btn" data-product-id="<?php echo $productId; ?>" <?php echo ($productInCart ? 'disabled' : ''); ?>>
+											<?php echo $productInCart ? 'Added to Cart' : 'Add to Cart'; ?>
+										</button>
+									<?php
+									}
+									?>
+								<?php else : ?>
+									<span class="availability"><span class="text-danger">Out of Stock</span></span>
+								<?php endif; ?>
 							</div>
 						</div>
 					</div>
@@ -259,20 +267,24 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
 							</div>
 							<div class="d-block">
 								<p><?php echo $appetizer->description; ?></p>
-								<?php
-								$productId = isset($appetizer) ? $appetizer->id : null;
-
-								if ($productId !== null && isset($_SESSION['user_id'])) { // Check if user is logged in
-									$checkIfExists = $conn->prepare("SELECT * FROM cart WHERE user_id = ? AND pro_id = ?");
-									$checkIfExists->execute([$_SESSION['user_id'], $productId]);
-									$productInCart = $checkIfExists->fetch();
-									?>
-									<button class="btn btn-primary float-right add-to-cart-btn" data-product-id="<?php echo $productId; ?>" <?php echo ($productInCart ? 'disabled' : ''); ?>>
-										<?php echo $productInCart ? 'Added to Cart' : 'Add to Cart'; ?>
-									</button>
+								<?php if ($appetizer->stock_quantity > 0) : ?>
+									<span class="availability" style="color: yellow;">In Stock (<?php echo $appetizer->stock_quantity; ?> available)</span>
 									<?php
-								}
-								?>
+									$productId = $appetizer->id;
+									if (isset($_SESSION['user_id'])) { // Check if user is logged in
+										$checkIfExists = $conn->prepare("SELECT * FROM cart WHERE user_id = ? AND pro_id = ?");
+										$checkIfExists->execute([$_SESSION['user_id'], $productId]);
+										$productInCart = $checkIfExists->fetch();
+										?>
+										<button class="btn btn-primary float-right add-to-cart-btn" data-product-id="<?php echo $productId; ?>" <?php echo ($productInCart ? 'disabled' : ''); ?>>
+											<?php echo $productInCart ? 'Added to Cart' : 'Add to Cart'; ?>
+										</button>
+									<?php
+									}
+									?>
+								<?php else : ?>
+									<span class="availability"><span class="text-danger">Out of Stock</span></span>
+								<?php endif; ?>
 							</div>
 						</div>
 					</div>
@@ -330,6 +342,11 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
 											<h3><a href="products/product-single.php?id=<?php echo $drink->id; ?>"><?php echo strlen($drink->name) > 15 ? substr($drink->name, 0, 15) . '...' : $drink->name; ?></a></h3>
 												<p><?php echo strlen($drink->description) > 50 ? substr($drink->description, 0, 50) . '...' : $drink->description; ?></p>
 												<p class="price"><span>₹<?php echo $drink->price; ?></span></p>
+												<?php if ($drink->stock_quantity > 0) : ?>
+													<p class="availability"><span style="color: yellow;">In Stock (<?php echo $drink->stock_quantity; ?> available)</span></p>
+												<?php else : ?>
+													<p class="availability"><span class="text-danger">Out of Stock</span></p>
+												<?php endif; ?>
 												<p><a href="products/product-single.php?id=<?php echo $drink->id; ?>" class="btn btn-primary btn-outline-primary">Show</a></p>
 											</div>
 										</div>
@@ -365,6 +382,11 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
 											<h3><a href="products/product-single.php?id=<?php echo $dessert->id; ?>"><?php echo strlen($dessert->name) > 15 ? substr($dessert->name, 0, 15) . '...' : $dessert->name; ?></a></h3>
 												<p><?php echo strlen($dessert->description) > 50 ? substr($dessert->description, 0, 50) . '...' : $dessert->description; ?></p>
 												<p class="price"><span>₹<?php echo $dessert->price; ?></span></p>
+												<?php if ($dessert->stock_quantity > 0) : ?>
+													<p class="availability"><span style="color: yellow;">In Stock (<?php echo $dessert->stock_quantity; ?> available)</span></p>
+												<?php else : ?>
+													<p class="availability"><span class="text-danger">Out of Stock</span></p>
+												<?php endif; ?>
 												<p><a href="products/product-single.php?id=<?php echo $dessert->id; ?>" class="btn btn-primary btn-outline-primary">Show</a></p>
 											</div>
 										</div>
@@ -400,6 +422,11 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
 											<h3><a href="products/product-single.php?id=<?php echo $appetizer->id; ?>"><?php echo strlen($appetizer->name) > 15 ? substr($appetizer->name, 0, 15) . '...' : $appetizer->name; ?></a></h3>
 												<p><?php echo strlen($appetizer->description) > 50 ? substr($appetizer->description, 0, 50) . '...' : $appetizer->description; ?></p>
 												<p class="price"><span>₹<?php echo $appetizer->price; ?></span></p>
+												<?php if ($appetizer->stock_quantity > 0) : ?>
+													<p class="availability"><span style="color: yellow;">In Stock (<?php echo $appetizer->stock_quantity; ?> available)</span></p>
+												<?php else : ?>
+													<p class="availability"><span class="text-danger">Out of Stock</span></p>
+												<?php endif; ?>
 												<p><a href="products/product-single.php?id=<?php echo $appetizer->id; ?>" class="btn btn-primary btn-outline-primary">Show</a></p>
 											</div>
 										</div>

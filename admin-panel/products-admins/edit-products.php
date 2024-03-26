@@ -19,6 +19,7 @@ if (isset($_GET['id'])) {
         $updatedDescription = $_POST['description'];
         $updatedType = $_POST['type'];
         $updatedImage = $_FILES['image']['name'];
+        $updatedStockQuantity = $_POST['stock_quantity'];
 
         // Check if a new image is uploaded
         if (!empty($updatedImage)) {
@@ -30,8 +31,8 @@ if (isset($_GET['id'])) {
         }
 
         // Update the product details in the database
-        $updateStmt = $conn->prepare("UPDATE products SET name = ?, price = ?, description = ?, type = ?, image = ? WHERE id = ?");
-        $updateStmt->execute([$updatedName, $updatedPrice, $updatedDescription, $updatedType, $updatedImage, $productId]);
+        $updateStmt = $conn->prepare("UPDATE products SET name = ?, price = ?, description = ?, type = ?, image = ?, stock_quantity = stock_quantity + ? WHERE id = ?");
+        $updateStmt->execute([$updatedName, $updatedPrice, $updatedDescription, $updatedType, $updatedImage, $updatedStockQuantity, $productId]);
 
         //header("Location: show-products.php");
         echo "<script>window.location.href = 'show-products.php';</script>";
@@ -75,6 +76,10 @@ if (isset($_GET['id'])) {
                             <option value="dessert" <?php echo ($product->type === 'dessert') ? 'selected' : ''; ?>>Dessert</option>
                             <option value="appetizer" <?php echo ($product->type === 'appetizer') ? 'selected' : ''; ?>>Appetizer</option>
                         </select>
+                    </div>
+                    <!-- Stock quantity input -->
+                    <div class="form-outline mb-4 mt-4">
+                        <input type="number" name="stock_quantity" id="form2Example1" class="form-control" placeholder="Stock Quantity" value="<?php echo $product->stock_quantity; ?>" required />
                     </div>
                     <br>
                     <!-- Submit button -->

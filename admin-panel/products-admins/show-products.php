@@ -173,6 +173,7 @@ $totalPages = ceil($totalProducts / $productsPerPage);
                             <th scope="col"><i class="fas fa-image"></i> Image</th>
                             <th scope="col"><i class="fas fa-rupee-sign"></i> Price</th>
                             <th scope="col"><i class="fas fa-folder"></i> Type</th>
+                            <th scope="col"><i class="fas fa-cubes"></i> Stock</th>
                             <th scope="col"><i class="fas fa-cogs"></i> Action</th>
                         </tr>
                     </thead>
@@ -184,6 +185,7 @@ $totalPages = ceil($totalProducts / $productsPerPage);
                                 <td><img src="images/<?php echo $product->image; ?>" style="width: 60px; height:60px;"></td>
                                 <td>₹<?php echo $product->price; ?></td>
                                 <td><?php echo $product->type; ?></td>
+                                <td><?php echo $product->stock_quantity; ?></td>
                                 <td>
                                     <a href="delete-products.php?id=<?php echo $product->id; ?>" class="btn btn-danger  text-center"><i class="fas fa-trash-alt"></i> Delete</a>
                                     <a href="edit-products.php?id=<?php echo $product->id; ?>" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>

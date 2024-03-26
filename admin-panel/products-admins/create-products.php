@@ -1,46 +1,46 @@
 <?php require "../layouts/header.php"; ?>
 <?php require "../../config/config.php"; ?>
-<?php
 
-if(!isset ($_SESSION['admin_name'])){
-  header("location: ".ADMINURL."/admins/login-admins.php");
+<?php
+if (!isset($_SESSION['admin_name'])) {
+    header("location: " . ADMINURL . "/admins/login-admins.php");
 }
 
 if (isset($_POST['submit'])) {
+    if (empty($_POST['name']) || empty($_POST['price']) || empty($_POST['description']) || empty($_POST['type']) || empty($_POST['stock_quantity'])) {
+        echo "<script>alert('One or more inputs are empty');</script>";
+    } else {
+        $name = $_POST['name'];
+        $price = $_POST['price'];
+        $description = $_POST['description'];
+        $type = $_POST['type'];
+        $stock_quantity = $_POST['stock_quantity'];
+        $image = $_FILES['image']['name'];
 
-  if (empty($_POST['name']) || empty($_POST['price']) || empty($_POST['description']) || empty($_POST['type'])) {
-      echo "<script>alert('One or more inputs are empty');</script>";
-  } else {
-      $name = $_POST['name'];
-      $price = $_POST['price'];
-      $description = $_POST['description'];
-      $type = $_POST['type'];
-      $image = $_FILES['image']['name'];
+        $dir = "images/" . basename($image);
 
-      $dir = "images/" . basename($image);
+        $insert = $conn->prepare("INSERT INTO products (name, price, description, type, stock_quantity, image) 
+        VALUES (:name, :price, :description, :type, :stock_quantity, :image)");
 
-      // Assuming $conn is your database connection object
-      $insert = $conn->prepare("INSERT INTO products (name, price, description, type, image) 
-      VALUES (:name, :price, :description, :type, :image)");
+        $insert->execute([
+            ":name" => $name,
+            ":price" => $price,
+            ":description" => $description,
+            ":type" => $type,
+            ":stock_quantity" => $stock_quantity,
+            ":image" => $image,
+        ]);
 
-      $insert->execute([
-          ":name" => $name,
-          ":price" => $price,
-          ":description" => $description,
-          ":type" => $type,
-          ":image" => $image,
-      ]);
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $dir)) {
+            echo "<script>window.location.href = 'show-products.php';</script>";
+        }
 
-      if(move_uploaded_file($_FILES['image']['tmp_name'], $dir)) {
-        //header("location: show-products.php");
-        echo "<script>window.location.href = 'show-products.php';</script>";
-      }
-
-      exit(); 
-  }
+        exit();
+    }
 }
 
 ?>
+
        <div class="row">
         <div class="col">
           <div class="card">
@@ -49,11 +49,11 @@ if (isset($_POST['submit'])) {
           <form method="POST" action="create-products.php" enctype="multipart/form-data">
                 <!-- Email input -->
                 <div class="form-outline mb-4 mt-4">
-                  <input type="text" name="name" id="form2Example1" class="form-control" placeholder="name" />
+                  <input type="text" name="name" id="form2Example1" class="form-control" placeholder="Name" />
                  
                 </div>
                 <div class="form-outline mb-4 mt-4">
-                  <input type="text" name="price" id="form2Example1" class="form-control" placeholder="price" />
+                  <input type="text" name="price" id="form2Example1" class="form-control" placeholder="Price" />
                  
                 </div>
                 <div class="form-outline mb-4 mt-4">
@@ -66,12 +66,16 @@ if (isset($_POST['submit'])) {
                 </div>
                
                 <div class="form-outline mb-4 mt-4">
+                        <input type="text" name="stock_quantity" class="form-control" placeholder="Stock Quantity" />
+                </div>
+
+                <div class="form-outline mb-4 mt-4">
 
                   <select name="type" class="form-select  form-control" aria-label="Default select example">
                     <option selected>Choose Type</option>
-                    <option value="drink">drink</option>
-                    <option value="dessert">dessert</option>
-                    <option value="appetizer">appetizer</option>
+                    <option value="drink">Drink</option>
+                    <option value="dessert">Dessert</option>
+                    <option value="appetizer">Appetizer</option>
                   </select>
                 </div>
 

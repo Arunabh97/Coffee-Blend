@@ -84,19 +84,24 @@ if (isset($_POST['submit'])) {
 		foreach ($cartItems as $cartItem) {
 			$insertOrderItems->execute([
 				':order_id'   => $order_id,
-				':product_id' => $cartItem['pro_id'], // adjust this based on your cart structure
+				':product_id' => $cartItem['pro_id'], 
 				':quantity'   => $cartItem['quantity'],
 				':price'      => $cartItem['price'],
 				':product_name' => $cartItem['name'],
 				':product_image'      => $cartItem['image'],
 
 			]);
-		}
-		//header("location: pay.php");
+		
+		$updateStockQuantity = $conn->prepare("UPDATE products SET stock_quantity = stock_quantity - :quantity WHERE id = :product_id");
+		$updateStockQuantity->execute([
+			':quantity'   => $cartItem['quantity'],
+			':product_id' => $cartItem['pro_id'],
+		]);
+	}
+
 		echo '<script>window.location.href="pay.php";</script>';
 	}
 }
-
 
 ?>
     <section class="home-slider owl-carousel">
