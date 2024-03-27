@@ -73,6 +73,9 @@
           <li class="nav-item">
             <a class="nav-link" href="<?php echo ADMINURL; ?>/bookings-admins/show-bookings.php" style="margin-left: 20px;"><i class="far fa-calendar"></i> Bookings</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?php echo ADMINURL; ?>/payments-admin/show-payments.php" style="margin-left: 20px;"><i class="fas fa-money-bill-wave"></i> Payments</a>
+          </li>
         </ul>
         <?php endif; ?>
         <ul class="navbar-nav ml-md-auto d-md-flex">
