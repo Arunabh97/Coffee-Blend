@@ -190,15 +190,6 @@ if ($filter == 'all') {
                     }
                     echo "</ul>";
 
-                    // Revenue Generated
-                    $totalRevenue = 0;
-                    foreach ($allBookings as $booking) {
-                        if (property_exists($booking, 'price')) {
-                            $totalRevenue += $booking->price;
-                        }
-                    }
-
-                    echo "<p class='overview-info'>Total Revenue Generated: <span class='overview-value'>$totalRevenue</span></p>";
                     ?>
                 </div>
             </div>
