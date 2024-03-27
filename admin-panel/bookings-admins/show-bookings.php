@@ -11,7 +11,7 @@ $bookingsPerPage = 10;
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $offset = ($page - 1) * $bookingsPerPage;
 
-$bookingsQuery = $conn->prepare("SELECT * FROM bookings LIMIT :offset, :per_page");
+$bookingsQuery = $conn->prepare("SELECT * FROM bookings ORDER BY created_at DESC LIMIT :offset, :per_page");
 $bookingsQuery->bindParam(':offset', $offset, PDO::PARAM_INT);
 $bookingsQuery->bindParam(':per_page', $bookingsPerPage, PDO::PARAM_INT);
 $bookingsQuery->execute();

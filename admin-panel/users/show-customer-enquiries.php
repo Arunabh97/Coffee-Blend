@@ -64,6 +64,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["change_status"])) {
 
     .closed-inquiry td {
     text-decoration: line-through;
+    text-decoration-color: red;
+    text-decoration-thickness: 2px;
     }
 
 </style>
@@ -75,13 +77,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["change_status"])) {
                 <h5 class="card-title mb-4 d-inline"><i class="fas fa-envelope"></i> Customer Inquiries</h5>
                 <?php
                 try {
-                    // Fetch customer inquiries from the database
-                    $sql = "SELECT * FROM customer_inquiries";
+                    $sql = "SELECT * FROM customer_inquiries ORDER BY id DESC";
                     $stmt = $conn->query($sql);
 
-                    // Check if there are any inquiries
                     if ($stmt->rowCount() > 0) {
-                        // Display the inquiries in a table
+
                         echo '<table class="table">
                                 <thead>
                                     <tr>
@@ -121,11 +121,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["change_status"])) {
 
                         echo '</tbody></table>';
                     } else {
-                        // Display a message if there are no inquiries
                         echo '<p class="no-inquiries">No customer inquiries found.</p>';
                     }
                 } catch (PDOException $e) {
-                    // Handle any PDO exceptions here
                     echo 'PDOException: ' . $e->getMessage();
                 }
                 ?>

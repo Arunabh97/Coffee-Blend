@@ -24,7 +24,7 @@ if (!isset($_SESSION['admin_name'])) {
       $query .= " AND status = :filterType";
   }
   
-  $query .= " LIMIT :offset, :per_page";
+  $query .= " ORDER BY created_at DESC LIMIT :offset, :per_page";
   
   $ordersQuery = $conn->prepare($query);
   $ordersQuery->bindParam(':offset', $offset, PDO::PARAM_INT);
