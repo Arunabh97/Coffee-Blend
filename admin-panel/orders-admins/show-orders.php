@@ -158,7 +158,7 @@ if (!isset($_SESSION['admin_name'])) {
                         </form>
                     </div>
 
-                <table class="table">
+                <table class="table table-striped table-hover">
                     <thead>
                     <tr>
                     <th scope="col">S No.</th>

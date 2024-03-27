@@ -101,7 +101,7 @@ $totalPages = ceil($totalAdmins / $adminsPerPage);
             <div class="card-body">
               <h5 class="card-title mb-4 d-inline"><i class="fas fa-user-tie"></i> Admins</h5>
              <a  href="create-admins.php" class="btn btn-primary mb-4 text-center float-right"><i class="fa-solid fa-plus"></i> Create Admins</a>
-              <table class="table">
+              <table class="table table-striped table-hover">
                 <thead>
                   <tr>
                     <th scope="col"><i class="fas fa-id-card"></i> Id</th>

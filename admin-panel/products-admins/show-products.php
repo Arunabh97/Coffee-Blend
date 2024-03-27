@@ -175,10 +175,10 @@ $totalPages = ceil($totalProducts / $productsPerPage);
                         <p class="lead">Filtering by product type: <strong><?php echo htmlspecialchars($productType); ?></strong></p>
                     <?php endif; ?>
 
-                <table class="table">
+                <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th scope="col"><i class="fas fa-hashtag"></i> Id</th>
+                            <th scope="col"><i class="fas fa-id-card"></i> Id</th>
                             <th scope="col"><i class="fas fa-user"></i> Name</th>
                             <th scope="col"><i class="fas fa-image"></i> Image</th>
                             <th scope="col"><i class="fas fa-rupee-sign"></i> Price</th>

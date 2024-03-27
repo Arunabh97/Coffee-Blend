@@ -82,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["change_status"])) {
 
                     if ($stmt->rowCount() > 0) {
 
-                        echo '<table class="table">
+                        echo '<table class="table table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th>Name</th>

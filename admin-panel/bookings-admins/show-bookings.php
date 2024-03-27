@@ -211,10 +211,10 @@ if ($filter == 'all') {
                     </select>
                 </div>
 
-              <table class="table">
+              <table class="table table-striped table-hover">
                 <thead>
                   <tr>
-                  <th scope="col"><i class="fas fa-hashtag"></i> Id</th>
+                  <th scope="col"><i class="fas fa-id-card"></i> Id</th>
                   <th scope="col"><i class="fas fa-user"></i> First Name</th>
                   <th scope="col"><i class="fas fa-user"></i> Last Name</th>
                   <th scope="col"><i class="fas fa-calendar"></i> Date</th>
