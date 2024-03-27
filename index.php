@@ -155,6 +155,20 @@
 			transform: rotate(45deg) scale(1.2);
 		}
 	}
+
+	.testimonial-image {
+		display: none; 
+		text-align: center; 
+	}
+
+	.testimonial-image img {
+		max-width: 100%; 
+		max-height: 300px; 
+		border-radius: 8px; 
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+		margin-top: 10px; 
+	}
+
 </style>
 
 <script>
@@ -520,7 +534,7 @@
         </div>
     </div>
     <div class="container-wrap">
-        <div id="testimonialCarousel" class="carousel slide" data-ride="carousel">
+		<div id="testimonialCarousel" class="carousel slide" data-ride="carousel">
 			<div class="carousel-inner">
 				<?php $reviewsChunks = array_chunk($allReviews, 4); ?>
 				<?php foreach ($reviewsChunks as $index => $reviewsChunk) : ?>
@@ -528,20 +542,25 @@
 						<div class="row">
 							<?php foreach ($reviewsChunk as $review) : ?>
 								<div class="col-md-3 ftco-animate d-flex align-items-center">
-									<div class="testimony">
-										<blockquote>
-											<p>&ldquo;<?php echo $review->review; ?>.&rdquo;</p>
-										</blockquote>
-										<div class="rating">
-											<?php
-											// Display stars based on the user rating
-											for ($i = 1; $i <= 5; $i++) {
-												echo ($i <= $review->rating) ? '★' : '☆';
-											}
-											?>
+									<div class="testimony" onclick="flipTestimony(this)">
+										<div class="testimonial-content">
+											<blockquote>
+												<p>&ldquo;<?php echo $review->review; ?>.&rdquo;</p>
+											</blockquote>
+											<div class="rating">
+												<?php
+												// Display stars based on the user rating
+												for ($i = 1; $i <= 5; $i++) {
+													echo ($i <= $review->rating) ? '★' : '☆';
+												}
+												?>
+											</div>
+											<div class="author d-flex mt-4">
+												<div class="name align-self-center">~ <?php echo $review->username; ?></div>
+											</div>
 										</div>
-										<div class="author d-flex mt-4">
-											<div class="name align-self-center">~ <?php echo $review->username; ?></div>
+										<div class="testimonial-image" style="display: none;">
+											<img src="reviews/uploads/<?php echo $review->image; ?>" alt="Review Image">
 										</div>
 									</div>
 								</div>
@@ -556,10 +575,12 @@
 				<?php endforeach; ?>
 			</ol>
 		</div>
-    </div>
+	</div>
+
 </section>
 
 <script>
+	
     $(document).ready(function() {
         $('.appointment_time').timepicker({
             timeFormat: 'H:i',
@@ -571,6 +592,20 @@
             scrollbar: true
         });
     });
+
+	function flipTestimony(element) {
+    var testimonialContent = element.querySelector('.testimonial-content');
+    var testimonialImage = element.querySelector('.testimonial-image');
+
+    if (testimonialContent.style.display === 'block') {
+        testimonialContent.style.display = 'none';
+        testimonialImage.style.display = 'block';
+    } else {
+        testimonialContent.style.display = 'block';
+        testimonialImage.style.display = 'none';
+    }
+}
+
 </script>
 
 <?php require "includes/footer.php"; ?>
