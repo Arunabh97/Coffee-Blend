@@ -77,6 +77,10 @@ $totalPages = ceil($totalProducts / $productsPerPage);
         margin-right: 5px;
     }
 
+    .btn {
+        border-radius: 15px; 
+    }
+
     .pagination {
         margin-top: 20px;
         display: flex;

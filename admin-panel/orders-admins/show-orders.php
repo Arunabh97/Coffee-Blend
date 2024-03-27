@@ -74,6 +74,10 @@ if (!isset($_SESSION['admin_name'])) {
         margin-right: 5px;
     }
 
+    .btn {
+        border-radius: 15px; 
+    }
+
     .pagination {
         margin-top: 20px;
         display: flex;

@@ -51,7 +51,8 @@ $adminsCount = $admins->fetch(PDO::FETCH_OBJ);
   }
 
   .custom-btn {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    border-radius: 20px;
   }
 </style>
 

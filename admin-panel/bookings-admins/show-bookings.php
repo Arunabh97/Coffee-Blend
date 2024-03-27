@@ -82,11 +82,16 @@ if ($filter == 'all') {
     .btn-action {
         margin-right: 5px;
     }
+
+    .btn {
+        border-radius: 15px; 
+    }
+
     #bookingChart {
         max-width: 100%;
         max-height: 100%;
     }
-    /* Add these styles to your existing styles */
+
     .dashboard-container {
         display: flex;
         justify-content: space-between;
