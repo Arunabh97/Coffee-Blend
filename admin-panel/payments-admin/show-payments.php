@@ -2,14 +2,24 @@
 require "../layouts/header.php";
 require "../../config/config.php";
 
-// Check if the user is logged in
 if (!isset($_SESSION['admin_name'])) {
     header("location: " . ADMINURL . "/admins/login-admins.php");
-    exit(); // Stop further execution
+    exit(); 
 }
 
-$paymentsQuery = $conn->query("SELECT id, user_id, payment_id, amount_paid, status, timestamp FROM payments ORDER BY timestamp DESC");
+$paymentsPerPage = 10;
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$offset = ($page - 1) * $paymentsPerPage;
+
+$paymentsQuery = $conn->prepare("SELECT id, user_id, payment_id, amount_paid, status, timestamp FROM payments ORDER BY timestamp DESC LIMIT :offset, :per_page");
+$paymentsQuery->bindParam(':offset', $offset, PDO::PARAM_INT);
+$paymentsQuery->bindParam(':per_page', $paymentsPerPage, PDO::PARAM_INT);
+$paymentsQuery->execute();
 $payments = $paymentsQuery->fetchAll(PDO::FETCH_ASSOC);
+
+// Total number of payments
+$totalPayments = $conn->query("SELECT COUNT(*) FROM payments")->fetchColumn();
+$totalPages = ceil($totalPayments / $paymentsPerPage);
 
 ?>
 
@@ -41,6 +51,30 @@ $payments = $paymentsQuery->fetchAll(PDO::FETCH_ASSOC);
         margin-right: 5px;
     }
 
+    .pagination {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .pagination a {
+        color: #007bff;
+        padding: 8px 12px;
+        text-decoration: none;
+        background-color: #f5f5f5;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin: 0 5px;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .pagination a.active,
+    .pagination a:hover {
+        background-color: #007bff;
+        color: #fff;
+        border-color: #007bff;
+    }
 </style>
 
 <div class="row">
@@ -61,7 +95,7 @@ $payments = $paymentsQuery->fetchAll(PDO::FETCH_ASSOC);
                         </tr>
                     </thead>
                     <tbody>
-                    <?php $serialNo = 1; ?>
+                    <?php $serialNo = $offset + 1; ?>
                     <?php foreach ($payments as $payment) : ?>
                         <tr>
                             <td><?php echo $serialNo++; ?></td>
@@ -75,6 +109,34 @@ $payments = $paymentsQuery->fetchAll(PDO::FETCH_ASSOC);
                     <?php endforeach; ?>
                     </tbody>
                 </table>
+
+                <div class="pagination">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <?php if ($page > 1) : ?>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=<?php echo $page - 1; ?>" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                </li>
+                            <?php endif; ?>
+                            <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
+                                <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
+                                    <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                                </li>
+                            <?php endfor; ?>
+                            <?php if ($page < $totalPages) : ?>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=<?php echo $page + 1; ?>" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </li>
+                            <?php endif; ?>
+                        </ul>
+                    </nav>
+                </div>
             </div>
         </div>
     </div>
