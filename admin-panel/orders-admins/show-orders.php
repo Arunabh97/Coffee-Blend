@@ -88,7 +88,7 @@ $allOrders = $ordersQuery->fetchAll(PDO::FETCH_OBJ);
                             <button type="submit" class="btn btn-primary mb-2"><i class="fa-solid fa-filter"></i> </button>
                         </form>
                     </div>
-
+                </div>
                     <?php if (!empty($filterType)) : ?>
                     <p class="lead">Filtering by status type: <strong><?php echo htmlspecialchars($filterType); ?></strong></p>
                     <?php endif; ?>
