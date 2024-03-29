@@ -29,6 +29,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["change_status"])) {
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
 <style>
     .card {
         border-radius: 15px;
@@ -74,61 +78,67 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["change_status"])) {
     <div class="col">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title mb-4 d-inline"><i class="fas fa-envelope"></i> Customer Inquiries</h5>
-                <?php
-                try {
-                    $sql = "SELECT * FROM customer_inquiries ORDER BY id DESC";
-                    $stmt = $conn->query($sql);
+                <div class="row mb-3">
+                    <div class="col-md-8">
+                        <h5 class="card-title mb-4 d-inline"><i class="fas fa-envelope"></i> Customer Inquiries</h5>
+                    </div>
+                </div>
+                <table id="inquiriesTable" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Subject</th>
+                            <th>Message</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        try {
+                            $sql = "SELECT * FROM customer_inquiries ORDER BY id DESC";
+                            $stmt = $conn->query($sql);
 
-                    if ($stmt->rowCount() > 0) {
-
-                        echo '<table class="table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Subject</th>
-                                        <th>Message</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>';
-
-                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-
-                            $status_class = ($row['status'] == 'closed') ? 'closed-inquiry' : '';
-
-                            echo '<tr class="' . $status_class . '">';
-                            echo '<td>' . $row['name'] . '</td>';
-                            echo '<td>' . $row['email'] . '</td>';
-                            echo '<td>' . $row['subject'] . '</td>';
-                            echo '<td>' . $row['message'] . '</td>';
-                            echo '<td>' . $row['status'] . '</td>';
-                            echo '<td>
-                                    <form method="post" action="">
-                                        <input type="hidden" name="inquiry_id" value="' . $row['id'] . '">
-                                        <select name="new_status">
-                                            <option value="pending" ' . ($row['status'] == 'pending' ? 'selected' : '') . '>Pending</option>
-                                            <option value="resolved" ' . ($row['status'] == 'resolved' ? 'selected' : '') . '>Resolved</option>
-                                            <option value="closed" ' . ($row['status'] == 'closed' ? 'selected' : '') . '>Closed</option>
-                                        </select>
-                                        <button type="submit" name="change_status">Change Status</button>
-                                    </form>
-                                  </td>';
-                            echo '</tr>';
+                            if ($stmt->rowCount() > 0) {
+                                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                    $status_class = ($row['status'] == 'closed') ? 'closed-inquiry' : '';
+                                    echo '<tr class="' . $status_class . '">';
+                                    echo '<td>' . $row['name'] . '</td>';
+                                    echo '<td>' . $row['email'] . '</td>';
+                                    echo '<td>' . $row['subject'] . '</td>';
+                                    echo '<td>' . $row['message'] . '</td>';
+                                    echo '<td>' . $row['status'] . '</td>';
+                                    echo '<td>
+                                        <form method="post" action="">
+                                            <input type="hidden" name="inquiry_id" value="' . $row['id'] . '">
+                                            <select name="new_status">
+                                                <option value="pending" ' . ($row['status'] == 'pending' ? 'selected' : '') . '>Pending</option>
+                                                <option value="resolved" ' . ($row['status'] == 'resolved' ? 'selected' : '') . '>Resolved</option>
+                                                <option value="closed" ' . ($row['status'] == 'closed' ? 'selected' : '') . '>Closed</option>
+                                            </select>
+                                            <button type="submit" name="change_status">Change Status</button>
+                                        </form>
+                                    </td>';
+                                    echo '</tr>';
+                                }
+                            } else {
+                                echo '<tr><td colspan="6">No customer inquiries found.</td></tr>';
+                            }
+                        } catch (PDOException $e) {
+                            echo 'PDOException: ' . $e->getMessage();
                         }
-
-                        echo '</tbody></table>';
-                    } else {
-                        echo '<p class="no-inquiries">No customer inquiries found.</p>';
-                    }
-                } catch (PDOException $e) {
-                    echo 'PDOException: ' . $e->getMessage();
-                }
-                ?>
+                        ?>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#inquiriesTable').DataTable();
+    });
+</script>
 
