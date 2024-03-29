@@ -54,7 +54,7 @@ $payments = $paymentsQuery->fetchAll(PDO::FETCH_ASSOC);
             <div class="card-body">
                 <div class="row mb-3">
                     <div class="col-md-8">
-                        <h5 class="card-title mb-4 d-inline"><i class="fas fa-money-bill-wave"></i> Payments</h5>
+                        <h5 class="card-title mb-4 d-inline"><i class="fas fa-credit-card"></i> Payments</h5>
                     </div>
                 </div>
 
