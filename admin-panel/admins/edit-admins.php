@@ -51,9 +51,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "<script>window.location.href=window.location.href;</script>";
     exit();
 }
+
 ?>
 
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
 
 <div class="row">
     <div class="col">
@@ -72,17 +74,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <!-- Old Password input -->
                     <div class="form-outline mb-4 mt-4">
-                        <input type="password" name="old_password" class="form-control" placeholder="Old Password" required/>
+                        <div class="input-group">
+                            <input type="password" name="old_password" class="form-control" placeholder="Old Password" required/>
+                            <button type="button" class="btn btn-outline-secondary" id="toggleOldPassword">
+                                <i class="fas fa-eye" id="oldPasswordEye"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <!-- New Password input -->
                     <div class="form-outline mb-4 mt-4">
-                        <input type="password" name="new_password" class="form-control" placeholder="New Password"/>
+                        <div class="input-group">
+                            <input type="password" name="new_password" class="form-control" placeholder="New Password"/>
+                            <button type="button" class="btn btn-outline-secondary" id="toggleNewPassword">
+                                <i class="fas fa-eye" id="newPasswordEye"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Confirm Password input -->
                     <div class="form-outline mb-4">
-                        <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password"/>
+                        <div class="input-group">
+                            <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password"/>
+                            <button type="button" class="btn btn-outline-secondary" id="toggleConfirmPassword">
+                                <i class="fas fa-eye" id="confirmPasswordEye"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Submit button -->
@@ -92,5 +109,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById("toggleOldPassword").addEventListener("click", function() {
+        var oldPasswordInput = document.getElementsByName("old_password")[0];
+        var oldPasswordEye = document.getElementById("oldPasswordEye");
+        if (oldPasswordInput.type === "password") {
+            oldPasswordInput.type = "text";
+            oldPasswordEye.classList.remove("fa-eye");
+            oldPasswordEye.classList.add("fa-eye-slash");
+        } else {
+            oldPasswordInput.type = "password";
+            oldPasswordEye.classList.remove("fa-eye-slash");
+            oldPasswordEye.classList.add("fa-eye");
+        }
+    });
+
+    document.getElementById("toggleNewPassword").addEventListener("click", function() {
+        var newPasswordInput = document.getElementsByName("new_password")[0];
+        var newPasswordEye = document.getElementById("newPasswordEye");
+        if (newPasswordInput.type === "password") {
+            newPasswordInput.type = "text";
+            newPasswordEye.classList.remove("fa-eye");
+            newPasswordEye.classList.add("fa-eye-slash");
+        } else {
+            newPasswordInput.type = "password";
+            newPasswordEye.classList.remove("fa-eye-slash");
+            newPasswordEye.classList.add("fa-eye");
+        }
+    });
+
+    document.getElementById("toggleConfirmPassword").addEventListener("click", function() {
+        var confirmPasswordInput = document.getElementsByName("confirm_password")[0];
+        var confirmPasswordEye = document.getElementById("confirmPasswordEye");
+        if (confirmPasswordInput.type === "password") {
+            confirmPasswordInput.type = "text";
+            confirmPasswordEye.classList.remove("fa-eye");
+            confirmPasswordEye.classList.add("fa-eye-slash");
+        } else {
+            confirmPasswordInput.type = "password";
+            confirmPasswordEye.classList.remove("fa-eye-slash");
+            confirmPasswordEye.classList.add("fa-eye");
+        }
+    });
+</script>
 
 <?php require "../layouts/footer.php"; ?>

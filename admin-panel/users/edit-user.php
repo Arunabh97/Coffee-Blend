@@ -2,132 +2,147 @@
 require "../layouts/header.php";
 require "../../config/config.php";
 
-if (!isset($_SESSION['admin_name'])) {
-    header("location: " . ADMINURL . "/admins/login-admins.php");
+if (!isset($_SESSION['admin_id'])) {
+    header("Location: " . ADMINURL . "/admins/login-admins.php");
     exit();
 }
 
-if (isset($_GET['id'])) {
-    $userId = $_GET['id'];
+if (!isset($_GET['id'])) {
+    header("Location: users.php");
+    exit();
+}
 
-    $getUserQuery = $conn->prepare("SELECT id, username, email, first_name, last_name FROM users WHERE id = :id");
-    $getUserQuery->bindParam(":id", $userId);
-    $getUserQuery->execute();
-    $userData = $getUserQuery->fetch(PDO::FETCH_OBJ);
+$userId = $_GET['id'];
+$userQuery = $conn->prepare("SELECT * FROM users WHERE id = :userId");
+$userQuery->bindParam(':userId', $userId, PDO::PARAM_INT);
+$userQuery->execute();
+$user = $userQuery->fetch(PDO::FETCH_OBJ);
 
-    if (!$userData) {
-        header("location: users.php");
-        exit();
-    }
-} else {
-    header("location: users.php");
+if (!$user) {
+    echo "<script>window.location.href='users.php';</script>";
     exit();
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Validate and process the submitted data
-    // Update user details in the database
-    $updateUserQuery = $conn->prepare("UPDATE users SET username = :username, email = :email, first_name = :first_name, last_name = :last_name WHERE id = :id");
-    $updateUserQuery->bindParam(":id", $userId);
-    $updateUserQuery->bindParam(":username", $_POST['username']);
-    $updateUserQuery->bindParam(":email", $_POST['email']);
-    $updateUserQuery->bindParam(":first_name", $_POST['first_name']);
-    $updateUserQuery->bindParam(":last_name", $_POST['last_name']);
+
+    $first_name = $_POST['first_name'];
+    $last_name = $_POST['last_name'];
+    $username = $_POST['username'];
+    $email = $_POST['email'];
     
-    if ($updateUserQuery->execute()) {
-        // Redirect back to the users page after updating
-        echo "<script>window.location.href = 'users.php';</script>";
+    if(isset($_POST['new_password']) && isset($_POST['confirm_new_password'])) {
+        $new_password = $_POST['new_password'];
+        $confirm_new_password = $_POST['confirm_new_password'];
+        
+        if($new_password === $confirm_new_password) {
+
+            $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+            
+            $updateQuery = $conn->prepare("UPDATE users SET first_name = :first_name, last_name = :last_name, username = :username, email = :email, password = :password WHERE id = :userId");
+            $updateQuery->bindParam(':password', $hashed_password, PDO::PARAM_STR);
+        }
+        else {
+            echo "<script>alert('New password and confirm password do not match');</script>";
+            exit();
+        }
+    }
+
+    $updateQuery->bindParam(':first_name', $first_name, PDO::PARAM_STR);
+    $updateQuery->bindParam(':last_name', $last_name, PDO::PARAM_STR);
+    $updateQuery->bindParam(':username', $username, PDO::PARAM_STR);
+    $updateQuery->bindParam(':email', $email, PDO::PARAM_STR);
+    $updateQuery->bindParam(':userId', $userId, PDO::PARAM_INT);
+    
+    if ($updateQuery->execute()) {
+        echo "<script>alert('User details updated successfully');</script>";
+        echo "<script>window.location.href='users.php';</script>";
         exit();
     } else {
-        // Handle the update failure, if needed
-        echo "Update failed!";
+        echo "<script>alert('Failed to update user details');</script>";
     }
 }
 
 ?>
 
-<style>
-    body {
-        background-color: #f8f9fa;
-    }
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
 
-    .card {
-        border: none;
-        border-radius: 15px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title mb-5 d-inline">Edit User</h5>
+                <form method="POST" action="">
 
-    .card-title {
-        color: #007bff;
-    }
+                    <div class="form-outline mb-4 mt-4">
+                        <input type="text" name="username" class="form-control" placeholder="Username" value="<?php echo $user->username; ?>" required />
+                    </div>
 
-    label {
-        font-weight: bold;
-        color: #495057;
-    }
+                    <div class="form-outline mb-4 mt-4">
+                        <input type="text" name="first_name" class="form-control" placeholder="First Name" value="<?php echo $user->first_name; ?>" required />
+                    </div>
 
-    form {
-        max-width: 400px;
-        margin: auto;
-    }
+                    <div class="form-outline mb-4">
+                        <input type="text" name="last_name" class="form-control" placeholder="Last Name" value="<?php echo $user->last_name; ?>" required />
+                    </div>
 
-    .btn-primary {
-        background-color: #007bff;
-        border: none;
-    }
+                    <div class="form-outline mb-4">
+                        <input type="email" name="email" class="form-control" placeholder="Email" value="<?php echo $user->email; ?>" required />
+                    </div>
+                    
+                    <div class="form-outline mb-4">
+                        <div class="input-group">
+                            <input type="password" name="new_password" id="new_password" class="form-control" placeholder="New Password" required />
+                            <button type="button" class="btn btn-outline-secondary" id="toggleNewPassword">
+                                <i class="fas fa-eye" id="newPasswordEye"></i>
+                            </button>
+                        </div>
+                    </div>
 
-    .btn-primary:hover {
-        background-color: #0056b3;
-    }
+                    <div class="form-outline mb-4">
+                        <div class="input-group">
+                            <input type="password" name="confirm_new_password" id="confirm_new_password" class="form-control" placeholder="Confirm New Password" required />
+                            <button type="button" class="btn btn-outline-secondary" id="toggleConfirmPassword">
+                                <i class="fas fa-eye" id="confirmPasswordEye"></i>
+                            </button>
+                        </div>
+                    </div>
 
-    .btn-back {
-        background-color: #6c757d;
-        border: none;
-    }
-
-    .btn-back:hover {
-        background-color: #5a6268;
-    }
-</style>
-
-<div class="container mt-5">
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title text-center mb-4"><i class="fas fa-user-edit"></i> Edit User</h5>
-
-            <form method="post" action="" class="mt-4">
-                <div class="form-group">
-                    <label for="username">Username:</label>
-                    <input type="text" id="username" name="username" value="<?php echo $userData->username; ?>"
-                           class="form-control" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="first_name">First Name:</label>
-                    <input type="text" id="first_name" name="first_name"
-                           value="<?php echo $userData->first_name; ?>" class="form-control" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="last_name">Last Name:</label>
-                    <input type="text" id="last_name" name="last_name"
-                           value="<?php echo $userData->last_name; ?>" class="form-control" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" value="<?php echo $userData->email; ?>"
-                           class="form-control" required>
-                </div>
-
-                <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-save"></i> Save Changes
-                </button>
-
-                <a href="users.php" class="btn btn-back btn-block mt-3"><i class="fas fa-arrow-left"></i> Back to Users
-                </a>
-            </form>
+                    <button type="submit" name="submit" class="btn btn-primary  mb-4 text-center"><i class="fa fa-refresh"></i> Update</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById("toggleNewPassword").addEventListener("click", function() {
+        var passwordInput = document.getElementById("new_password");
+        var passwordEye = document.getElementById("newPasswordEye");
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            passwordEye.classList.remove("fa-eye");
+            passwordEye.classList.add("fa-eye-slash");
+        } else {
+            passwordInput.type = "password";
+            passwordEye.classList.remove("fa-eye-slash");
+            passwordEye.classList.add("fa-eye");
+        }
+    });
+
+    document.getElementById("toggleConfirmPassword").addEventListener("click", function() {
+        var confirmPasswordInput = document.getElementById("confirm_new_password");
+        var confirmPasswordEye = document.getElementById("confirmPasswordEye");
+        if (confirmPasswordInput.type === "password") {
+            confirmPasswordInput.type = "text";
+            confirmPasswordEye.classList.remove("fa-eye");
+            confirmPasswordEye.classList.add("fa-eye-slash");
+        } else {
+            confirmPasswordInput.type = "password";
+            confirmPasswordEye.classList.remove("fa-eye-slash");
+            confirmPasswordEye.classList.add("fa-eye");
+        }
+    });
+</script>
 
 <?php require "../layouts/footer.php"; ?>
