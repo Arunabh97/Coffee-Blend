@@ -86,12 +86,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["change_status"])) {
                 <table id="inquiriesTable" class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Subject</th>
-                            <th>Message</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th><i class="fas fa-user"></i> Name</th>
+                            <th><i class="fas fa-envelope"></i> Email</th>
+                            <th><i class="fas fa-book"></i> Subject</th>
+                            <th><i class="fas fa-comment"></i> Message</th>
+                            <th><i class="fas fa-info-circle"></i> Status</th>
+                            <th><i class="fas fa-cog"></i> Action</th>
                         </tr>
                     </thead>
                     <tbody>
