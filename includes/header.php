@@ -222,30 +222,40 @@ if (isset($_SESSION['user_id'])) {
 	      </button>
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item active"><a href="<?php echo APPURL; ?>" class="nav-link">Home</a></li>
-	          <li class="nav-item"><a href="<?php echo APPURL; ?>/menu.php" class="nav-link">Menu</a></li>
-	          <li class="nav-item"><a href="<?php echo APPURL; ?>/services.php" class="nav-link">Services</a></li>
-	          <li class="nav-item"><a href="<?php echo APPURL; ?>/about.php" class="nav-link">About</a></li>
-	         
-	          <li class="nav-item"><a href="<?php echo APPURL; ?>/contact.php" class="nav-link">Contact</a></li>
-	          <?php if(isset($_SESSION['username'])) : ?>
-              <li class="nav-item cart">
-    <a href="<?php echo APPURL; ?>/products/cart.php" class="nav-link">
-        <span class="icon icon-shopping_cart"></span>
-        <?php
-        // Fetch and display the count of items in the cart
-        $cartCount = 0; // Default value if the count is not available
-        if (isset($_SESSION['user_id'])) {
-            $cartQuery = $conn->query("SELECT COUNT(*) AS count FROM cart WHERE user_id = '$_SESSION[user_id]'");
-            $cartCountResult = $cartQuery->fetch(PDO::FETCH_ASSOC);
-            $cartCount = $cartCountResult['count'];
-        }
-        ?>
-        <?php if ($cartCount > 0) : ?>
-            <sup class="badge badge-pill badge-danger"><?php echo $cartCount; ?></sup>
-        <?php endif; ?>
-    </a>
-</li>
+                <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'index.php') ? 'active' : ''; ?>">
+                    <a href="<?php echo APPURL; ?>" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'menu.php') ? 'active' : ''; ?>">
+                    <a href="<?php echo APPURL; ?>/menu.php" class="nav-link">Menu</a>
+                </li>
+                <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'services.php') ? 'active' : ''; ?>">
+                    <a href="<?php echo APPURL; ?>/services.php" class="nav-link">Services</a>
+                </li>
+                <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'about.php') ? 'active' : ''; ?>">
+                    <a href="<?php echo APPURL; ?>/about.php" class="nav-link">About</a>
+                </li>
+                <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'contact.php') ? 'active' : ''; ?>">
+                    <a href="<?php echo APPURL; ?>/contact.php" class="nav-link">Contact</a>
+                </li>
+
+	            <?php if(isset($_SESSION['username'])) : ?>
+                <li class="nav-item cart">
+                    <a href="<?php echo APPURL; ?>/products/cart.php" class="nav-link">
+                        <span class="icon icon-shopping_cart"></span>
+                        <?php
+                        // Fetch and display the count of items in the cart
+                        $cartCount = 0; // Default value if the count is not available
+                        if (isset($_SESSION['user_id'])) {
+                            $cartQuery = $conn->query("SELECT COUNT(*) AS count FROM cart WHERE user_id = '$_SESSION[user_id]'");
+                            $cartCountResult = $cartQuery->fetch(PDO::FETCH_ASSOC);
+                            $cartCount = $cartCountResult['count'];
+                        }
+                        ?>
+                        <?php if ($cartCount > 0) : ?>
+                            <sup class="badge badge-pill badge-danger"><?php echo $cartCount; ?></sup>
+                        <?php endif; ?>
+                    </a>
+                </li>
 
  <!-- settings icon can delete this when needed -->
 <?php if(isset($_SESSION['username'])) : ?>

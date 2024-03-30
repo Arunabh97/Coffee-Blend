@@ -54,7 +54,7 @@ $allReviews = $reviews->fetchAll(PDO::FETCH_OBJ);
             <div class="row slider-text justify-content-center align-items-center">
                 <div class="col-md-7 col-sm-12 text-center ftco-animate">
                     <h1 class="mb-3 mt-5 bread">About Us</h1>
-                    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>About</span></p>
+                    <p class="breadcrumbs"><span class="mr-2"><a href="<?php echo APPURL; ?>">Home</a></span> <span>About</span></p>
                 </div>
             </div>
         </div>
