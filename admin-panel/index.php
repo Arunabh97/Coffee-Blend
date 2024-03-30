@@ -21,23 +21,23 @@ $bookings = $conn->query("SELECT COUNT(*) AS count_bookings FROM bookings");
 $bookings->execute();
 $bookingsCount = $bookings->fetch(PDO::FETCH_OBJ);
 
-// admins
-$admins = $conn->query("SELECT COUNT(*) AS count_admins FROM admins");
-$admins->execute();
-$adminsCount = $admins->fetch(PDO::FETCH_OBJ);
+// users
+$users = $conn->query("SELECT COUNT(*) AS count_users FROM users");
+$users->execute();
+$usersCount = $users->fetch(PDO::FETCH_OBJ);
 
 // Previous counts (You may store these in session or a database)
 $prevProductsCount = isset($_SESSION['prev_counts']['products']) ? $_SESSION['prev_counts']['products'] : 0;
 $prevOrdersCount = isset($_SESSION['prev_counts']['orders']) ? $_SESSION['prev_counts']['orders'] : 0;
 $prevBookingsCount = isset($_SESSION['prev_counts']['bookings']) ? $_SESSION['prev_counts']['bookings'] : 0;
-$prevAdminsCount = isset($_SESSION['prev_counts']['admins']) ? $_SESSION['prev_counts']['admins'] : 0;
+$prevUsersCount = isset($_SESSION['prev_counts']['users']) ? $_SESSION['prev_counts']['users'] : 0;
 
 // Update session with current counts
 $_SESSION['prev_counts'] = array(
     'products' => $productsCount->count_products,
     'orders' => $ordersCount->count_orders,
     'bookings' => $bookingsCount->count_bookings,
-    'admins' => $adminsCount->count_admins
+    'users' => $usersCount->count_users
 );
 
 ?>
@@ -74,6 +74,21 @@ $_SESSION['prev_counts'] = array(
 </style>
 
 <div class="row">
+  <div class="col-md-3">
+      <div class="card bg-warning text-dark custom-card">
+          <div class="card-body">
+              <h5 class="card-title custom-card-title">
+                  <i class="fas fa-user"></i> Users
+                  <?php if ($usersCount->count_users > $prevUsersCount) { ?>
+                      <span class="badge bg-danger">New</span>
+                  <?php } ?>
+              </h5>
+              <p class="card-text custom-card-text">Total: <?php echo $usersCount->count_users; ?></p>
+              <a href="<?php echo ADMINURL; ?>/users/users.php" class="btn btn-dark custom-btn"><i class="fa-solid fa-eye"></i> View Details</a>
+          </div>
+      </div>
+  </div>
+
   <div class="col-md-3">
       <div class="card bg-primary text-white custom-card">
         <div class="card-body">
@@ -115,21 +130,6 @@ $_SESSION['prev_counts'] = array(
               </h5>
               <p class="card-text custom-card-text">Total: <?php echo $bookingsCount->count_bookings; ?></p>
               <a href="<?php echo ADMINURL; ?>/bookings-admins/show-bookings.php" class="btn btn-light custom-btn"><i class="fa-solid fa-eye"></i> View Details</a>
-          </div>
-      </div>
-  </div>
-
-  <div class="col-md-3">
-      <div class="card bg-warning text-dark custom-card">
-          <div class="card-body">
-              <h5 class="card-title custom-card-title">
-                  <i class="fas fa-user"></i> Admins
-                  <?php if ($adminsCount->count_admins > $prevAdminsCount) { ?>
-                      <span class="badge bg-danger">New</span>
-                  <?php } ?>
-              </h5>
-              <p class="card-text custom-card-text">Total: <?php echo $adminsCount->count_admins; ?></p>
-              <a href="<?php echo ADMINURL; ?>/admins/admins.php" class="btn btn-dark custom-btn"><i class="fa-solid fa-eye"></i> View Details</a>
           </div>
       </div>
   </div>
