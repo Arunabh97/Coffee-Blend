@@ -65,8 +65,14 @@ $allOrders = $ordersQuery->fetchAll(PDO::FETCH_OBJ);
 
     .delivered-order {
     text-decoration: line-through;
-    text-decoration-color: red; 
+    text-decoration-color: green; 
     text-decoration-thickness: 2px; 
+    }
+    
+    .cancelled-order{
+    text-decoration: line-through;
+    text-decoration-color: red; 
+    text-decoration-thickness: 2px;
     }
 
 </style>
@@ -121,8 +127,7 @@ $allOrders = $ordersQuery->fetchAll(PDO::FETCH_OBJ);
                         <?php $serial = 1; ?>
                         <?php foreach($allOrders as $order) : ?>
                             <?php
-
-                            $statusClass = $order->status === 'Delivered' ? 'delivered-order' : '';
+                            $statusClass = $order->status === 'Delivered' ? 'delivered-order' : ($order->status === 'Cancelled' ? 'cancelled-order' : '');
                             ?>
                             <tr class="<?php echo $statusClass; ?>">
                                 <td><?php echo $serial++; ?></td> 

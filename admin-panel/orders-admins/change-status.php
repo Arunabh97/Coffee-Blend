@@ -16,8 +16,6 @@ if(isset($_GET['id'])){
         } else {
             $status = $_POST['status'];
             
-      
-            // Assuming $conn is your database connection object
             $update = $conn->prepare("UPDATE orders SET status = :status WHERE id='$id'");
       
             $update->execute([
@@ -27,35 +25,36 @@ if(isset($_GET['id'])){
            // header("location: show-orders.php");
             echo "<script>window.location.href = 'show-orders.php';</script>";
         }
-      }
+    }
 }
 
 ?>
-       <div class="row">
-        <div class="col">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title mb-5 d-inline">Update Status</h5>
-          <form method="POST" action="change-status.php?id=<?php echo $id; ?>">
-                <!-- Email input -->
-                <div class="form-outline mb-4 mt-4">
 
-                  <select name="status" class="form-select  form-control" aria-label="Default select example">
-                    <option selected>Choose Type</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Delivered">Delivered</option>
-                  </select>
-                </div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-U3+K+F5ldqGz8U+XfW1deyOKNEdFG+4Bp2HBf5vHvXsfyM9Oo4+c2bqk4f+UZaBm" crossorigin="anonymous">
 
+<div class="row">
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title mb-5 d-inline">Orders Update Status</h5>
+        <form method="POST" action="change-status.php?id=<?php echo $id; ?>">
 
-                <!-- Submit button -->
-                <button type="submit" name="submit" class="btn btn-primary  mb-4 text-center">Update</button>
-
-          
-              </form>
-
-            </div>
+          <div class="form-outline mb-4 mt-4">
+            <select name="status" class="form-select form-control" aria-label="Default select example">
+              <option selected>Choose Type</option>
+              <option value="Pending">Pending <i class="fas fa-info-circle text-info"></i> - Waiting for processing</option>
+              <option value="In Progress">In Progress <i class="fas fa-sync-alt text-warning"></i> - Currently being processed</option>
+              <option value="Shipped">Shipped <i class="fas fa-truck text-primary"></i> - Order has been shipped</option>
+              <option value="Delivered">Delivered <i class="fas fa-check-circle text-success"></i> - Order has been delivered</option>
+              <option value="Cancelled">Cancelled <i class="fas fa-times-circle text-danger"></i> - Order has been cancelled</option>
+            </select>
           </div>
-        </div>
+
+          <button type="submit" name="submit" class="btn btn-primary mb-4 text-center"><i class="fas fa-sync-alt"></i> Update</button>
+        </form>
       </div>
-      <?php require "../layouts/footer.php"; ?>
+    </div>
+  </div>
+</div>
+
+<?php require "../layouts/footer.php"; ?>
