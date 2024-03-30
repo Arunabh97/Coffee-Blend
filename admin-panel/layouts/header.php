@@ -21,11 +21,13 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>
       .navbar {
-            background: linear-gradient(to right, #007bff, #6c757d); /* Adjust colors as needed */
+            background: linear-gradient(to right, #007bff, #6c757d); 
         }
         .navbar-nav.side-nav {
             background: linear-gradient(to right, #007bff, #6c757d);
-            margin: 20px 0; /* Adjust colors as needed */
+            margin: 20px 0;
+            border-top-right-radius: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
         }
         .nav-item {
             padding: 10px;
@@ -37,7 +39,30 @@
         .nav-item:hover {
             background-color: rgba(255, 255, 255, 0.2);
         }
-        
+
+        .nav-item.active {
+            background: linear-gradient(135deg, #00d4ff, #0d47a1); 
+            padding: 10px 15px; 
+            border-radius: 5px;
+            border-top-right-radius: 30px;
+            border-bottom-right-radius: 30px; 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); 
+            color: white; 
+            font-size: 16px; 
+            font-weight: bold; 
+            text-align: center; 
+            text-decoration: none; 
+            transition: background-color 0.3s ease, box-shadow 0.3s ease; 
+        }
+
+        .nav-item.active i {
+            margin-right: 8px; 
+        }
+
+        .nav-item.active span {
+            vertical-align: middle; 
+        }
+
       </style>
 </head>
 <body>
@@ -53,28 +78,28 @@
       <div class="collapse navbar-collapse" id="navbarText">
         <?php if(isset($_SESSION['admin_name'])) : ?>
         <ul class="navbar-nav side-nav" >
-          <li class="nav-item">
+          <li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : ''; ?>">
             <a class="nav-link" style="margin-left: 20px;" href="<?php echo ADMINURL; ?>"><i class="fas fa-home"></i> Home
-              <span class="sr-only">(current)</span>
+                <span class="sr-only">(current)</span>
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?php echo ADMINURL; ?>/admins/admins.php" style="margin-left: 20px;"><i class="fa-solid fa-user-tie"></i> Admins</a>
+          <li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'admins.php' ? 'active' : ''; ?>">
+              <a class="nav-link" href="<?php echo ADMINURL; ?>/admins/admins.php" style="margin-left: 20px;"><i class="fa-solid fa-user-tie"></i> Admins</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?php echo ADMINURL; ?>/users/users.php" style="margin-left: 20px;"><i class="fa-solid fa-user"></i> Users</a>
+          <li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'users.php' ? 'active' : ''; ?>">
+              <a class="nav-link" href="<?php echo ADMINURL; ?>/users/users.php" style="margin-left: 20px;"><i class="fa-solid fa-user"></i> Users</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?php echo ADMINURL; ?>/products-admins/show-products.php" style="margin-left: 20px;"><i class="fas fa-shopping-bag"></i> Products</a>
+          <li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'show-products.php' ? 'active' : ''; ?>">
+              <a class="nav-link" href="<?php echo ADMINURL; ?>/products-admins/show-products.php" style="margin-left: 20px;"><i class="fas fa-shopping-bag"></i> Products</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?php echo ADMINURL; ?>/orders-admins/show-orders.php" style="margin-left: 20px;"><i class="fa-solid fa-cart-shopping"></i> Orders</a>
+          <li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'show-orders.php' ? 'active' : ''; ?>">
+              <a class="nav-link" href="<?php echo ADMINURL; ?>/orders-admins/show-orders.php" style="margin-left: 20px;"><i class="fa-solid fa-cart-shopping"></i> Orders</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?php echo ADMINURL; ?>/bookings-admins/show-bookings.php" style="margin-left: 20px;"><i class="far fa-calendar"></i> Bookings</a>
+          <li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'show-bookings.php' ? 'active' : ''; ?>">
+              <a class="nav-link" href="<?php echo ADMINURL; ?>/bookings-admins/show-bookings.php" style="margin-left: 20px;"><i class="far fa-calendar"></i> Bookings</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?php echo ADMINURL; ?>/payments-admin/show-payments.php" style="margin-left: 20px;"><i class="fas fa-credit-card"></i> Payments</a>
+          <li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'show-payments.php' ? 'active' : ''; ?>">
+              <a class="nav-link" href="<?php echo ADMINURL; ?>/payments-admin/show-payments.php" style="margin-left: 20px;"><i class="fas fa-credit-card"></i> Payments</a>
           </li>
         </ul>
         <?php endif; ?>
