@@ -49,6 +49,7 @@ $_SESSION['prev_counts'] = array(
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 10px;
     transition: transform 0.3s ease-in-out;
+    background: linear-gradient(135deg, #FF6347, #4682B4);
   }
 
   .custom-card:hover {
