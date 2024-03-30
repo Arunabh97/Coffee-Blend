@@ -112,6 +112,12 @@ if ($filter == 'all') {
         color: #007bff;
     }
 
+    .done-booking td {
+    text-decoration: line-through;
+    text-decoration-color: red; 
+    text-decoration-thickness: 2px; 
+    }
+
 </style>
 
 <div class="row">
@@ -182,7 +188,11 @@ if ($filter == 'all') {
                     </thead>
                     <tbody>
                         <?php foreach ($allBookings as $booking) : ?>
-                            <tr>
+                            <?php
+                            // Determine if the status is "Done"
+                            $doneClass = $booking->status === 'Done' ? 'done-booking' : '';
+                            ?>
+                            <tr class="<?php echo $doneClass; ?>">
                                 <th scope="row"><?php echo $booking->id; ?></th>
                                 <td><?php echo $booking->first_name; ?></td>
                                 <td><?php echo $booking->last_name; ?></td>

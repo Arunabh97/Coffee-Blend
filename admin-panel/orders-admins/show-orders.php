@@ -63,6 +63,12 @@ $allOrders = $ordersQuery->fetchAll(PDO::FETCH_OBJ);
         border-radius: 15px; 
     }
 
+    .delivered-order {
+    text-decoration: line-through;
+    text-decoration-color: red; 
+    text-decoration-thickness: 2px; 
+    }
+
 </style>
 
 <div class="row">
@@ -112,10 +118,13 @@ $allOrders = $ordersQuery->fetchAll(PDO::FETCH_OBJ);
                         </tr>
                     </thead>
                     <tbody>
-                        <?php 
-                        $serial = 1; // Initialize the serial number
-                        foreach($allOrders as $order) : ?>
-                            <tr>
+                        <?php $serial = 1; ?>
+                        <?php foreach($allOrders as $order) : ?>
+                            <?php
+
+                            $statusClass = $order->status === 'Delivered' ? 'delivered-order' : '';
+                            ?>
+                            <tr class="<?php echo $statusClass; ?>">
                                 <td><?php echo $serial++; ?></td> 
                                 <td><?php echo $order->first_name; ?></td>
                                 <td><?php echo $order->last_name; ?></td>
