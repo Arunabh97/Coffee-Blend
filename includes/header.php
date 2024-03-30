@@ -290,6 +290,7 @@ if (isset($_SESSION['user_id'])) {
                 <div class="modal-body">
                     <!-- Display user details in the modal -->
                     <div id="userDetailsContainer">
+                        <p>User Id: <span id="userId"><?php echo $userDetails['id']; ?></span></p>
                         <p>First Name: <span id="firstName"><?php echo $userDetails['first_name']; ?></span></p>
                         <p>Last Name: <span id="lastName"><?php echo $userDetails['last_name']; ?></span></p>
                         <p>Username: <span id="username"><?php echo $userDetails['username']; ?></span></p>
