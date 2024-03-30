@@ -137,6 +137,9 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
 		    				<div class="form-group ml-md-4">
 		    					<input name = "last_name" type="text" class="form-control" placeholder="Last Name">
 		    				</div>
+							<div class="form-group ml-md-4">
+								<input name="seats" type="number" class="form-control" placeholder="Seats" required min="1" max="10">
+							</div>
 	    				</div>
 	    				<div class="d-md-flex">
 							<div class="form-group">

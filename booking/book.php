@@ -4,13 +4,14 @@
 
 if (isset($_POST['submit'])) {
   
-    if (empty($_POST['first_name']) || empty($_POST['last_name']) || empty($_POST['date'])
+    if (empty($_POST['first_name']) || empty($_POST['last_name']) || empty($_POST['seats']) || empty($_POST['date'])
     || empty($_POST['time']) || empty($_POST['phone']) || empty($_POST['message'])) {
         echo "<script>alert('One or more inputs are empty');</script>";
     } else {
 
         $first_name = $_POST['first_name'];
         $last_name = $_POST['last_name'];
+        $seats = $_POST['seats'];
         $date = $_POST['date'];
         $time = $_POST['time'];
         $phone = $_POST['phone'];
@@ -25,12 +26,13 @@ if (isset($_POST['submit'])) {
             if($validTime) {
                 $formattedDate = (new DateTime($date))->format('Y-m-d');
 
-                $insert = $conn->prepare("INSERT INTO bookings (first_name,last_name,date,time,phone,message,user_id)
-                VALUES (:first_name, :last_name, :date, :time, :phone, :message, :user_id)");
+                $insert = $conn->prepare("INSERT INTO bookings (first_name,last_name,seats,date,time,phone,message,user_id)
+                VALUES (:first_name, :last_name, :seats, :date, :time, :phone, :message, :user_id)");
 
                 $insert->execute([
                     ":first_name" => $first_name,
                     ":last_name" => $last_name,
+                    ":seats" => $seats,
                     ":date" => $formattedDate,
                     ":time" => $time,
                     ":phone" => $phone,
@@ -48,6 +50,6 @@ if (isset($_POST['submit'])) {
     }
     //header("location: ".APPURL."");
     echo "<script>window.history.back();</script>";
-    exit(); // Ensure script stops execution after the redirect
+    exit(); 
 }
 ?>
