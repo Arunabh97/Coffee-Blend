@@ -1,5 +1,6 @@
 <?php require "includes/header.php"; ?>
 <?php require "config/config.php"; ?>
+
 <?php
 
 	$isLoggedIn = isset($_SESSION['user_id']);
@@ -15,6 +16,19 @@
 	$reviews->execute();
 
 	$allReviews = $reviews->fetchAll(PDO::FETCH_OBJ);
+
+	// Fetch user details from the database
+	$user_id = $_SESSION['user_id'];
+	$user_query = $conn->prepare("SELECT first_name, last_name, email FROM users WHERE id = :user_id");
+	$user_query->execute([':user_id' => $user_id]);
+	$user_data = $user_query->fetch(PDO::FETCH_ASSOC);
+
+	if (!$user_data) {
+		die("User data not found");
+	}
+
+	$logged_in_first_name = $user_data['first_name'];
+	$logged_in_last_name = $user_data['last_name'];
 
 ?>
 
@@ -277,11 +291,11 @@
 					<form action="booking/book.php" method="POST" class="appointment-form">
 						<div class="d-md-flex">
 							<div class="form-group">
-								<input type="text" name="first_name" class="form-control" placeholder="First Name">
+								<input type="text" name="first_name" class="form-control" value="<?php echo htmlspecialchars($logged_in_first_name); ?>" placeholder="First Name">
 							</div>
 							
 							<div class="form-group ml-md-4">
-								<input type="text" name="last_name" class="form-control" placeholder="Last Name">
+								<input type="text" name="last_name" class="form-control" value="<?php echo htmlspecialchars($logged_in_last_name); ?>" placeholder="Last Name">
 							</div>
 							<div class="form-group ml-md-4">
 								<input name="seats" type="number" class="form-control" placeholder="Seats" required min="1" max="10">
