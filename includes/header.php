@@ -210,6 +210,21 @@ if (isset($_SESSION['user_id'])) {
     color: #0056b3;
 }
 
+.password-field {
+        position: relative;
+    }
+
+    .password-field input {
+        padding-right: 40px; /* Adjust as needed */
+    }
+
+    .password-field .field-icon {
+        position: absolute;
+        top: 50%;
+        right: 10px; /* Adjust as needed */
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
 </style>
 
   </head>
@@ -333,13 +348,22 @@ if (isset($_SESSION['user_id'])) {
                     <!-- Editable form for changing password, initially hidden -->
                     <form id="changePasswordForm" style="display: none;">
                         <label for="currentPassword">Current Password:</label>
-                        <input type="password" id="currentPassword" name="currentPassword" required>
+                            <div class="password-field">
+                                <input type="password" id="currentPassword" name="currentPassword" placeholder="Enter your current password" required>
+                                <span class="field-icon toggle-password" data-status="hidden">👁️</span>
+                            </div>
 
-                        <label for="newPassword">New Password:</label>
-                        <input type="password" id="newPassword" name="newPassword" required>
+                            <label for="newPassword">New Password:</label>
+                            <div class="password-field">
+                                <input type="password" id="newPassword" name="newPassword" placeholder="Enter your new password" required>
+                                <span class="field-icon toggle-password" data-status="hidden">👁️</span>
+                            </div>
 
-                        <label for="confirmPassword">Confirm New Password:</label>
-                        <input type="password" id="confirmPassword" name="confirmPassword" required>
+                            <label for="confirmPassword">Confirm New Password:</label>
+                            <div class="password-field">
+                                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your new password" required>
+                                <span class="field-icon toggle-password" data-status="hidden">👁️</span>
+                            </div>
 
                         <!-- Add a button to save changes -->
                         <button type="button" class="btn btn-success" id="savePasswordBtn">Save Password</button>
@@ -452,6 +476,22 @@ if (isset($_SESSION['user_id'])) {
 });
 </script>
 
+<script>
+    $(".toggle-password").click(function() {
+        var input = $(this).prev('input');
+        var status = $(this).attr("data-status");
+        
+        if (status === "hidden") {
+            input.attr("type", "text");
+            $(this).text("🔒");
+            $(this).attr("data-status", "visible");
+        } else {
+            input.attr("type", "password");
+            $(this).text("👁️");
+            $(this).attr("data-status", "hidden");
+        }
+    });
+</script>
 
 </body>
 </html>
