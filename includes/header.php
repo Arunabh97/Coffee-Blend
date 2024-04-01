@@ -73,7 +73,7 @@ if (isset($_SESSION['user_id'])) {
     }
 
     .modal-header {
-        background-color: #007bff;
+        background: linear-gradient(to right, #ff4e50, #ff7a57);
         color: #fff;
         border-radius: 8px 8px 0 0;
         padding: 15px;
@@ -98,7 +98,7 @@ if (isset($_SESSION['user_id'])) {
 
     /* Customize the form inside the modal */
     #editDetailsForm {
-        max-width: 300px;
+        max-width: 600px;
         margin: 0 auto;
     }
 
@@ -111,19 +111,23 @@ if (isset($_SESSION['user_id'])) {
     }
 
     #editDetailsForm input {
-        width: 100%;
-        padding: 8px;
-        margin-bottom: 12px;
-        box-sizing: border-box;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        font-size: 14px;
-        transition: border-color 0.3s ease-in-out;
-    }
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 15px; 
+    box-sizing: border-box;
+    border: none; 
+    border-bottom: 2px solid #007bff; 
+    background-color: #f4f4f4; 
+    border-radius: 6px; 
+    font-size: 14px; 
+    color: #333; 
+    transition: border-color 0.3s ease-in-out; 
+}
 
-    #editDetailsForm input:focus {
-        border-color: #007bff;
-    }
+#editDetailsForm input:focus {
+    outline: none; 
+    border-bottom-color: #ff6347; 
+}
 
     #saveChangesBtn,
     #cancelEditBtn {
@@ -154,7 +158,7 @@ if (isset($_SESSION['user_id'])) {
         color: #0056b3;
     }
     #changePasswordForm {
-    max-width: 300px;
+    max-width: 600px;
     margin: 0 auto;
 }
 
@@ -168,17 +172,21 @@ if (isset($_SESSION['user_id'])) {
 
 #changePasswordForm input {
     width: 100%;
-    padding: 8px;
-    margin-bottom: 12px;
+    padding: 5px;
+    margin-bottom: 15px; 
     box-sizing: border-box;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
+    border: none; 
+    border-bottom: 2px solid #007bff; 
+    background-color: #f4f4f4; 
+    border-radius: 6px; 
+    font-size: 14px; 
+    color: #333; 
     transition: border-color 0.3s ease-in-out;
 }
 
 #changePasswordForm input:focus {
-    border-color: #007bff;
+    outline: none; 
+    border-bottom-color: #ff6347;
 }
 
 #savePasswordBtn,
@@ -220,8 +228,8 @@ if (isset($_SESSION['user_id'])) {
 
     .password-field .field-icon {
         position: absolute;
-        top: 50%;
-        right: 10px; /* Adjust as needed */
+        top: 40%;
+        right: 10px; 
         transform: translateY(-50%);
         cursor: pointer;
     }
@@ -328,17 +336,18 @@ if (isset($_SESSION['user_id'])) {
 
                     <!-- Editable form, initially hidden -->
                     <form id="editDetailsForm" style="display: none;">
+                        <label for="editUsername">Username:</label>
+                        <input type="text" id="editUsername" name="editUsername" value="<?php echo $userDetails['username']; ?>" readonly placeholder="Username">
+
                         <label for="editFirstName">First Name:</label>
-                        <input type="text" id="editFirstName" name="editFirstName" value="<?php echo $userDetails['first_name']; ?>">
+                        <input type="text" id="editFirstName" name="editFirstName" value="<?php echo $userDetails['first_name']; ?>" placeholder="Enter your first name">
 
                         <label for="editLastName">Last Name:</label>
-                        <input type="text" id="editLastName" name="editLastName" value="<?php echo $userDetails['last_name']; ?>">
-
-                        <label for="editUsername">Username:</label>
-                        <input type="text" id="editUsername" name="editUsername" value="<?php echo $userDetails['username']; ?>" readonly>
-
+                        <input type="text" id="editLastName" name="editLastName" value="<?php echo $userDetails['last_name']; ?>" placeholder="Enter your last name">
+                        
                         <label for="editEmail">Email:</label>
-                        <input type="email" id="editEmail" name="editEmail" value="<?php echo $userDetails['email']; ?>">
+                        <input type="email" id="editEmail" name="editEmail" value="<?php echo $userDetails['email']; ?>" placeholder="Enter your email">
+
 
                         <!-- Add a button to save changes -->
                         <button type="button" class="btn btn-success" id="saveChangesBtn">Save Changes</button>

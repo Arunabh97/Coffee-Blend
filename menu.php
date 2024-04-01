@@ -1,6 +1,22 @@
 <?php require "includes/header.php"; ?>
 <?php require "config/config.php"; ?>
+
 <?php 
+
+$isLoggedIn = isset($_SESSION['user_id']);
+
+if ($isLoggedIn) {
+	$userId = $_SESSION['user_id'];
+	$userQuery = $conn->prepare("SELECT first_name, last_name FROM users WHERE id = ?");
+	$userQuery->execute([$userId]);
+	$user = $userQuery->fetch(PDO::FETCH_ASSOC);
+
+	$firstName = $user['first_name'] ?? '';
+	$lastName = $user['last_name'] ?? '';
+} else {
+	$firstName = '';
+	$lastName = '';
+}
 
 $desserts = $conn->query("SELECT * FROM products WHERE type='dessert'");
 $desserts->execute();
@@ -18,19 +34,6 @@ $appetizers = $conn->query("SELECT * FROM products WHERE type='appetizer'");
 $appetizers->execute();
 
 $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
-
-// Fetch user details from the database
-$user_id = $_SESSION['user_id'];
-$user_query = $conn->prepare("SELECT first_name, last_name, email FROM users WHERE id = :user_id");
-$user_query->execute([':user_id' => $user_id]);
-$user_data = $user_query->fetch(PDO::FETCH_ASSOC);
-
-if (!$user_data) {
-    die("User data not found");
-}
-
-$logged_in_first_name = $user_data['first_name'];
-$logged_in_last_name = $user_data['last_name'];
 
 ?>
 
@@ -145,10 +148,10 @@ $logged_in_last_name = $user_data['last_name'];
 	    			<form action="booking/book.php" method="POST" class="appointment-form">
 	    				<div class="d-md-flex">
 		    				<div class="form-group">
-		    					<input name = "first_name" type="text" class="form-control" value="<?php echo htmlspecialchars($logged_in_first_name); ?>" placeholder="First Name">
+		    					<input name = "first_name" type="text" class="form-control" value="<?php echo isset($firstName) ? $firstName : ''; ?>" placeholder="First Name">
 		    				</div>
 		    				<div class="form-group ml-md-4">
-		    					<input name = "last_name" type="text" class="form-control" value="<?php echo htmlspecialchars($logged_in_last_name); ?>" placeholder="Last Name">
+		    					<input name = "last_name" type="text" class="form-control" value="<?php echo isset($lasttName) ? $lastName : ''; ?>" placeholder="Last Name">
 		    				</div>
 							<div class="form-group ml-md-4">
 								<input name="seats" type="number" class="form-control" placeholder="Seats" required min="1" max="10">
