@@ -108,6 +108,12 @@ $allOrders = $ordersQuery->fetchAll(PDO::FETCH_OBJ);
                     <table id="orderTable" class="table table-striped table-hover">
                     <thead>
                         <tr>
+                            <th scope="col">
+                                <div class="d-flex align-items-center">
+                                    <input type="checkbox" id="select-all">
+                                    <button type="button" class="btn btn-danger ml-2" id="bulk-delete"><i class="fas fa-trash-alt"></i></button>
+                                </div>
+                            </th>
                             <th scope="col">S No.</th>
                             <th scope="col"><i class="fas fa-user"></i> First Name</th>
                             <th scope="col"><i class="fas fa-user"></i> Last Name</th>
@@ -130,6 +136,7 @@ $allOrders = $ordersQuery->fetchAll(PDO::FETCH_OBJ);
                             $statusClass = $order->status === 'Delivered' ? 'delivered-order' : ($order->status === 'Cancelled' ? 'cancelled-order' : '');
                             ?>
                             <tr class="<?php echo $statusClass; ?>">
+                                <td><input type="checkbox" class="order-checkbox" value="<?php echo $order->id; ?>"></td>
                                 <td><?php echo $serial++; ?></td> 
                                 <td><?php echo $order->first_name; ?></td>
                                 <td><?php echo $order->last_name; ?></td>
@@ -158,6 +165,45 @@ $allOrders = $ordersQuery->fetchAll(PDO::FETCH_OBJ);
     $(document).ready(function() {
         $('#orderTable').DataTable();
     });
+</script>
+
+<script>
+$(document).ready(function() {
+    // Select/deselect all checkboxes
+    $('#select-all').change(function() {
+        $('.order-checkbox').prop('checked', $(this).prop('checked'));
+    });
+
+    // Handle bulk delete
+    $('#bulk-delete').click(function() {
+        var selectedOrders = [];
+        $('.order-checkbox:checked').each(function() {
+            selectedOrders.push($(this).val());
+        });
+
+        if (selectedOrders.length === 0) {
+            alert('Please select at least one order to delete.');
+            return;
+        }
+
+        if (confirm('Are you sure you want to delete the selected orders?')) {
+            // Perform AJAX request to delete selected orders
+            $.ajax({
+                url: 'bulk-delete.php',
+                method: 'POST',
+                data: { orders: selectedOrders },
+                success: function(response) {
+                    // Reload page or update table as needed
+                    window.location.reload(); // Reloads the page
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                    alert('An error occurred while deleting orders. Please try again.');
+                }
+            });
+        }
+    });
+});
 </script>
 
 <?php require "../layouts/footer.php"; ?>
