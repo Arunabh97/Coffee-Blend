@@ -124,7 +124,6 @@ $allOrders = $ordersQuery->fetchAll(PDO::FETCH_OBJ);
                             <th scope="col"><i class="fas fa-road"></i> Street Address</th>
                             <th scope="col"><i class="fas fa-dollar-sign"></i> Total Price</th>
                             <th scope="col"><i class="fas fa-info-circle"></i> Status</th>
-                            <th scope="col"><i class="fas fa-edit"></i> Update</th>
                             <th scope="col"><i class="fas fa-cogs"></i> Action</th>
                             <th scope="col"><i class="fas fa-file-invoice"></i> Invoice</th>
                         </tr>
@@ -149,8 +148,8 @@ $allOrders = $ordersQuery->fetchAll(PDO::FETCH_OBJ);
                                 <td style="color: <?php echo $order->status === 'Delivered' ? 'green' : ($order->status === 'Pending' ? 'orange' : ($order->status === 'In Progress' ? 'blue' : ($order->status === 'Shipped' ? 'purple' : 'black') ));?>; font-weight: bold;">
                                     <?php echo $order->status; ?>
                                 </td>
-                                <td><a href="change-status.php?id=<?php echo $order->id; ?>" class="btn btn-warning text-white text-center"><i class="fas fa-sync-alt"></i> Update Status</a></td>
-                                <td><a href="delete-orders.php?id=<?php echo $order->id; ?>" class="btn btn-danger text-center"><i class="fas fa-trash-alt"></i> Delete</a></td>
+                                <td><a href="change-status.php?id=<?php echo $order->id; ?>" class="btn btn-warning text-white text-center"><i class="fas fa-sync-alt"></i> Status</a>
+                                <a href="delete-orders.php?id=<?php echo $order->id; ?>" class="btn btn-danger text-center" style="margin-top: 5px;"><i class="fas fa-trash-alt"></i> Delete</a></td>
                                 <td><a class="btn btn-success" href="../../users/print.php?order_id=<?php echo $order->id; ?>" target="_blank"><i class="fas fa-download"></i></a>OrdId: <?php echo $order->id; ?></td>
                             </tr>
                         <?php endforeach; ?>
