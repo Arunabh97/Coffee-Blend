@@ -146,7 +146,7 @@ $allOrders = $ordersQuery->fetchAll(PDO::FETCH_OBJ);
                                 <td><?php echo $order->phone; ?></td>
                                 <td><?php echo $order->street_address; ?></td>
                                 <td>₹<?php echo $order->total_price; ?></td>
-                                <td style="color: <?php echo $order->status === 'Delivered' ? 'green' : ($order->status === 'Pending' ? 'orange' : 'black'); ?>; font-weight: bold;">
+                                <td style="color: <?php echo $order->status === 'Delivered' ? 'green' : ($order->status === 'Pending' ? 'orange' : ($order->status === 'In Progress' ? 'blue' : ($order->status === 'Shipped' ? 'purple' : 'black') ));?>; font-weight: bold;">
                                     <?php echo $order->status; ?>
                                 </td>
                                 <td><a href="change-status.php?id=<?php echo $order->id; ?>" class="btn btn-warning text-white text-center"><i class="fas fa-sync-alt"></i> Update Status</a></td>

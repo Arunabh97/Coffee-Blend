@@ -39,9 +39,14 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
         background-color: transparent; 
         color: #fff;
     }
+
     .cart-list table {
         max-width: 90%;
         margin: 0 auto;
+    }
+
+    .badge {
+    font-size: 17px; 
     }
 </style>
 
@@ -93,7 +98,35 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
                                             <td class="price"><?php echo $order->phone; ?></td>
                                             <td class="price">₹<?php echo $order->total_price; ?></td>
                                             <td class="timestamp"><?php echo $order->created_at; ?></td>
-                                            <td class="total"><?php echo $order->status; ?></td>
+                                            <td class="status">
+                                                <?php
+                                                $status = $order->status;
+                                                $badge_class = '';
+
+                                                switch ($status) {
+                                                    case 'Delivered':
+                                                        $badge_class = 'badge badge-success';
+                                                        break;
+                                                    case 'In Progress':
+                                                        $badge_class = 'badge badge-primary';
+                                                        break;
+                                                    case 'Shipped':
+                                                        $badge_class = 'badge badge-info';
+                                                        break;
+                                                    case 'Pending':
+                                                    case 'Processing':
+                                                        $badge_class = 'badge badge-warning';
+                                                        break;
+                                                    case 'Cancelled':
+                                                        $badge_class = 'badge badge-danger';
+                                                        break;
+                                                    default:
+                                                        $badge_class = 'badge badge-secondary';
+                                                        break;
+                                                }
+                                                ?>
+                                                <span class="<?php echo $badge_class; ?>"><?php echo $status; ?></span>
+                                            </td>
                                             <td class="total">
                                                 <a href="order_details.php?order_id=<?php echo $order->id; ?>" class="btn btn-info">View Details</a>
                                             </td>
