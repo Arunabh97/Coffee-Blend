@@ -36,13 +36,12 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
     }
 
     .btn:hover {
-        background-color: #007bff; 
+        background-color: transparent; 
         color: #fff;
     }
-
-    .btn-cancel:hover {
-        background-color: #dc3545; 
-        color: #fff; 
+    .cart-list table {
+        max-width: 90%;
+        margin: 0 auto;
     }
 </style>
 
@@ -63,7 +62,7 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
       </div>
     </section>
     <section class="ftco-section ftco-cart">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12 ftco-animate">
                     <div class="cart-list">
@@ -71,11 +70,13 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
                             <table class="table">
                                 <thead class="thead-primary">
                                     <tr class="text-center">
+                                        <th>Order ID</th>
                                         <th>Name</th>
                                         <th>Town</th>
                                         <th>Street Address</th>
                                         <th>Phone</th>
                                         <th>Total Price</th>
+                                        <th>Timestamp</th>
                                         <th>Status</th>
                                         <th>Product Details</th>
                                         <th>Action</th>
@@ -85,11 +86,13 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
                                 <tbody>
                                     <?php foreach ($allOrders as $order) : ?>
                                         <tr class="text-center">
+                                            <td class="order_id"><?php echo $order->id; ?></td>
                                             <td class="name"><?php echo $order->first_name . ' ' . $order->last_name; ?></td>
                                             <td class="price"><?php echo $order->town; ?></td>
                                             <td class="street_add"><?php echo $order->street_address; ?></td>
                                             <td class="price"><?php echo $order->phone; ?></td>
                                             <td class="price">₹<?php echo $order->total_price; ?></td>
+                                            <td class="timestamp"><?php echo $order->created_at; ?></td>
                                             <td class="total"><?php echo $order->status; ?></td>
                                             <td class="total">
                                                 <a href="order_details.php?order_id=<?php echo $order->id; ?>" class="btn btn-info">View Details</a>
