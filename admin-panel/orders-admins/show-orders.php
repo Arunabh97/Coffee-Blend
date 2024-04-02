@@ -150,7 +150,7 @@ $allOrders = $ordersQuery->fetchAll(PDO::FETCH_OBJ);
                                 </td>
                                 <td><a href="change-status.php?id=<?php echo $order->id; ?>" class="btn btn-warning text-white text-center"><i class="fas fa-sync-alt"></i> Status</a>
                                 <a href="delete-orders.php?id=<?php echo $order->id; ?>" class="btn btn-danger text-center" style="margin-top: 5px;"><i class="fas fa-trash-alt"></i> Delete</a></td>
-                                <td><a class="btn btn-success" href="../../users/print.php?order_id=<?php echo $order->id; ?>" target="_blank"><i class="fas fa-download"></i></a>OrdId: <?php echo $order->id; ?></td>
+                                <td><a class="btn btn-success" href="../../users/print.php?order_id=<?php echo $order->id; ?>" target="_blank"><i class="fas fa-download"></i></a>Ord_Id:<b><?php echo $order->id; ?></b><br>Usr_Id:<b><?php echo $order->user_id; ?></b></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
