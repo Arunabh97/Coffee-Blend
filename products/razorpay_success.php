@@ -38,12 +38,14 @@ if(isset($_GET['id'])) {
         if ($conn->query($sql_payment) === TRUE) {
             $status = "Pending";
             $total_price = $_SESSION['total_price'];
+            $payment_type = "Online Payment";
+            $payment_status = "Completed";
 
-            $sql_order = "INSERT INTO orders (first_name, last_name, state, street_address, town, zip_code, phone, email, user_id, status, total_price) 
-              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql_order = "INSERT INTO orders (first_name, last_name, state, street_address, town, zip_code, phone, email, user_id, status, total_price, payment_type, payment_status) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             $stmt = $conn->prepare($sql_order);
-            $stmt->bind_param('ssssssssiss', 
+            $stmt->bind_param('ssssssssissss', 
                 $order_data['first_name'],
                 $order_data['last_name'],
                 $order_data['state'],
@@ -54,7 +56,9 @@ if(isset($_GET['id'])) {
                 $order_data['email'],
                 $user_id,
                 $status,
-                $total_price
+                $total_price,
+                $payment_type,
+                $payment_status
             );
 
             if ($stmt->execute()) {
