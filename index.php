@@ -490,7 +490,7 @@
 			<?php foreach($allProducts as $product) : ?>
         	<div class="col-md-3">
         		<div class="menu-entry">
-    					<a target="_blank" href="products/product-single.php?id=<?php echo $product->id; ?>" class="img" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $product->image; ?>);"></a>
+    					<a target="_blank" href="products/product-single.php?id=<?php echo $product->id; ?>" class="img" style="background-image: url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $product->image; ?>); height: 280px; background-size: cover;"></a>
     					<div class="text text-center pt-4">
     						<h3><a href="#"><?php echo $product->name; ?></a></h3>
     						<p><?php echo $product->description; ?></p>

@@ -65,6 +65,9 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="<?php echo APPURL; ?>/css/icomoon.css">
     <link rel="stylesheet" href="<?php echo APPURL; ?>/css/style.css">
     <style>
+        .container-fluid{
+            width: 90%;
+        }
     /* Customize the modal appearance */
     .modal-content {
         background-color: #fff;
@@ -238,7 +241,7 @@ if (isset($_SESSION['user_id'])) {
   </head>
   <body>
   	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-	    <div class="container">
+	    <div class="container-fluid">
 	      <a class="navbar-brand" href="<?php echo APPURL; ?>"><i class='bx bx-coffee-togo'></i>Coffee<small>Blend</small></a>
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
@@ -250,6 +253,9 @@ if (isset($_SESSION['user_id'])) {
                 </li>
                 <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'menu.php') ? 'active' : ''; ?>">
                     <a href="<?php echo APPURL; ?>/menu.php" class="nav-link">Menu</a>
+                </li>
+                <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'gallery.php') ? 'active' : ''; ?>">
+                    <a href="<?php echo APPURL; ?>/gallery.php" class="nav-link">Gallery</a>
                 </li>
                 <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'services.php') ? 'active' : ''; ?>">
                     <a href="<?php echo APPURL; ?>/services.php" class="nav-link">Services</a>

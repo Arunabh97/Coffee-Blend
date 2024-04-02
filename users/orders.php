@@ -41,7 +41,7 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
     }
 
     .cart-list table {
-        max-width: 90%;
+        max-width: 100%;
         margin: 0 auto;
     }
 
@@ -81,6 +81,8 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
                                         <th>Street Address</th>
                                         <th>Phone</th>
                                         <th>Total Price</th>
+                                        <th>Payment Type</th>
+                                        <th>Payment Status</th>
                                         <th>Timestamp</th>
                                         <th>Status</th>
                                         <th>Product Details</th>
@@ -97,6 +99,8 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
                                             <td class="street_add"><?php echo $order->street_address; ?></td>
                                             <td class="price"><?php echo $order->phone; ?></td>
                                             <td class="price">₹<?php echo $order->total_price; ?></td>
+                                            <td class="pay_type">₹<?php echo $order->pay_type; ?></td>
+                                            <td class="pay_status">₹<?php echo $order->pay_status; ?></td>
                                             <td class="timestamp"><?php echo $order->created_at; ?></td>
                                             <td class="status">
                                                 <?php
