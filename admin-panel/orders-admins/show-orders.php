@@ -93,68 +93,85 @@ $allOrders = $ordersQuery->fetchAll(PDO::FETCH_OBJ);
                                 <select class="form-control" id="status" name="filter">
                                     <option value="">All Status</option>
                                     <option value="Pending">Pending</option>
+                                    <option value="In Progress">In Progress</option>
+                                    <option value="Shipped">Shipped</option>
                                     <option value="Delivered">Delivered</option>
                                     <option value="Cancelled">Cancelled</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary mb-2"><i class="fa-solid fa-filter"></i> </button>
+                            <button type="submit" class="btn btn-primary mb-2" id="filter-button" onclick="this.disabled=true;this.form.submit();"><i class="fa-solid fa-filter"></i> </button>
                         </form>
                     </div>
                 </div>
-                    <?php if (!empty($filterType)) : ?>
-                    <p class="lead">Filtering by status type: <strong><?php echo htmlspecialchars($filterType); ?></strong></p>
-                    <?php endif; ?>
-                
+
+                <?php if (!empty($filterType)) : ?>
+                <p class="lead">Filtering by status type: <strong><?php echo htmlspecialchars($filterType); ?></strong></p>
+                <?php endif; ?>
+
+                <div class="table-responsive">
+        
                     <table id="orderTable" class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">
-                                <div class="d-flex align-items-center">
-                                    <input type="checkbox" id="select-all">
-                                    <button type="button" class="btn btn-danger ml-2" id="bulk-delete"><i class="fas fa-trash-alt"></i></button>
-                                </div>
-                            </th>
-                            <th scope="col">S No.</th>
-                            <th scope="col"><i class="fas fa-user"></i> First Name</th>
-                            <th scope="col"><i class="fas fa-user"></i> Last Name</th>
-                            <th scope="col"><i class="fas fa-city"></i> Town</th>
-                            <th scope="col"><i class="fas fa-flag"></i> State</th>
-                            <th scope="col"><i class="fas fa-map-pin"></i> Zip code</th>
-                            <th scope="col"><i class="fas fa-phone"></i> Phone No.</th>
-                            <th scope="col"><i class="fas fa-road"></i> Street Address</th>
-                            <th scope="col"><i class="fas fa-dollar-sign"></i> Total Price</th>
-                            <th scope="col"><i class="fas fa-info-circle"></i> Status</th>
-                            <th scope="col"><i class="fas fa-cogs"></i> Action</th>
-                            <th scope="col"><i class="fas fa-file-invoice"></i> Invoice</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php $serial = 1; ?>
-                        <?php foreach($allOrders as $order) : ?>
-                            <?php
-                            $statusClass = $order->status === 'Delivered' ? 'delivered-order' : ($order->status === 'Cancelled' ? 'cancelled-order' : '');
-                            ?>
-                            <tr class="<?php echo $statusClass; ?>">
-                                <td><input type="checkbox" class="order-checkbox" value="<?php echo $order->id; ?>"></td>
-                                <td><?php echo $serial++; ?></td> 
-                                <td><?php echo $order->first_name; ?></td>
-                                <td><?php echo $order->last_name; ?></td>
-                                <td><?php echo $order->town; ?></td>
-                                <td><?php echo $order->state; ?></td>
-                                <td><?php echo $order->zip_code; ?></td>
-                                <td><?php echo $order->phone; ?></td>
-                                <td><?php echo $order->street_address; ?></td>
-                                <td>₹<?php echo $order->total_price; ?></td>
-                                <td style="color: <?php echo $order->status === 'Delivered' ? 'green' : ($order->status === 'Pending' ? 'orange' : ($order->status === 'In Progress' ? 'blue' : ($order->status === 'Shipped' ? 'purple' : 'black') ));?>; font-weight: bold;">
-                                    <?php echo $order->status; ?>
-                                </td>
-                                <td><a href="change-status.php?id=<?php echo $order->id; ?>" class="btn btn-warning text-white text-center"><i class="fas fa-sync-alt"></i> Status</a>
-                                <a href="delete-orders.php?id=<?php echo $order->id; ?>" class="btn btn-danger text-center" style="margin-top: 5px;"><i class="fas fa-trash-alt"></i> Delete</a></td>
-                                <td><a class="btn btn-success" href="../../users/print.php?order_id=<?php echo $order->id; ?>" target="_blank"><i class="fas fa-download"></i></a>Ord_Id:<b><?php echo $order->id; ?></b><br>Usr_Id:<b><?php echo $order->user_id; ?></b></td>
+                        <thead>
+                            <tr>
+                                <th scope="col">
+                                    <div class="d-flex align-items-center">
+                                        <input type="checkbox" id="select-all">
+                                        <button type="button" class="btn btn-danger ml-2" id="bulk-delete"><i class="fas fa-trash-alt"></i></button>
+                                    </div>
+                                </th>
+                                <th scope="col">S No.</th>
+                                <th scope="col"><i class="fas fa-user"></i> First Name</th>
+                                <th scope="col"><i class="fas fa-user"></i> Last Name</th>
+                                <th scope="col"><i class="fas fa-city"></i> Town</th>
+                                <th scope="col"><i class="fas fa-flag"></i> State</th>
+                                <th scope="col"><i class="fas fa-map-pin"></i> Zip code</th>
+                                <th scope="col"><i class="fas fa-phone"></i> Phone No.</th>
+                                <th scope="col"><i class="fas fa-road"></i> Street Address</th>
+                                <th scope="col"><i class="fas fa-dollar-sign"></i> Total Price</th>
+                                <th scope="col"><i class="fas fa-id-card"></i> Payment ID</th>
+                                <th scope="col"><i class="fas fa-credit-card"></i> Payment Type</th>
+                                <th scope="col"><i class="fas fa-money-check-alt"></i> Payment Status</th>
+                                <th scope="col"><i class="far fa-calendar-alt"></i> Order Date</th>
+                                <th scope="col"><i class="far fa-clock"></i> Order Time</th>
+                                <th scope="col"><i class="fas fa-info-circle"></i> Status</th>
+                                <th scope="col"><i class="fas fa-cogs"></i> Action</th>
+                                <th scope="col"><i class="fas fa-file-invoice"></i> Invoice</th>
                             </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <?php $serial = 1; ?>
+                            <?php foreach($allOrders as $order) : ?>
+                                <?php
+                                $statusClass = $order->status === 'Delivered' ? 'delivered-order' : ($order->status === 'Cancelled' ? 'cancelled-order' : '');
+                                ?>
+                                <tr class="<?php echo $statusClass; ?>">
+                                    <td><input type="checkbox" class="order-checkbox" value="<?php echo $order->id; ?>"></td>
+                                    <td><?php echo $serial++; ?></td> 
+                                    <td><?php echo $order->first_name; ?></td>
+                                    <td><?php echo $order->last_name; ?></td>
+                                    <td><?php echo $order->town; ?></td>
+                                    <td><?php echo $order->state; ?></td>
+                                    <td><?php echo $order->zip_code; ?></td>
+                                    <td><?php echo $order->phone; ?></td>
+                                    <td><?php echo $order->street_address; ?></td>
+                                    <td>₹<?php echo $order->total_price; ?></td>
+                                    <td><?php echo $order->pay_id; ?></td>
+                                    <td><?php echo $order->pay_type; ?></td>
+                                    <td><?php echo $order->pay_status; ?></td>
+                                    <td><?php echo date('Y-m-d', strtotime($order->created_at)); ?></td>
+                                    <td><?php echo date('H:i:s', strtotime($order->created_at)); ?></td>
+
+                                    <td style="color: <?php echo $order->status === 'Delivered' ? 'green' : ($order->status === 'Pending' ? 'orange' : ($order->status === 'In Progress' ? 'blue' : ($order->status === 'Shipped' ? 'purple' : 'black') ));?>; font-weight: bold;">
+                                        <?php echo $order->status; ?>
+                                    </td>
+                                    <td><a href="change-status.php?id=<?php echo $order->id; ?>" class="btn btn-warning text-white text-center"><i class="fas fa-sync-alt"></i> Status</a>
+                                    <a href="delete-orders.php?id=<?php echo $order->id; ?>" class="btn btn-danger text-center" style="margin-top: 5px;"><i class="fas fa-trash-alt"></i> Delete</a></td>
+                                    <td><a class="btn btn-success" href="../../users/print.php?order_id=<?php echo $order->id; ?>" target="_blank"><i class="fas fa-download"></i></a>Ord_Id:<b><?php echo $order->id; ?></b><br>Usr_Id:<b><?php echo $order->user_id; ?></b></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
