@@ -2,6 +2,13 @@
 <?php require "../config/config.php"; ?>
 
 <?php 
+
+// Check if previous counts are set in session, if not set them to 0
+$prevUsersCount = isset($_SESSION['prevUsersCount']) ? $_SESSION['prevUsersCount'] : 0;
+$prevProductsCount = isset($_SESSION['prevProductsCount']) ? $_SESSION['prevProductsCount'] : 0;
+$prevOrdersCount = isset($_SESSION['prevOrdersCount']) ? $_SESSION['prevOrdersCount'] : 0;
+$prevBookingsCount = isset($_SESSION['prevBookingsCount']) ? $_SESSION['prevBookingsCount'] : 0;
+
 if (!isset($_SESSION['admin_name'])) {
   header("location: " . ADMINURL . "/admins/login-admins.php");
 }
@@ -26,19 +33,17 @@ $users = $conn->query("SELECT COUNT(*) AS count_users FROM users");
 $users->execute();
 $usersCount = $users->fetch(PDO::FETCH_OBJ);
 
-// Previous counts (You may store these in session or a database)
-$prevProductsCount = isset($_SESSION['prev_counts']['products']) ? $_SESSION['prev_counts']['products'] : 0;
-$prevOrdersCount = isset($_SESSION['prev_counts']['orders']) ? $_SESSION['prev_counts']['orders'] : 0;
-$prevBookingsCount = isset($_SESSION['prev_counts']['bookings']) ? $_SESSION['prev_counts']['bookings'] : 0;
-$prevUsersCount = isset($_SESSION['prev_counts']['users']) ? $_SESSION['prev_counts']['users'] : 0;
+// Check if the current counts are greater than the previous counts to determine if there are new records
+$newUsers = $usersCount->count_users > $prevUsersCount;
+$newProducts = $productsCount->count_products > $prevProductsCount;
+$newOrders = $ordersCount->count_orders > $prevOrdersCount;
+$newBookings = $bookingsCount->count_bookings > $prevBookingsCount;
 
-// Update session with current counts
-$_SESSION['prev_counts'] = array(
-    'products' => $productsCount->count_products,
-    'orders' => $ordersCount->count_orders,
-    'bookings' => $bookingsCount->count_bookings,
-    'users' => $usersCount->count_users
-);
+// Store current counts in session variables
+$_SESSION['prevUsersCount'] = $usersCount->count_users;
+$_SESSION['prevProductsCount'] = $productsCount->count_products;
+$_SESSION['prevOrdersCount'] = $ordersCount->count_orders;
+$_SESSION['prevBookingsCount'] = $bookingsCount->count_bookings;
 
 ?>
 
@@ -80,7 +85,7 @@ $_SESSION['prev_counts'] = array(
           <div class="card-body">
               <h5 class="card-title custom-card-title">
                   <i class="fas fa-user"></i> Users
-                  <?php if ($usersCount->count_users > $prevUsersCount) { ?>
+                  <?php if ($newUsers && $prevUsersCount != 0) { ?>
                       <span class="badge bg-danger">New</span>
                   <?php } ?>
               </h5>
@@ -95,8 +100,8 @@ $_SESSION['prev_counts'] = array(
         <div class="card-body">
           <h5 class="card-title custom-card-title">
             <i class="fas fa-shopping-bag"></i> Products
-            <?php if ($productsCount->count_products > $prevProductsCount) { ?>
-              <span class="badge bg-danger">New</span>
+            <?php if ($newProducts && $prevProductsCount != 0) { ?>
+                <span class="badge bg-danger">New</span>
             <?php } ?>
           </h5>
           <p class="card-text custom-card-text">Total: <?php echo $productsCount->count_products; ?></p>
@@ -110,7 +115,7 @@ $_SESSION['prev_counts'] = array(
           <div class="card-body">
               <h5 class="card-title custom-card-title">
                   <i class="fas fa-shopping-cart"></i> Orders
-                  <?php if ($ordersCount->count_orders > $prevOrdersCount) { ?>
+                  <?php if ($newOrders && $prevOrdersCount != 0) { ?>
                       <span class="badge bg-danger">New</span>
                   <?php } ?>
               </h5>
@@ -125,7 +130,7 @@ $_SESSION['prev_counts'] = array(
           <div class="card-body">
               <h5 class="card-title custom-card-title">
                   <i class="far fa-calendar"></i> Bookings
-                  <?php if ($bookingsCount->count_bookings > $prevBookingsCount) { ?>
+                  <?php if ($newBookings && $prevBookingsCount != 0) { ?>
                       <span class="badge bg-danger">New</span>
                   <?php } ?>
               </h5>
