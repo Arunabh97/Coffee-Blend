@@ -56,8 +56,8 @@ if (isset($_POST['submit'])) {
         if ($payment_method == "cashOnDelivery") {
 
          $place_orders = $conn->prepare("INSERT INTO orders (first_name, last_name, state,
-            street_address, town, zip_code, phone, email, user_id, status, total_price, payment_type, payment_status) VALUES (:first_name,
-            :last_name, :state, :street_address, :town, :zip_code, :phone, :email, :user_id, :status, :total_price, :payment_type, :payment_status)");
+            street_address, town, zip_code, phone, email, user_id, status, total_price, pay_type, pay_status) VALUES (:first_name,
+            :last_name, :state, :street_address, :town, :zip_code, :phone, :email, :user_id, :status, :total_price, :pay_type, :pay_status)");
 
             $place_orders->execute([
                 ":first_name" => $first_name,
@@ -71,8 +71,8 @@ if (isset($_POST['submit'])) {
                 ":user_id" => $user_id,
                 ":status" => $status,
                 ":total_price" => $total_price,
-                ":payment_type" => "Cash On Delivery",
-                ":payment_status" => "Pending",
+                ":pay_type" => "Cash On Delivery",
+                ":pay_status" => "Pending",
             ]);
 
             // Get the last inserted order ID
@@ -129,8 +129,8 @@ if (isset($_POST['submit'])) {
                 'user_id' => $user_id,
                 'status' => 'Pending',
                 'total_price' => $total_price,
-                'payment_type' => "Online Payment",
-                'payment_status' => "Pending",
+                'pay_type' => "Online Payment",
+                'pay_status' => "Pending",
             );
 
 			// Retrieve cart items and store them in session

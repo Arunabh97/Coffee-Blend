@@ -40,10 +40,10 @@ if(isset($_GET['id'])) {
 
             $status = "Pending";
             $total_price = $_SESSION['total_price'];
-            $payment_type = "Online Payment";
-            $payment_status = "Completed";
+            $pay_type = "Online Payment";
+            $pay_status = "Completed";
 
-            $sql_order = "INSERT INTO orders (first_name, last_name, state, street_address, town, zip_code, phone, email, user_id, status, total_price, payment_type, payment_status, pay_id) 
+            $sql_order = "INSERT INTO orders (first_name, last_name, state, street_address, town, zip_code, phone, email, user_id, status, total_price, pay_type, pay_status, pay_id) 
               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             $stmt = $conn->prepare($sql_order);
@@ -59,8 +59,8 @@ if(isset($_GET['id'])) {
                 $user_id,
                 $status,
                 $total_price,
-                $payment_type,
-                $payment_status,
+                $pay_type,
+                $pay_status,
                 $pay_id
             );
 
@@ -147,7 +147,7 @@ if(isset($_GET['id'])) {
                     </head>
                     <body>
                     <div class="container">
-                    <h2>Order and payment details successfully stored in the database.</h2>
+                    <i><b><h2>Your Order Has Been Successfully Placed. Thank You for Your Order!</h2></b></i>
                     <p>Payment ID: ' . $payment_id . '</p>
                     <p>Order ID: ' . $inserted_order_id . '</p>
                     <p>Amount Paid: ₹' . $amount_paid . '</p>
