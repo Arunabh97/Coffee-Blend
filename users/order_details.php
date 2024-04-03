@@ -81,7 +81,7 @@ $orderedItems = $orderItemsQuery->fetchAll(PDO::FETCH_OBJ);
                         <tbody>
                             <?php foreach ($orderedItems as $item) : ?>
                                 <tr>
-                                <td class="image-prod"><div class="img" style="background-image:url(<?php echo IMAGEPRODUCTS; ?>/<?php echo $item->product_image; ?>);"></div></td>
+                                <td class="image-prod"><img src="<?php echo IMAGEPRODUCTS; ?>/<?php echo $item->product_image; ?>" alt="Product Image" class="img-fluid" style="max-width: 250px; max-height: 250px;"></td>
                                     <td><?php echo $item->product_name; ?></td>
                                     <td><?php echo $item->quantity; ?></td>
                                     <td>₹<?php echo $item->price; ?></td>

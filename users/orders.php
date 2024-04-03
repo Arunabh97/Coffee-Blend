@@ -45,9 +45,6 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
         margin: 0 auto;
     }
 
-    .badge {
-    font-size: 17px; 
-    }
 </style>
 
 <section class="home-slider owl-carousel">

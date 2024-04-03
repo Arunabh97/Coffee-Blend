@@ -89,6 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cancel_booking'])) {
 						    <thead class="thead-primary">
 						      <tr class="text-center">
 							  	<th>Name</th>
+								<th>Seats</th>
 						        <th>Date</th>
 						        <th>Time</th>
 						        <th>Phone</th>
@@ -102,6 +103,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cancel_booking'])) {
 						      <tr class="text-center">
 							  	<td class="name"><?php echo $booking->first_name . ' ' . $booking->last_name; ?></td>
 						        
+								<td class="seats"><?php echo $booking->seats; ?></td>
+
 						        <td class="product-name">
 						        	<h3><?php echo $booking->date; ?></h3>
 						        </td>
