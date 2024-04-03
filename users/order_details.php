@@ -39,7 +39,32 @@ $orderedItems = $orderItemsQuery->fetchAll(PDO::FETCH_OBJ);
             <div class="col-md-12 ftco-animate">
                 <div class="cart-list">
                     <h2>Order Details - Order #<?php echo $orderDetails->id; ?></h2>
-                    <p>Status: <?php echo $orderDetails->status; ?></p>
+                    <p>Status: <?php $status = $orderDetails->status;
+                                                $badge_class = '';
+
+                                                switch ($status) {
+                                                    case 'Delivered':
+                                                        $badge_class = 'badge badge-success';
+                                                        break;
+                                                    case 'In Progress':
+                                                        $badge_class = 'badge badge-primary';
+                                                        break;
+                                                    case 'Shipped':
+                                                        $badge_class = 'badge badge-info';
+                                                        break;
+                                                    case 'Pending':
+                                                    case 'Processing':
+                                                        $badge_class = 'badge badge-warning';
+                                                        break;
+                                                    case 'Cancelled':
+                                                        $badge_class = 'badge badge-danger';
+                                                        break;
+                                                    default:
+                                                        $badge_class = 'badge badge-secondary';
+                                                        break;
+                                                }
+                                                ?>
+                                                <span class="<?php echo $badge_class; ?>"><?php echo $status; ?></span></p>
                     <p>Total Price: ₹<?php echo $orderDetails->total_price; ?></p>
 
                     <div class="table-responsive">

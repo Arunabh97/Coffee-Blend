@@ -176,6 +176,7 @@ if ($filter == 'all') {
                             <th scope="col"><i class="fas fa-id-card"></i> Id</th>
                             <th scope="col"><i class="fas fa-user"></i> First Name</th>
                             <th scope="col"><i class="fas fa-user"></i> Last Name</th>
+                            <th scope="col"><i class="fas fa-chair"></i> Seats</th>
                             <th scope="col"><i class="fas fa-calendar"></i> Date</th>
                             <th scope="col"><i class="fas fa-clock"></i> Time</th>
                             <th scope="col"><i class="fas fa-phone"></i> Phone</th>
@@ -196,6 +197,7 @@ if ($filter == 'all') {
                                 <th scope="row"><?php echo $booking->id; ?></th>
                                 <td><?php echo $booking->first_name; ?></td>
                                 <td><?php echo $booking->last_name; ?></td>
+                                <td><?php echo $booking->seats; ?></td>
                                 <td><?php echo $booking->date; ?></td>
                                 <td><?php echo $booking->time; ?></td>
                                 <td><?php echo $booking->phone; ?></td>

@@ -99,8 +99,8 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
                                             <td class="street_add"><?php echo $order->street_address; ?></td>
                                             <td class="price"><?php echo $order->phone; ?></td>
                                             <td class="price">₹<?php echo $order->total_price; ?></td>
-                                            <td class="pay_type">₹<?php echo $order->pay_type; ?></td>
-                                            <td class="pay_status">₹<?php echo $order->pay_status; ?></td>
+                                            <td class="pay_type"><?php echo $order->pay_type; ?></td>
+                                            <td class="pay_status"><?php echo $order->pay_status; ?></td>
                                             <td class="timestamp"><?php echo $order->created_at; ?></td>
                                             <td class="status">
                                                 <?php
