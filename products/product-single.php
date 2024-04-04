@@ -79,58 +79,65 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <script>
+  
   $(document).ready(function () {
     function updatePrice() {
-      var quantity = parseInt($('#quantity').val());
-      // Validate quantity against max limit (10 in this case)
-      if (quantity > 10) {
-        alert('Maximum quantity allowed is 10.');
-        $('#quantity').val(10);
-        quantity = 10;
-      }
+        var quantity = parseInt($('#quantity').val());
+        // Validate quantity against max limit (10 in this case)
+        if (quantity > 10) {
+            alert('Maximum quantity allowed is 10.');
+            $('#quantity').val(10);
+            quantity = 10;
+        }
 
-      var pricePerItem = <?php echo $singleProduct->price; ?>;
-      var totalPrice = quantity * pricePerItem;
-      $('#updatedPrice').text('₹' + totalPrice.toFixed(2));
+        var pricePerItem = <?php echo $singleProduct->price; ?>;
+        var totalPrice = quantity * pricePerItem;
+        $('#updatedPrice').text('₹' + totalPrice.toFixed(2));
     }
 
     // Plus button
     $('.quantity-right-plus').click(function (e) {
-      e.preventDefault();
-      if (!isItemAddedToCart()) {
-        var quantity = parseInt($('#quantity').val());
-        if (quantity < 10) {
-          $('#quantity').val(quantity + 1);
-          updatePrice();
-        } else {
-          alert('Maximum quantity allowed is 10.');
+        e.preventDefault();
+        if (!isItemAddedToCart()) {
+            var quantity = parseInt($('#quantity').val());
+            var maxQuantity = <?php echo $singleProduct->stock_quantity; ?>;
+            if (quantity < maxQuantity) {
+                $('#quantity').val(quantity + 1);
+                updatePrice();
+            } else {
+                alert('Maximum quantity allowed is ' + maxQuantity + '.');
+            }
         }
-      }
     });
 
     // Minus button
     $('.quantity-left-minus').click(function (e) {
-      e.preventDefault();
-      if (!isItemAddedToCart()) {
+        e.preventDefault();
         var quantity = parseInt($('#quantity').val());
         if (quantity > 1) {
-          $('#quantity').val(quantity - 1);
-          updatePrice();
+            $('#quantity').val(quantity - 1);
+            updatePrice();
         }
-      }
     });
 
     function isItemAddedToCart() {
-      <?php if (isset($_SESSION['user_id']) && $rowCount > 0) : ?>
-        alert('Item is already added to the cart. Quantity adjustment is disabled.');
-        return true;
-      <?php else : ?>
-        return false;
-      <?php endif; ?>
+        <?php if (isset($_SESSION['user_id']) && $rowCount > 0) : ?>
+            alert('Item is already added to the cart. Quantity adjustment is disabled.');
+            return true;
+        <?php else : ?>
+            var availableQuantity = <?php echo $singleProduct->stock_quantity; ?>;
+            var requestedQuantity = parseInt($('#quantity').val());
+            if (requestedQuantity >= availableQuantity) {
+                alert('Sorry, only ' + availableQuantity + ' items are available.');
+                return true;
+            }
+            return false;
+        <?php endif; ?>
     }
 
     updatePrice();
-  });
+});
+
 </script>
 
     <section class="home-slider owl-carousel">
