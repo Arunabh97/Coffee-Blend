@@ -63,13 +63,13 @@ if(isset($_POST['submit'])) {
                   <div class="row align-items-end">
                       <div class="col-md-12">
                           <div class="form-group">
-                              <label for="Email">Email</label>
+                              <label for="email">Email <span class="required-icon">*</span></label>
                               <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
                           </div>
                       </div>
                       <div class="col-md-12">
                           <div class="form-group">
-                              <label for="Password">Password</label>
+                              <label for="password">Password <span class="required-icon">*</span></label>
                               <div class="input-group">
                                   <input type="password" name="password" class="form-control" placeholder="Enter your password" id="passwordInput" required>
                                   <div class="input-group-append">
