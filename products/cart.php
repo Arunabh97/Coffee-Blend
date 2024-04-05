@@ -91,7 +91,33 @@
   filter: brightness(150%);
 }
 
+.discount-banner {
+    background-color: #fdf5e6; 
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.discount-content {
+    text-align: center;
+}
+
+.discount-content h2 {
+    font-size: 28px;
+    color: #ff7f50; 
+	margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.discount-content p {
+    font-size: 18px;
+    color: #333; 
+    margin-bottom: 10px; 
+}
+
 </style>
+
     <section class="home-slider owl-carousel">
 
       <div class="slider-item" style="background-image: url(<?php echo APPURL; ?>/images/bg_3.jpg);" data-stellar-background-ratio="0.5">
@@ -177,6 +203,22 @@
     			</div>
     		</div>
     		<div class="row justify-content-end">
+				<div class="col-md-6 mt-5 ftco-animate float-left">
+				<?php if(count($allProducts) > 0) : ?>
+					<section class="discount-banner">
+						<div class="container">
+							<div class="row">
+								<div class="col-md-12 text-center">
+									<div class="discount-content">
+										<h2>Hurry! Limited Time Offer</h2>
+										<p>Get 10% off on your order using coupon code COFFEEBLEND10</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+					<?php endif; ?>
+				</div>
     			<div class="col col-lg-3 col-md-6 mt-5 cart-wrap ftco-animate">
 					<form method="POST" action="cart.php">
 						<div class="form-group">
@@ -224,8 +266,8 @@
 					</form>
 				</div>
     		</div>
-			</div>
-		</section>
+		</div>
+</section>
 
 <script>
 
