@@ -29,6 +29,12 @@ $logged_in_email = $user_data['email'];
 $cartTotal = $conn->query("SELECT SUM(quantity*price) AS total FROM cart WHERE user_id='$_SESSION[user_id]'");
 $cartTotal->execute();
 
+if (isset($_SESSION['total_discount'])) {
+   $total_price = $_SESSION['total_price'] + 50 - 5 - $_SESSION['total_discount']; // Apply discount if it's set
+} else {
+   $total_price = $_SESSION['total_price']; // If discount is not set, use total price without discount
+}
+
 $allCartTotal = $cartTotal->fetch(PDO::FETCH_OBJ);
 
 if (isset($_POST['submit'])) {
@@ -272,14 +278,12 @@ if (isset($_POST['submit'])) {
                         </p>
                         <p class="d-flex">
                            <span>Discount</span>
-                           <span>₹5</span>
+                           <span>₹<?php echo $_SESSION['total_discount']; ?></span>
                         </p>
                         <hr>
                         <p class="d-flex total-price">
                            <span>Total</span>
-                           <?php if($allCartTotal->total > 0) : ?>
-                           <span>₹<?php echo $allCartTotal->total + 50 - 5; ?></span>
-                           <?php endif; ?>
+                           <span>₹<?php echo $_SESSION['total_price']; ?></span>
                         </p>
                      </div>
                   </div>

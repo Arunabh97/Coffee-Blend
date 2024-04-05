@@ -23,10 +23,27 @@
 
 	$allCartTotal = $cartTotal->fetch(PDO::FETCH_OBJ);
 
+	define("CONSTANT_COUPON_CODE", "COFFEEBLEND10");
+
+	if(isset($_POST['apply_coupon'])){
+		$entered_coupon = $_POST['coupon_code'];
+
+		if($entered_coupon === CONSTANT_COUPON_CODE){
+
+			$discount_amount = 10; 
+			$total_price = $allCartTotal->total + 50 - 5; 
+			$discounted_price = $total_price - $discount_amount; 
+			echo "<script>alert('Coupon code applied successfully! You got a ₹$discount_amount discount.');</script>";
+		} else {
+			echo "<script>alert('Invalid coupon code.');</script>";
+		}
+	}
+
 	//proceed to checkout
 	if(isset($_POST['checkout'])){
 
 		$_SESSION['total_price'] = $_POST['total_price'];
+		$_SESSION['total_discount'] = $_POST['total_discount'];
 
 		//header("location: checkout.php");
 		echo '<script>window.location.href="checkout.php";</script>';
@@ -161,6 +178,12 @@
     		</div>
     		<div class="row justify-content-end">
     			<div class="col col-lg-3 col-md-6 mt-5 cart-wrap ftco-animate">
+					<form method="POST" action="cart.php">
+						<div class="form-group">
+							<input type="text" class="form-control" id="coupon_code" name="coupon_code" placeholder="Enter promo code">
+							<button type="submit" name="apply_coupon" class="btn btn-primary" style="color: white !important; z-index: 1; margin-top:10px;">Apply</button>
+						</div>
+					</form>
     				<div class="cart-total mb-3">
     					<h3>Cart Totals</h3>
     					<p class="d-flex">
@@ -173,18 +196,28 @@
     					</p>
     					<p class="d-flex">
     						<span>Discount</span>
-    						<span>₹5</span>
+    						<span>
+								₹<?php 
+									$total_discount = isset($discounted_price) ? $discount_amount + 5 : 5; 
+									echo $total_discount; 
+								?>
+							</span>
     					</p>
     					<hr>
     					<p class="d-flex total-price">
 							<span>Total</span>
-							<?php if($allCartTotal->total > 0) : ?>
-								<span>₹<?php echo $allCartTotal->total + 50 - 5; ?></span>
-							<?php endif; ?>
+							<span><?php echo isset($discounted_price) ? '₹' . $discounted_price : '₹' . ($allCartTotal->total + 50 - 5); ?></span>
 						</p>
     				</div>
 					<form method="POST" action="cart.php" onsubmit="return confirm('Are you sure you want to proceed to checkout?');">
-						<input type="hidden" name="total_price" value="<?php echo $allCartTotal->total + 50 - 5; ?>">
+						<?php
+						$total_price = $allCartTotal->total + 50 - 5; 
+						if (isset($discounted_price)) {
+							$total_price = $discounted_price + 5 - 5; 
+						}
+						?>
+						<input type="hidden" name="total_price" value="<?php echo $total_price; ?>">
+						<input type="hidden" name="total_discount" value="<?php echo $total_discount; ?>">
 						<?php if($allCartTotal->total > 0) : ?>
 							<button name="checkout" type="submit" class="btn btn-primary" style="color: white !important; z-index: 1; font-weight: bold;">Proceed to Checkout</button>
 						<?php endif; ?>
@@ -235,7 +268,6 @@ $(document).ready(function() {
         });
     });
 });
-
 
 </script>
 
