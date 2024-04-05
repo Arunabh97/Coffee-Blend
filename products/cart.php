@@ -6,11 +6,17 @@
 		header("location: ".APPURL."");
 	}
 	
-	$products = $conn->query("SELECT * FROM cart WHERE user_id='$_SESSION[user_id]'");
+	$products = $conn->query("SELECT cart.*, products.*, 
+                          CASE 
+                            WHEN cart.quantity > products.stock_quantity THEN products.stock_quantity
+                            ELSE cart.quantity
+                          END AS max_quantity 
+                          FROM cart 
+                          JOIN products ON cart.pro_id = products.id
+                          WHERE cart.user_id = '$_SESSION[user_id]'");
 	$products->execute();
-
 	$allProducts = $products->fetchAll(PDO::FETCH_OBJ);
-	
+
 	//cart total
 	$cartTotal = $conn->query("SELECT SUM(quantity*price) AS total FROM cart WHERE user_id='$_SESSION[user_id]'");
 	$cartTotal->execute();
@@ -125,8 +131,14 @@
 						        <td class="price">₹ <?php echo $product->price; ?></td>
 						        
 						        <td>
-									<div class="input-group mb-3">
-										<input type="number" name="quantity_<?php echo $product->id; ?>" class="quantity form-control input-number" value="<?php echo $product->quantity; ?>" min="1" max="10" data-product-id="<?php echo $product->id; ?>" style="padding: 7px;">
+									<div style="position: relative;">
+										<div class="input-group mb-3">
+											<input type="number" name="quantity_<?php echo $product->id; ?>" class="quantity form-control input-number" value="<?php echo $product->quantity; ?>" min="1" max="10" data-product-id="<?php echo $product->id; ?>" style="padding: 7px;">
+										</div>
+
+										<div style="position: absolute; top: 100%; left: 50%; transform: translateX(-50%); text-align: center; margin-top:5px;">
+											<p class="availability" style="color: #FFDAB9;">Available Stock: <?php echo $product->stock_quantity; ?></p>
+										</div>
 									</div>
 								</td>
 				        
@@ -184,37 +196,46 @@
 
 <script>
 
-	$(document).ready(function() {
-		$('.quantity').on('change', function() {
-			var productId = $(this).data('product-id');
-			var newQuantity = $(this).val();
+$(document).ready(function() {
+    $('.quantity').on('change', function() {
+        var productId = $(this).data('product-id');
+        var newQuantity = $(this).val();
+        var currentElement = $(this); 
 
-			$.ajax({
-				url: 'update-cart.php',
-				method: 'POST',
-				data: { product_id: productId, quantity: newQuantity },
-				success: function(response) {
+        $.ajax({
+            url: 'update-cart.php',
+            method: 'POST',
+            data: { product_id: productId, quantity: newQuantity },
+            dataType: 'json', 
+            success: function(response) {
+                if (response.success) {
+                    alert(response.message);
 
-					var total = parseFloat(response);
-					var row = $(this).closest('tr');
-					row.find('.total').text('₹' + total.toFixed(2));
+                    var total = parseFloat(response.total);
+                    var row = currentElement.closest('tr');
+                    row.find('.total').text('₹' + total.toFixed(2));
 
-					var subtotal = 0;
-					$('.total').each(function() {
-						subtotal += parseFloat($(this).text().replace('₹', ''));
-					});
-					var totalWithDelivery = subtotal + 50 - 5;
-					$('.cart-total span:contains("Subtotal")').next().text('₹' + subtotal.toFixed(2));
-					$('.cart-total span:contains("Total")').next().text('₹' + totalWithDelivery.toFixed(2));
+                    var subtotal = 0;
+                    $('.total').each(function() {
+                        subtotal += parseFloat($(this).text().replace('₹', ''));
+                    });
+                    var totalWithDelivery = subtotal + 50 - 5;
+                    $('.cart-total span:contains("Subtotal")').next().text('₹' + subtotal.toFixed(2));
+                    $('.cart-total span:contains("Total")').next().text('₹' + totalWithDelivery.toFixed(2));
+                } else {
+                    alert(response.message);
+                }
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                alert('An error occurred while updating quantity. Please try again later.');
+                location.reload();
+            }
+        });
+    });
+});
 
-					location.reload();
-				},
-				error: function(xhr, status, error) {
-					console.error(xhr.responseText);
-				}
-			});
-		});
-	});
 
 </script>
 

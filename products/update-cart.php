@@ -1,45 +1,43 @@
 <?php
 require "../config/config.php";
+session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['product_id']) && isset($_POST['quantity'])) {
+        $productId = $_POST['product_id'];
+        $quantity = intval($_POST['quantity']);
 
-    if (isset($_POST["product_id"]) && isset($_POST["quantity"])) {
+        // Fetch the stock quantity of the product
+        $stockQuery = $conn->prepare("SELECT stock_quantity FROM products WHERE id = :productId");
+        $stockQuery->bindParam(':productId', $productId);
+        $stockQuery->execute();
+        $stockResult = $stockQuery->fetch(PDO::FETCH_ASSOC);
+        $stockQuantity = $stockResult['stock_quantity'];
 
-        $productId = $_POST["product_id"];
-        $quantity = $_POST["quantity"];
+        // Limit the quantity to the available stock
+        $quantity = min($quantity, $stockQuantity);
 
-        if ($quantity > 10) {
+        // Update the cart quantity in the database
+        $updateQuery = $conn->prepare("UPDATE cart SET quantity = :quantity WHERE pro_id = :productId AND user_id = :userId");
+        $updateQuery->bindParam(':quantity', $quantity);
+        $updateQuery->bindParam(':productId', $productId);
+        $updateQuery->bindParam(':userId', $_SESSION['user_id']);
+        $updateQuery->execute();
 
-            echo "Quantity cannot exceed 10.";
-            exit; 
-
-        }
-
-        $stmt = $conn->prepare("UPDATE cart SET quantity = :quantity WHERE id = :id");
-        $stmt->bindParam(':quantity', $quantity);
-        $stmt->bindParam(':id', $productId);
-        
-        if ($stmt->execute()) {
-
-            $stmt = $conn->prepare("SELECT price * quantity AS total FROM cart WHERE id = :id");
-            $stmt->bindParam(':id', $productId);
-            $stmt->execute();
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            
-            echo $row["total"];
+        // Check if the quantity was updated successfully
+        if ($updateQuery->rowCount() > 0) {
+            // Quantity updated successfully
+            echo json_encode(array('success' => true, 'message' => 'Quantity updated successfully.'));
         } else {
-
-            echo "Error updating cart.";
+            // Quantity not updated (e.g., product not found in cart)
+            echo json_encode(array('success' => false, 'message' => 'Unable to update quantity.'));
         }
     } else {
-
-        echo "Product ID or quantity not specified.";
+        http_response_code(400);
+        echo "Missing product_id or quantity";
     }
 } else {
-
-    echo "Invalid request method.";
+    http_response_code(405);
+    echo "Method Not Allowed";
 }
-
-// Close the database connection
-$conn = null;
 ?>
