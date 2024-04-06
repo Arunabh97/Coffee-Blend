@@ -61,7 +61,7 @@ $payments = $paymentsQuery->fetchAll(PDO::FETCH_ASSOC);
                 <table id="paymentTable" class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>Serial No</th>
+                            <th>S No.</th>
                             <th><i class="fas fa-id-card"></i> ID</th>
                             <th><i class="fas fa-user"></i> User ID</th>
                             <th><i class="fas fa-receipt"></i> Payment ID</th>

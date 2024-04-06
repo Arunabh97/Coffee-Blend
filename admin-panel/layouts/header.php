@@ -101,6 +101,9 @@
           <li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'show-payments.php' ? 'active' : ''; ?>">
               <a class="nav-link" href="<?php echo ADMINURL; ?>/payments-admin/show-payments.php" style="margin-left: 20px;"><i class="fas fa-credit-card"></i> Payments</a>
           </li>
+          <li class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'show-reviews.php' ? 'active' : ''; ?>">
+              <a class="nav-link" href="<?php echo ADMINURL; ?>/reviews-admins/show_reviews.php" style="margin-left: 20px;"><i class="fas fa-comments"></i> Reviews</a>
+          </li>
         </ul>
         <?php endif; ?>
         <ul class="navbar-nav ml-md-auto d-md-flex">
