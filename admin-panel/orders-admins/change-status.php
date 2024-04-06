@@ -8,24 +8,36 @@ if(!isset ($_SESSION['admin_name'])){
 
 if(isset($_GET['id'])){
 
-    $id = $_GET['id'];
+  $id = $_GET['id'];
 
-    if (isset($_POST['submit'])) {
-        if (empty($_POST['status'])) {
-            echo "<script>alert('One or more inputs are empty');</script>";
-        } else {
-            $status = $_POST['status'];
-            
-            $update = $conn->prepare("UPDATE orders SET status = :status WHERE id='$id'");
-      
-            $update->execute([
-                ":status" => $status,
-            ]);
-      
-           // header("location: show-orders.php");
-            echo "<script>window.location.href = 'show-orders.php';</script>";
-        }
-    }
+  if (isset($_POST['submit'])) {
+      if (empty($_POST['status'])) {
+          echo "<script>alert('One or more inputs are empty');</script>";
+      } else {
+          $status = $_POST['status'];
+          
+          // Check if the current status is 'Cancelled' or 'Delivered'
+          $check_status = $conn->prepare("SELECT status FROM orders WHERE id=:id");
+          $check_status->execute([":id" => $id]);
+          $current_status = $check_status->fetchColumn();
+
+          if ($current_status === 'Cancelled') {
+              echo "<script>alert('Once cancelled, status cannot be changed.');</script>";
+          } elseif ($current_status === 'Delivered') {
+              echo "<script>alert('Once delivered, status cannot be changed.');</script>";
+          } else {
+              // Proceed with updating the status
+              $update = $conn->prepare("UPDATE orders SET status = :status WHERE id=:id");
+              $update->execute([
+                  ":status" => $status,
+                  ":id" => $id
+              ]);
+    
+              echo "<script>alert('Status updated successfully.');</script>";
+              echo "<script>window.location.href = 'show-orders.php';</script>";
+          }
+      }
+  }
 }
 
 ?>
