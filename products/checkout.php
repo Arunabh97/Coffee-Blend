@@ -184,20 +184,20 @@ if (isset($_POST['submit'])) {
                <div class="row align-items-end">
                   <div class="col-md-6">
                      <div class="form-group">
-                        <label for="first_name">First Name</label>
+                        <label for="first_name">First Name <span class="required-icon">*</span></label>
                         <input name="first_name" type="text" class="form-control" value="<?php echo htmlspecialchars($logged_in_first_name); ?>" placeholder="Enter your first name" required>
                      </div>
                   </div>
                   <div class="col-md-6">
                      <div class="form-group">
-                        <label for="last_name">Last Name</label>
+                        <label for="last_name">Last Name <span class="required-icon">*</span></label>
                         <input name="last_name" type="text" class="form-control" value="<?php echo htmlspecialchars($logged_in_last_name); ?>" placeholder="Enter your last name" required>
                      </div>
                   </div>
                   <div class="w-100"></div>
                   <div class="col-md-12">
                      <div class="form-group">
-                        <label for="state">State</label>
+                        <label for="state">State <span class="required-icon">*</span></label>
                         <div class="select-wrap">
                            <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                            <select name="state" id="" class="form-control">
@@ -214,7 +214,7 @@ if (isset($_POST['submit'])) {
                   <div class="w-100"></div>
                   <div class="col-md-12">
                      <div class="form-group">
-                        <label for="street_address">Street Address</label>
+                        <label for="street_address">Street Address <span class="required-icon">*</span></label>
                         <input name="street_address" type="text" class="form-control" placeholder="House number and street name" required>
                      </div>
                   </div>
@@ -226,20 +226,20 @@ if (isset($_POST['submit'])) {
                   <div class="w-100"></div>
                   <div class="col-md-6">
                      <div class="form-group">
-                        <label for="town">Town / City</label>
+                        <label for="town">Town / City <span class="required-icon">*</span></label>
                         <input name="town" type="text" class="form-control" placeholder="Enter your town / city" required>
                      </div>
                   </div>
                   <div class="col-md-6">
                      <div class="form-group">
-                        <label for="zip_code">Postcode / ZIP *</label>
+                        <label for="zip_code">Postcode / ZIP <span class="required-icon">*</span></label>
                         <input name="zip_code" type="text" class="form-control" placeholder="Enter your zip code" required>
                      </div>
                   </div>
                   <div class="w-100"></div>
                   <div class="col-md-6">
                      <div class="form-group">
-                        <label for="phone">Phone</label>
+                        <label for="phone">Phone <span class="required-icon">*</span></label>
                         <div class="input-group">
                            <div class="input-group-prepend">
                               <span class="input-group-text">+91</span>
@@ -250,7 +250,7 @@ if (isset($_POST['submit'])) {
                   </div>
                   <div class="col-md-6">
                      <div class="form-group">
-                        <label for="email">Email Address</label>
+                        <label for="email">Email Address <span class="required-icon">*</span></label>
                         <input name="email" type="text" class="form-control" value="<?php echo htmlspecialchars($logged_in_email); ?>" placeholder="Enter your email address" readonly required>
                      </div>
                   </div>
