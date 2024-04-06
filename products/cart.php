@@ -55,7 +55,7 @@
 
 <style>
   #cart-icon {
-    font-size: 70px;
+    font-size: 80px;
     bottom: 40px;
     color: #3498db;
     cursor: pointer;
@@ -219,6 +219,8 @@
 					</section>
 					<?php endif; ?>
 				</div>
+
+				<?php if(count($allProducts) > 0) : ?>
     			<div class="col col-lg-3 col-md-6 mt-5 cart-wrap ftco-animate">
 					<form method="POST" action="cart.php">
 						<div class="form-group">
@@ -265,6 +267,7 @@
 						<?php endif; ?>
 					</form>
 				</div>
+				<?php endif; ?>
     		</div>
 		</div>
 </section>
