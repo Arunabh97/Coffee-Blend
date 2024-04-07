@@ -8,15 +8,12 @@ if (!isset($_SESSION['admin_id']) || !isset($_GET['id'])) {
 
 $adminId = $_GET['id'];
 
-// Fetch admin details from the database based on $adminId
 $adminQuery = $conn->prepare("SELECT * FROM admins WHERE id = :adminId");
 $adminQuery->bindParam(':adminId', $adminId, PDO::PARAM_INT);
 $adminQuery->execute();
 $admin = $adminQuery->fetch(PDO::FETCH_OBJ);
 
 if (!$admin) {
-    // Admin not found, handle accordingly (e.g., redirect to admin list)
-    //header("location: admins.php");
     echo "<script>window.location.href = 'admins.php';</script>";
     exit();
 }
@@ -24,31 +21,41 @@ if (!$admin) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if the user wants to update the password
     if (!empty($_POST['new_password'])) {
-        // Validate the old password
         if (password_verify($_POST['old_password'], $admin->password)) {
-            // Check if new password and confirm password match
             if ($_POST['new_password'] === $_POST['confirm_password']) {
-                // Update the password
                 $newPassword = password_hash($_POST['new_password'], PASSWORD_DEFAULT);
 
-                // Update the password in the database for the admin with $adminId
                 $updatePasswordQuery = $conn->prepare("UPDATE admins SET password = :newPassword WHERE id = :adminId");
                 $updatePasswordQuery->bindParam(':newPassword', $newPassword, PDO::PARAM_STR);
                 $updatePasswordQuery->bindParam(':adminId', $adminId, PDO::PARAM_INT);
                 $updatePasswordQuery->execute();
-
-                echo "<script>alert('Password updated successfully');</script>";
-                echo "<script>window.location.href='admins.php';</script>";
-                exit();
             } else {
                 echo "<script>alert('New password and confirm password do not match');</script>";
+                echo "<script>window.location.href='admins.php';</script>";
+                exit();
             }
         } else {
             echo "<script>alert('Incorrect old password');</script>";
+            echo "<script>window.location.href='admins.php';</script>";
+            exit();
         }
     }
 
-    echo "<script>window.location.href=window.location.href;</script>";
+    // Check if the user wants to update email and username
+    if (!empty($_POST['email']) && !empty($_POST['adminname'])) {
+
+        $email = $_POST['email'];
+        $adminname = $_POST['adminname'];
+
+        $updateInfoQuery = $conn->prepare("UPDATE admins SET email = :email, adminname = :adminname WHERE id = :adminId");
+        $updateInfoQuery->bindParam(':email', $email, PDO::PARAM_STR);
+        $updateInfoQuery->bindParam(':adminname', $adminname, PDO::PARAM_STR);
+        $updateInfoQuery->bindParam(':adminId', $adminId, PDO::PARAM_INT);
+        $updateInfoQuery->execute();
+    }
+
+    echo "<script>alert('Profile updated successfully');</script>";
+    echo "<script>window.location.href='admins.php';</script>";
     exit();
 }
 
@@ -75,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <!-- Old Password input -->
                     <div class="form-outline mb-4 mt-4">
                         <div class="input-group">
-                            <input type="password" name="old_password" class="form-control" placeholder="Old Password" required/>
+                            <input type="password" name="old_password" class="form-control" placeholder="Old Password" />
                             <button type="button" class="btn btn-outline-secondary" id="toggleOldPassword">
                                 <i class="fas fa-eye" id="oldPasswordEye"></i>
                             </button>
@@ -152,6 +159,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             confirmPasswordEye.classList.add("fa-eye");
         }
     });
+
+    function togglePasswordRequired() {
+        var oldPasswordInput = document.getElementsByName("old_password")[0];
+        var newPasswordInput = document.getElementsByName("new_password")[0];
+        var confirmPasswordInput = document.getElementsByName("confirm_password")[0];
+
+        if (oldPasswordInput.value.trim() !== "") {
+            newPasswordInput.required = true;
+            confirmPasswordInput.required = true;
+        } else {
+            newPasswordInput.required = false;
+            confirmPasswordInput.required = false;
+        }
+    }
+
+    document.getElementsByName("old_password")[0].addEventListener("input", togglePasswordRequired);
+
 </script>
 
 <?php require "../layouts/footer.php"; ?>
