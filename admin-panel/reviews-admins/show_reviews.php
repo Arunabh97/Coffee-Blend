@@ -35,7 +35,18 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']) 
     exit();
 }
 
-$reviewsQuery = $conn->query("SELECT id, review, rating, username, created_at FROM reviews");
+$filterRating = isset($_GET['rating']) ? $_GET['rating'] : '';
+
+$ratingsCondition = '';
+if (!empty($filterRating)) {
+    $ratingsCondition = "WHERE rating = :rating";
+}
+
+$reviewsQuery = $conn->prepare("SELECT id, review, rating, username, created_at FROM reviews $ratingsCondition");
+if (!empty($filterRating)) {
+    $reviewsQuery->bindParam(':rating', $filterRating);
+}
+$reviewsQuery->execute();
 $reviews = $reviewsQuery->fetchAll(PDO::FETCH_OBJ);
 
 ?>
@@ -78,10 +89,31 @@ $reviews = $reviewsQuery->fetchAll(PDO::FETCH_OBJ);
         <div class="card">
             <div class="card-body">
                 <div class="row mb-3">
-                    <div class="col-md-8">
+                    <div class="col-md-10">
                         <h5 class="card-title mb-4 d-inline"><i class="fas fa-comments"></i> Reviews</h5>
                     </div>
+                    <div class="col-md-2 text-right">
+                        <form action="" method="GET" class="form-inline">
+                            <div class="form-group mb-2 mr-1">
+                                <label for="rating" class="mr-2"></label>
+                                <select class="form-control" id="rating" name="rating">
+                                    <option value="">All Ratings</option>
+                                    <option value="1">1 Star</option>
+                                    <option value="2">2 Stars</option>
+                                    <option value="3">3 Stars</option>
+                                    <option value="4">4 Stars</option>
+                                    <option value="5">5 Stars</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary mb-2"><i class="fa-solid fa-filter"></i></button>
+                        </form>
+                    </div>
                 </div>
+
+                <?php if (!empty($filterRating)) : ?>
+                <p class="lead">Filtering by rating no: <strong><?php echo htmlspecialchars($filterRating); ?></strong></p>
+                <?php endif; ?>
+
                 <table id="reviewTable" class="table table-striped table-hover">
                     <thead>
                         <tr>
