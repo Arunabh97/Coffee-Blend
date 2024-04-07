@@ -78,19 +78,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <form method="POST" action="">
 
                     <div class="form-outline mb-4 mt-4">
-                        <input type="text" name="username" class="form-control" placeholder="Username" value="<?php echo $user->username; ?>"  />
+                        <input type="text" name="username" class="form-control" placeholder="Username" value="<?php echo $user->username; ?>"  required/>
                     </div>
 
                     <div class="form-outline mb-4 mt-4">
-                        <input type="text" name="first_name" class="form-control" placeholder="First Name" value="<?php echo $user->first_name; ?>"  />
+                        <input type="text" name="first_name" class="form-control" placeholder="First Name" value="<?php echo $user->first_name; ?>"  required/>
                     </div>
 
                     <div class="form-outline mb-4">
-                        <input type="text" name="last_name" class="form-control" placeholder="Last Name" value="<?php echo $user->last_name; ?>"  />
+                        <input type="text" name="last_name" class="form-control" placeholder="Last Name" value="<?php echo $user->last_name; ?>"  required/>
                     </div>
 
                     <div class="form-outline mb-4">
-                        <input type="email" name="email" class="form-control" placeholder="Email" value="<?php echo $user->email; ?>"  />
+                        <input type="email" name="email" class="form-control" placeholder="Email" value="<?php echo $user->email; ?>"  required/>
                     </div>
                     
                     <div class="form-outline mb-4">
