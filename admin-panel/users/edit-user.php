@@ -34,19 +34,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $new_password = $_POST['new_password'];
         $confirm_new_password = $_POST['confirm_new_password'];
         
-        if($new_password === $confirm_new_password) {
-
-            $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-            
-            $updateQuery = $conn->prepare("UPDATE users SET first_name = :first_name, last_name = :last_name, username = :username, email = :email, password = :password WHERE id = :userId");
-            $updateQuery->bindParam(':password', $hashed_password, PDO::PARAM_STR);
-        }
-        else {
+        if($new_password !== $confirm_new_password) {
             echo "<script>alert('New password and confirm password do not match');</script>";
+            echo "<script>window.location.href='users.php';</script>";
             exit();
         }
+
+        $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
     }
 
+    if (isset($hashed_password)) {
+        $updateQuery = $conn->prepare("UPDATE users SET first_name = :first_name, last_name = :last_name, username = :username, email = :email, password = :password WHERE id = :userId");
+        $updateQuery->bindParam(':password', $hashed_password, PDO::PARAM_STR);
+    } else {
+        $updateQuery = $conn->prepare("UPDATE users SET first_name = :first_name, last_name = :last_name, username = :username, email = :email WHERE id = :userId");
+    }
+    
     $updateQuery->bindParam(':first_name', $first_name, PDO::PARAM_STR);
     $updateQuery->bindParam(':last_name', $last_name, PDO::PARAM_STR);
     $updateQuery->bindParam(':username', $username, PDO::PARAM_STR);
@@ -75,24 +78,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <form method="POST" action="">
 
                     <div class="form-outline mb-4 mt-4">
-                        <input type="text" name="username" class="form-control" placeholder="Username" value="<?php echo $user->username; ?>" required />
+                        <input type="text" name="username" class="form-control" placeholder="Username" value="<?php echo $user->username; ?>"  />
                     </div>
 
                     <div class="form-outline mb-4 mt-4">
-                        <input type="text" name="first_name" class="form-control" placeholder="First Name" value="<?php echo $user->first_name; ?>" required />
+                        <input type="text" name="first_name" class="form-control" placeholder="First Name" value="<?php echo $user->first_name; ?>"  />
                     </div>
 
                     <div class="form-outline mb-4">
-                        <input type="text" name="last_name" class="form-control" placeholder="Last Name" value="<?php echo $user->last_name; ?>" required />
+                        <input type="text" name="last_name" class="form-control" placeholder="Last Name" value="<?php echo $user->last_name; ?>"  />
                     </div>
 
                     <div class="form-outline mb-4">
-                        <input type="email" name="email" class="form-control" placeholder="Email" value="<?php echo $user->email; ?>" required />
+                        <input type="email" name="email" class="form-control" placeholder="Email" value="<?php echo $user->email; ?>"  />
                     </div>
                     
                     <div class="form-outline mb-4">
                         <div class="input-group">
-                            <input type="password" name="new_password" id="new_password" class="form-control" placeholder="New Password" required />
+                            <input type="password" name="new_password" id="new_password" class="form-control" placeholder="New Password"  />
                             <button type="button" class="btn btn-outline-secondary" id="toggleNewPassword">
                                 <i class="fas fa-eye" id="newPasswordEye"></i>
                             </button>
@@ -101,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <div class="form-outline mb-4">
                         <div class="input-group">
-                            <input type="password" name="confirm_new_password" id="confirm_new_password" class="form-control" placeholder="Confirm New Password" required />
+                            <input type="password" name="confirm_new_password" id="confirm_new_password" class="form-control" placeholder="Confirm New Password"  />
                             <button type="button" class="btn btn-outline-secondary" id="toggleConfirmPassword">
                                 <i class="fas fa-eye" id="confirmPasswordEye"></i>
                             </button>
@@ -142,6 +145,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             confirmPasswordEye.classList.remove("fa-eye-slash");
             confirmPasswordEye.classList.add("fa-eye");
         }
+    });
+
+    document.getElementById("new_password").addEventListener("input", function() {
+        var confirmPasswordInput = document.getElementById("confirm_new_password");
+        confirmPasswordInput.required = this.value.trim().length > 0;
     });
 </script>
 
