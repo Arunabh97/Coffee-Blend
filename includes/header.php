@@ -236,6 +236,68 @@ if (isset($_SESSION['user_id'])) {
         transform: translateY(-50%);
         cursor: pointer;
     }
+
+    #addDetailsForm {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    #addDetailsForm label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #333;
+        font-size: 14px;
+    }
+
+    #addDetailsForm input {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 15px; 
+    box-sizing: border-box;
+    border: none; 
+    border-bottom: 2px solid #007bff; 
+    background-color: #f4f4f4; 
+    border-radius: 6px; 
+    font-size: 14px; 
+    color: #333; 
+    transition: border-color 0.3s ease-in-out; 
+}
+
+#addDetailsForm input:focus {
+    outline: none; 
+    border-bottom-color: #ff6347; 
+}
+
+    #saveAddBtn,
+    #cancelAddBtn {
+        display: inline-block;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    }
+
+    #saveAddBtn {
+        background-color: #28a745;
+        color: #fff;
+    }
+
+    #saveAddBtn:hover {
+        background-color: #218838;
+    }
+
+    #cancelAddBtn {
+        color: #007bff;
+        margin-left: 10px;
+    }
+
+    #cancelAddBtn:hover {
+        color: #0056b3;
+    }
+    
 </style>
 
   </head>
@@ -335,8 +397,16 @@ if (isset($_SESSION['user_id'])) {
                         <p>Username: <span id="username"><?php echo $userDetails['username']; ?></span></p>
                         <p>Email: <span id="email"><?php echo $userDetails['email']; ?></span></p>
 
+                        <p><center><u><b>Additional Details</b></u></center></p>
+
+                        <p>Street Address: <span id="email"><?php echo $userDetails['street_address']; ?></span></p>
+                        <p>Town / City: <span id="email"><?php echo $userDetails['town']; ?></span></p>
+                        <p>ZipCode: <span id="email"><?php echo $userDetails['zip_code']; ?></span></p>
+                        <p>Phone Number: <span id="email"><?php echo $userDetails['phone']; ?></span></p>
+
                         <!-- Add a link to edit details -->
                         <a href="#" id="editDetailsBtn" class="btn btn-primary">Edit Details</a>
+                        <a href="#" id="addDetailsBtn" class="btn btn-success">Add Details</a>
                         <a href="#" id="changePasswordBtn" class="btn btn-secondary">Change Password</a>
                     </div>
 
@@ -358,6 +428,23 @@ if (isset($_SESSION['user_id'])) {
                         <!-- Add a button to save changes -->
                         <button type="button" class="btn btn-success" id="saveChangesBtn">Save Changes</button>
                         <a href="#" id="cancelEditBtn">Cancel</a>
+                    </form>
+
+                    <form id="addDetailsForm" style="display: none;">
+                        <label for="editStreetAddress">Street Address:</label>
+                        <input type="text" id="editStreetAddress" name="editStreetAddress" value="<?php echo $userDetails['street_address']; ?>" placeholder="Enter your House No with Full Address">
+
+                        <label for="editTown">Town/City:</label>
+                        <input type="text" id="editTown" name="editTown" value="<?php echo $userDetails['town']; ?>" placeholder="Enter your town/city">
+
+                        <label for="editZipCode">Zip Code:</label>
+                        <input type="text" id="editZipCode" name="editZipCode" value="<?php echo $userDetails['zip_code']; ?>" placeholder="Enter your Pin Code">
+                        
+                        <label for="editPhone">Phone Number:</label>
+                        <input type="text" id="editPhone" name="editPhone" value="<?php echo $userDetails['phone']; ?>" minlength="10" maxlength="10" placeholder="Enter your phone">
+
+                        <button type="button" class="btn btn-success" id="saveAddBtn">Save Changes</button>
+                        <a href="#" id="cancelAddBtn">Cancel</a>
                     </form>
 
                     <!-- Editable form for changing password, initially hidden -->
@@ -442,6 +529,55 @@ if (isset($_SESSION['user_id'])) {
         });
     });
 </script>
+
+<script>
+    $(document).ready(function () {
+        $("#addDetailsBtn").click(function () {
+
+            $("#userDetailsContainer").hide();
+            $("#addDetailsForm").show();
+        });
+
+        $("#cancelAddBtn").click(function () {
+
+            $("#addDetailsForm").hide();
+            $("#userDetailsContainer").show();
+        });
+
+        $("#saveAddBtn").click(function () {
+
+            var addDetailsData = {
+                userId: <?php echo isset($userDetails['id']) ? $userDetails['id'] : 0; ?>,
+                streetAddress: $("#editStreetAddress").val(),
+                town: $("#editTown").val(),
+                zipCode: $("#editZipCode").val(),
+                phone: $("#editPhone").val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "add_details.php", 
+                data: addDetailsData,
+                success: function (response) {
+
+                    alert(response);
+                    $("#streetAddress").text(addDetailsData.streetAddress);
+                    $("#town").text(addDetailsData.town);
+                    $("#zipCode").text(addDetailsData.zipCode);
+                    $("#phone").text(addDetailsData.phone);
+
+                    $("#addDetailsForm").hide();
+                    $("#userDetailsContainer").show();
+                    
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX request error:", xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
+
 
     <script>
     $(document).ready(function () {
