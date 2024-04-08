@@ -523,7 +523,7 @@
 						</a>
 					</div>
 					<div class="col-md-3 ftco-animate">
-						<a href="gallery.php" class="gallery img d-flex align-items-center" style="background-image: url(images/gallery-3.jpg);">
+						<a href="gallery.php" class="gallery img d-flex align-items-center" style="background-image: url(images/gallery-8.jpg);">
 							<div class="icon mb-4 d-flex align-items-center justify-content-center">
     						<span class="icon-search"></span>
     					</div>
