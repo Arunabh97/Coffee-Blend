@@ -13,26 +13,29 @@ if(!isset($_SESSION['user_id'])){
 
 // Fetch user details from the database
 $user_id = $_SESSION['user_id'];
-$user_query = $conn->prepare("SELECT first_name, last_name, email FROM users WHERE id = :user_id");
+$user_query = $conn->prepare("SELECT first_name, last_name, email, street_address, phone, town, zip_code FROM users WHERE id = :user_id");
 $user_query->execute([':user_id' => $user_id]);
 $user_data = $user_query->fetch(PDO::FETCH_ASSOC);
 
 if (!$user_data) {
-    // Handle the case where user data is not found
     die("User data not found");
 }
 
 $logged_in_first_name = $user_data['first_name'];
 $logged_in_last_name = $user_data['last_name'];
 $logged_in_email = $user_data['email'];
+$logged_in_street_address = $user_data['street_address'];
+$logged_in_phone = $user_data['phone'];
+$logged_in_town = $user_data['town'];
+$logged_in_zip_code = $user_data['zip_code'];
 
 $cartTotal = $conn->query("SELECT SUM(quantity*price) AS total FROM cart WHERE user_id='$_SESSION[user_id]'");
 $cartTotal->execute();
 
 if (isset($_SESSION['total_discount'])) {
-   $total_price = $_SESSION['total_price'] + 50 - 5 - $_SESSION['total_discount']; // Apply discount if it's set
+   $total_price = $_SESSION['total_price'] + 50 - 5 - $_SESSION['total_discount']; 
 } else {
-   $total_price = $_SESSION['total_price']; // If discount is not set, use total price without discount
+   $total_price = $_SESSION['total_price']; 
 }
 
 $allCartTotal = $cartTotal->fetch(PDO::FETCH_OBJ);
@@ -148,6 +151,7 @@ if (isset($_POST['submit'])) {
 			$_SESSION['cart_items'] = $cartItems;
 
             echo '<script>window.location.href="pay.php";</script>';
+            
             exit; 
         }
     }
@@ -215,7 +219,7 @@ if (isset($_POST['submit'])) {
                   <div class="col-md-12">
                      <div class="form-group">
                         <label for="street_address">Street Address <span class="required-icon">*</span></label>
-                        <input name="street_address" type="text" class="form-control" placeholder="House number and street name" required>
+                        <input name="street_address" type="text" class="form-control" placeholder="House number and street name" value="<?php echo htmlspecialchars($logged_in_street_address); ?>" required>
                      </div>
                   </div>
                   <!-- <div class="col-md-12">
@@ -227,13 +231,13 @@ if (isset($_POST['submit'])) {
                   <div class="col-md-6">
                      <div class="form-group">
                         <label for="town">Town / City <span class="required-icon">*</span></label>
-                        <input name="town" type="text" class="form-control" placeholder="Enter your town / city" required>
+                        <input name="town" type="text" class="form-control" placeholder="Enter your town / city" value="<?php echo htmlspecialchars($logged_in_town); ?>" required>
                      </div>
                   </div>
                   <div class="col-md-6">
                      <div class="form-group">
                         <label for="zip_code">Postcode / ZIP <span class="required-icon">*</span></label>
-                        <input name="zip_code" type="text" class="form-control" placeholder="Enter your zip code" required>
+                        <input name="zip_code" type="text" class="form-control" placeholder="Enter your zip code" value="<?php echo htmlspecialchars($logged_in_zip_code); ?>" required>
                      </div>
                   </div>
                   <div class="w-100"></div>
@@ -244,7 +248,7 @@ if (isset($_POST['submit'])) {
                            <div class="input-group-prepend">
                               <span class="input-group-text">+91</span>
                            </div>
-                           <input name="phone" type="text" class="form-control" placeholder="Enter your phone number" minlength="10" maxlength="10" required>
+                           <input name="phone" type="text" class="form-control" placeholder="Enter your phone number" minlength="10" maxlength="10" value="<?php echo htmlspecialchars($logged_in_phone); ?>" required>
                         </div>
                      </div>
                   </div>
@@ -255,15 +259,8 @@ if (isset($_POST['submit'])) {
                      </div>
                   </div>
                   <div class="w-100"></div>
-                  <!-- <div class="col-md-12">
-                     <div class="form-group mt-4">
-                     <div class="radio">
-                          <p><button type="submit" name="submit" class="btn btn-primary py-3 px-4">Place an order on pay</button></p>
-                     
-                     </div>
-                     </div>
-                     </div> -->
                </div>
+               
                <div class="row mt-5 pt-3 d-flex">
                   <div class="col-md-6 d-flex">
                      <div class="cart-detail cart-total ftco-bg-dark p-3 p-md-4">
