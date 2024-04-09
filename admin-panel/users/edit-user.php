@@ -29,6 +29,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $last_name = $_POST['last_name'];
     $username = $_POST['username'];
     $email = $_POST['email'];
+    $street_address = $_POST['street_address'];
+    $town = $_POST['town'];
+    $zip_code = $_POST['zip_code'];
+    $phone = $_POST['phone'];
     
     if(isset($_POST['new_password']) && isset($_POST['confirm_new_password'])) {
         $new_password = $_POST['new_password'];
@@ -44,16 +48,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (isset($hashed_password)) {
-        $updateQuery = $conn->prepare("UPDATE users SET first_name = :first_name, last_name = :last_name, username = :username, email = :email, password = :password WHERE id = :userId");
+        $updateQuery = $conn->prepare("UPDATE users SET first_name = :first_name, last_name = :last_name, username = :username, email = :email, street_address = :street_address, town = :town, zip_code = :zip_code, phone = :phone, password = :password WHERE id = :userId");
         $updateQuery->bindParam(':password', $hashed_password, PDO::PARAM_STR);
     } else {
-        $updateQuery = $conn->prepare("UPDATE users SET first_name = :first_name, last_name = :last_name, username = :username, email = :email WHERE id = :userId");
+        $updateQuery = $conn->prepare("UPDATE users SET first_name = :first_name, last_name = :last_name, username = :username, email = :email, street_address = :street_address, town = :town, zip_code = :zip_code, phone = :phone WHERE id = :userId");
     }
     
     $updateQuery->bindParam(':first_name', $first_name, PDO::PARAM_STR);
     $updateQuery->bindParam(':last_name', $last_name, PDO::PARAM_STR);
     $updateQuery->bindParam(':username', $username, PDO::PARAM_STR);
     $updateQuery->bindParam(':email', $email, PDO::PARAM_STR);
+    $updateQuery->bindParam(':street_address', $street_address, PDO::PARAM_STR);
+    $updateQuery->bindParam(':town', $town, PDO::PARAM_STR);
+    $updateQuery->bindParam(':zip_code', $zip_code, PDO::PARAM_STR);
+    $updateQuery->bindParam(':phone', $phone, PDO::PARAM_STR);
     $updateQuery->bindParam(':userId', $userId, PDO::PARAM_INT);
     
     if ($updateQuery->execute()) {
@@ -93,6 +101,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <input type="email" name="email" class="form-control" placeholder="Email" value="<?php echo $user->email; ?>"  required/>
                     </div>
                     
+                    <div class="form-outline mb-4">
+                        <input type="text" name="street_address" class="form-control" placeholder="Street Address" value="<?php echo $user->street_address; ?>"  />
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <input type="text" name="town" class="form-control" placeholder="Town/City" value="<?php echo $user->town; ?>"  />
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <input type="text" name="zip_code" class="form-control" placeholder="Zip Code" value="<?php echo $user->zip_code; ?>"  />
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <input type="text" name="phone" class="form-control" placeholder="Phone Number" value="<?php echo $user->phone; ?>"  />
+                    </div>
+
                     <div class="form-outline mb-4">
                         <div class="input-group">
                             <input type="password" name="new_password" id="new_password" class="form-control" placeholder="New Password"  />

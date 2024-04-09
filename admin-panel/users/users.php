@@ -31,7 +31,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'confirmDelete' && isset($_GET[
     exit();
 }
 
-$usersQuery = $conn->query("SELECT id, username, email, first_name, last_name FROM users");
+$usersQuery = $conn->query("SELECT id, username, email, first_name, last_name, street_address, town, zip_code, phone FROM users");
 $allUsers = $usersQuery->fetchAll(PDO::FETCH_OBJ);
 
 ?>
@@ -83,6 +83,10 @@ $allUsers = $usersQuery->fetchAll(PDO::FETCH_OBJ);
                             <th scope="col"><i class="fas fa-user"></i> First Name</th>
                             <th scope="col"><i class="fas fa-user"></i> Last Name</th>
                             <th scope="col"><i class="fas fa-envelope"></i> Email</th>
+                            <th scope="col"><i class="fas fa-map-marker-alt"></i> Street Address</th> 
+                            <th scope="col"><i class="fas fa-city"></i> Town/City</th> 
+                            <th scope="col"><i class="fas fa-map-pin"></i> Zip Code</th> 
+                            <th scope="col"><i class="fas fa-phone"></i> Phone</th>
                             <th scope="col"><i class="fas fa-cog"></i> User Actions</th>
                         </tr>
                     </thead>
@@ -94,9 +98,13 @@ $allUsers = $usersQuery->fetchAll(PDO::FETCH_OBJ);
                                 <td><?php echo $user->first_name; ?></td>
                                 <td><?php echo $user->last_name; ?></td>
                                 <td><?php echo $user->email; ?></td>
+                                <td><?php echo $user->street_address; ?></td>
+                                <td><?php echo $user->town; ?></td>
+                                <td><?php echo $user->zip_code; ?></td>
+                                <td><?php echo $user->phone; ?></td>
                                 <td>
-                                    <a href="edit-user.php?id=<?php echo $user->id; ?>" class="btn btn-sm btn-primary btn-action"><i class="fas fa-edit"></i> Edit</a>
-                                    <a href="users.php?action=delete&id=<?php echo $user->id; ?>" class="btn btn-sm btn-danger btn-action"><i class="fas fa-trash"></i> Delete</a>
+                                    <a href="edit-user.php?id=<?php echo $user->id; ?>" class="btn btn-sm btn-primary btn-action"><i class="fas fa-edit"></i> </a>
+                                    <a href="users.php?action=delete&id=<?php echo $user->id; ?>" class="btn btn-sm btn-danger btn-action"><i class="fas fa-trash-alt"></i> </a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
