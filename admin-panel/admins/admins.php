@@ -74,6 +74,10 @@ $totalAdmins = count($allAdmins);
                                 <?php if ($_SESSION['admin_id'] == $admin->id) : ?>
                                 <a href="edit-admins.php?id=<?php echo $admin->id; ?>" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i> Edit</a>
                                 <?php endif; ?>
+                            
+                                <?php if ($_SESSION['admin_id'] == 1 && $_SESSION['admin_id'] != $admin->id) : ?>
+                                <button class="btn btn-sm btn-danger delete-admin" data-id="<?php echo $admin->id; ?>"><i class="fas fa-trash"></i> Delete</button>
+                                <?php endif; ?>
                             </td>
                         </tr>
                         <?php endforeach; ?>
@@ -83,6 +87,33 @@ $totalAdmins = count($allAdmins);
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#adminTable').DataTable();
+
+        $('.delete-admin').click(function() {
+            var adminId = $(this).data('id');
+            if (confirm("Are you sure you want to delete this admin?")) {
+                $.ajax({
+                    url: 'delete-admin.php',
+                    method: 'POST',
+                    data: {
+                        admin_id: adminId
+                    },
+                    success: function(response) {
+                        if (response == "success") {
+                            alert("Admin deleted successfully!");
+                            location.reload();
+                        } else {
+                            alert("Failed to delete admin. Please try again later.");
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
 
 <script>
     $(document).ready(function() {
