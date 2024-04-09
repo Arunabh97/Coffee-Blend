@@ -78,6 +78,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
 
+<style>
+.form-control {
+  line-height: 1;
+  margin: 0;
+  height: 45px;
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.form-outline {
+  position: relative;
+}
+
+.form-label {
+  color: #495057;
+  position: absolute;
+  pointer-events: none;
+  left: 12px;
+  top: 10px;
+  transition: 0.3s;
+}
+
+.form-control:focus ~ .form-label,
+.form-control:not(:placeholder-shown) ~ .form-label {
+  top: -12px;
+  left: 12px;
+  font-size: 12px;
+  background-color: #fff;
+  padding: 0 5px 0 5px;
+}
+</style>
+
 <div class="row">
     <div class="col">
         <div class="card">
@@ -85,55 +119,65 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <h5 class="card-title mb-5 d-inline">Edit User</h5>
                 <form method="POST" action="">
 
-                    <div class="form-outline mb-4 mt-4">
-                        <input type="text" name="username" class="form-control" placeholder="Username" value="<?php echo $user->username; ?>"  required/>
-                    </div>
+                <div class="form-outline mb-4 mt-4">
+                    <input type="text" name="username" class="form-control" placeholder=" " value="<?php echo isset($user->username) ? $user->username : ''; ?>">
+                    <label class="form-label" for="username">Username *</label>
+                </div>
 
-                    <div class="form-outline mb-4 mt-4">
-                        <input type="text" name="first_name" class="form-control" placeholder="First Name" value="<?php echo $user->first_name; ?>"  required/>
-                    </div>
+                <div class="form-outline mb-4 mt-4">
+                    <input type="text" name="first_name" class="form-control" placeholder=" " value="<?php echo isset($user->first_name) ? $user->first_name : ''; ?>">
+                    <label class="form-label" for="first_name">First Name *</label>
+                </div>
 
-                    <div class="form-outline mb-4">
-                        <input type="text" name="last_name" class="form-control" placeholder="Last Name" value="<?php echo $user->last_name; ?>"  required/>
-                    </div>
+                <div class="form-outline mb-4">
+                    <input type="text" name="last_name" class="form-control" placeholder=" " value="<?php echo isset($user->last_name) ? $user->last_name : ''; ?>">
+                    <label class="form-label" for="last_name">Last Name *</label>
+                </div>
 
-                    <div class="form-outline mb-4">
-                        <input type="email" name="email" class="form-control" placeholder="Email" value="<?php echo $user->email; ?>"  required/>
-                    </div>
-                    
-                    <div class="form-outline mb-4">
-                        <input type="text" name="street_address" class="form-control" placeholder="Street Address" value="<?php echo $user->street_address; ?>"  />
-                    </div>
+                <div class="form-outline mb-4">
+                    <input type="email" name="email" class="form-control" placeholder=" " value="<?php echo isset($user->email) ? $user->email : ''; ?>">
+                    <label class="form-label" for="email">Email *</label>
+                </div>
 
-                    <div class="form-outline mb-4">
-                        <input type="text" name="town" class="form-control" placeholder="Town/City" value="<?php echo $user->town; ?>"  />
-                    </div>
+                <div class="form-outline mb-4">
+                    <input type="text" name="street_address" class="form-control" placeholder=" " value="<?php echo isset($user->street_address) ? $user->street_address : ''; ?>">
+                    <label class="form-label" for="street_address">Street Address</label>
+                </div>
 
-                    <div class="form-outline mb-4">
-                        <input type="text" name="zip_code" class="form-control" placeholder="Zip Code" value="<?php echo $user->zip_code; ?>"  />
-                    </div>
+                <div class="form-outline mb-4">
+                    <input type="text" name="town" class="form-control" placeholder=" " value="<?php echo isset($user->town) ? $user->town : ''; ?>">
+                    <label class="form-label" for="town">Town/City</label>
+                </div>
 
-                    <div class="form-outline mb-4">
-                        <input type="text" name="phone" class="form-control" placeholder="Phone Number" value="<?php echo $user->phone; ?>"  />
-                    </div>
+                <div class="form-outline mb-4">
+                    <input type="text" name="zip_code" class="form-control" placeholder=" " value="<?php echo isset($user->zip_code) ? $user->zip_code : ''; ?>">
+                    <label class="form-label" for="zip_code">Zip Code</label>
+                </div>
 
-                    <div class="form-outline mb-4">
-                        <div class="input-group">
-                            <input type="password" name="new_password" id="new_password" class="form-control" placeholder="New Password"  />
-                            <button type="button" class="btn btn-outline-secondary" id="toggleNewPassword">
-                                <i class="fas fa-eye" id="newPasswordEye"></i>
-                            </button>
-                        </div>
-                    </div>
+                <div class="form-outline mb-4">
+                    <input type="text" name="phone" class="form-control" placeholder=" " value="<?php echo isset($user->phone) ? $user->phone : ''; ?>">
+                    <label class="form-label" for="phone">Phone Number</label>
+                </div>
 
-                    <div class="form-outline mb-4">
-                        <div class="input-group">
-                            <input type="password" name="confirm_new_password" id="confirm_new_password" class="form-control" placeholder="Confirm New Password"  />
-                            <button type="button" class="btn btn-outline-secondary" id="toggleConfirmPassword">
-                                <i class="fas fa-eye" id="confirmPasswordEye"></i>
-                            </button>
-                        </div>
+                <div class="form-outline mb-4">
+                    <div class="input-group">
+                        <input type="password" name="new_password" id="new_password" class="form-control" placeholder=" ">
+                        <label class="form-label" for="new_password">New Password</label>
+                        <button type="button" class="btn btn-outline-secondary" id="toggleNewPassword">
+                            <i class="fas fa-eye" id="newPasswordEye"></i>
+                        </button>
                     </div>
+                </div>
+
+                <div class="form-outline mb-4">
+                    <div class="input-group">
+                        <input type="password" name="confirm_new_password" id="confirm_new_password" class="form-control" placeholder=" ">
+                        <label class="form-label" for="confirm_new_password">Confirm New Password</label>
+                        <button type="button" class="btn btn-outline-secondary" id="toggleConfirmPassword">
+                            <i class="fas fa-eye" id="confirmPasswordEye"></i>
+                        </button>
+                    </div>
+                </div>
 
                     <button type="submit" name="submit" class="btn btn-primary  mb-4 text-center"><i class="fa fa-refresh"></i> Update</button>
                 </form>
