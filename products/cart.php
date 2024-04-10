@@ -3,7 +3,7 @@
 <?php
 
 	if(!isset($_SESSION['user_id'])){
-		header("location: ".APPURL."");
+		echo "<script>window.location.href = '" . APPURL . "';</script>";
 	}
 	
 	$products = $conn->query("SELECT cart.*, products.*, 
@@ -23,17 +23,18 @@
 
 	$allCartTotal = $cartTotal->fetch(PDO::FETCH_OBJ);
 
-	define("CONSTANT_COUPON_CODE", "COFFEEBLEND10");
+	define("CONSTANT_COUPON_CODE", "COFFEEBLEND20");
 
+	$couponApplied = false;
 	if(isset($_POST['apply_coupon'])){
 		$entered_coupon = $_POST['coupon_code'];
 
 		if($entered_coupon === CONSTANT_COUPON_CODE){
-
-			$discount_amount = 10; 
+			$discount_amount = 20; 
 			$total_price = $allCartTotal->total + 50 - 5; 
 			$discounted_price = $total_price - $discount_amount; 
 			echo "<script>alert('Coupon code applied successfully! You got a ₹$discount_amount discount.');</script>";
+			$couponApplied = true;
 		} else {
 			echo "<script>alert('Invalid coupon code.');</script>";
 		}
@@ -211,7 +212,7 @@
 								<div class="col-md-12 text-center">
 									<div class="discount-content">
 										<h2>Hurry! Limited Time Offer</h2>
-										<p>Get 10% off on your order using coupon code COFFEEBLEND10</p>
+										<p>Get upto ₹20 off on your order using coupon code COFFEEBLEND20</p>
 									</div>
 								</div>
 							</div>
@@ -224,8 +225,12 @@
     			<div class="col col-lg-3 col-md-6 mt-5 cart-wrap ftco-animate">
 					<form method="POST" action="cart.php">
 						<div class="form-group">
-							<input type="text" class="form-control" id="coupon_code" name="coupon_code" placeholder="Enter promo code">
-							<button type="submit" name="apply_coupon" class="btn btn-primary" style="color: white !important; z-index: 1; margin-top:10px;">Apply</button>
+							<input type="text" class="form-control" id="coupon_code" name="coupon_code" placeholder="Enter promo code" <?php if ($couponApplied) echo 'disabled'; ?>>
+							<?php if ($couponApplied): ?>
+								<button type="button" class="btn btn-primary" style="color: white !important; z-index: 1; margin-top:10px;" disabled>Applied</button>
+							<?php else: ?>
+								<button type="submit" name="apply_coupon" class="btn btn-primary" style="color: white !important; z-index: 1; margin-top:10px;">Apply</button>
+							<?php endif; ?>
 						</div>
 					</form>
     				<div class="cart-total mb-3">

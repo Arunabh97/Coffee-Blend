@@ -3,13 +3,13 @@ require "../includes/header.php";
 require "../config/config.php";
 
 if (!isset($_SESSION['user_id'])) {
-    header("location: " . APPURL . "");
+    echo "<script>window.location.href = '" . APPURL . "';</script>";
     exit();
 }
 
 // Ensure that an order ID is provided in the URL
 if (!isset($_GET['order_id']) || empty($_GET['order_id'])) {
-    header("location: " . APPURL . "/orders.php");
+    echo "<script>window.location.href = '" . APPURL . "/orders.php';</script>";
     exit();
 }
 
@@ -31,14 +31,30 @@ $orderItemsQuery->bindParam(':order_id', $order_id, PDO::PARAM_INT);
 $orderItemsQuery->execute();
 
 $orderedItems = $orderItemsQuery->fetchAll(PDO::FETCH_OBJ);
+
 ?>
+<link href="https://cdn.jsdelivr.net/boxicons/2.0.7/css/boxicons.min.css" rel="stylesheet">
 
 <section class="ftco-section ftco-cart">
     <div class="container">
         <div class="row">
+            <div class="col-md-6">
+                <h2>Order Details - Order #<?php echo $orderDetails->id; ?></h2>
+            </div>
+            <div class="col-md-6 text-right">
+                <?php if ($orderDetails->status == "Delivered") : ?>
+                    <div class="mb-3">
+                        <a class="btn btn-success" href="print.php?order_id=<?php echo $orderDetails->id; ?>" target="_blank">
+                            <i class='bx bx-receipt'></i> Invoice
+                        </a>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-12 ftco-animate">
                 <div class="cart-list">
-                    <h2>Order Details - Order #<?php echo $orderDetails->id; ?></h2>
+                    
                     <p>Status: <?php $status = $orderDetails->status;
                                                 $badge_class = '';
 
@@ -65,7 +81,10 @@ $orderedItems = $orderItemsQuery->fetchAll(PDO::FETCH_OBJ);
                                                 }
                                                 ?>
                                                 <span class="<?php echo $badge_class; ?>"><?php echo $status; ?></span></p>
+
                     <p>Total Price: ₹<?php echo $orderDetails->total_price; ?></p>
+                    <p>Payment Type: <?php echo $orderDetails->pay_type; ?></p>
+                    <p>Payment Status: <?php echo $orderDetails->pay_status; ?></p>
 
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover">
@@ -81,7 +100,7 @@ $orderedItems = $orderItemsQuery->fetchAll(PDO::FETCH_OBJ);
                         <tbody>
                             <?php foreach ($orderedItems as $item) : ?>
                                 <tr>
-                                <td class="image-prod"><img src="<?php echo IMAGEPRODUCTS; ?>/<?php echo $item->product_image; ?>" alt="Product Image" class="img-fluid" style="max-width: 250px; max-height: 250px;"></td>
+                                <td class="image-prod"><img src="<?php echo IMAGEPRODUCTS; ?>/<?php echo $item->product_image; ?>" alt="Product Image" class="img-fluid" style="max-width: 200px; max-height: 150px;"></td>
                                     <td><?php echo $item->product_name; ?></td>
                                     <td><?php echo $item->quantity; ?></td>
                                     <td>₹<?php echo $item->price; ?></td>
@@ -91,6 +110,7 @@ $orderedItems = $orderItemsQuery->fetchAll(PDO::FETCH_OBJ);
                         </tbody>
                     </table>
                     <div class="text-right mb-4">
+                        
                         <a href="<?php echo APPURL . '/users/orders.php'; ?>" class="btn btn-primary">&lt; Back to Orders</a>
                     </div>
                     </div>
