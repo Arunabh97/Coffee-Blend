@@ -8,26 +8,41 @@ if(!isset ($_SESSION['admin_name'])){
 }
 
 if (isset($_POST['submit'])) {
-  if (empty($_POST['adminname']) || empty($_POST['email']) || empty($_POST['password'])) {
+    if (empty($_POST['adminname']) || empty($_POST['email']) || empty($_POST['password'])) {
       echo "<script>alert('One or more inputs are empty');</script>";
-  } else {
+    } else {
       $adminname = $_POST['adminname'];
       $email = $_POST['email'];
       $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-
-      $insert = $conn->prepare("INSERT INTO admins (adminname, email, password) VALUES (:adminname, :email, :password)");
-
-      $insert->execute([
+  
+      // Check if adminname already exists
+      $checkAdminQuery = $conn->prepare("SELECT adminname FROM admins WHERE adminname = :adminname");
+      $checkAdminQuery->execute([':adminname' => $adminname]);
+      $existingAdmin = $checkAdminQuery->fetch(PDO::FETCH_ASSOC);
+  
+      // Check if email already exists
+      $checkEmailQuery = $conn->prepare("SELECT email FROM admins WHERE email = :email");
+      $checkEmailQuery->execute([':email' => $email]);
+      $existingEmail = $checkEmailQuery->fetch(PDO::FETCH_ASSOC);
+  
+      if ($existingAdmin) {
+        echo "<script>alert('Adminname already exists');</script>";
+      } elseif ($existingEmail) {
+        echo "<script>alert('Email already exists');</script>";
+      } else {
+        $insert = $conn->prepare("INSERT INTO admins (adminname, email, password) VALUES (:adminname, :email, :password)");
+        $insert->execute([
           ":adminname" => $adminname,
           ":email" => $email,
           ":password" => $password,
-      ]);
-
-      echo "<script>window.location.href = 'admins.php';</script>";
-      exit(); 
+        ]);
+  
+        echo "<script>window.location.href = 'admins.php';</script>";
+        exit(); 
+      }
+    }
   }
-}
-
+  
 ?>
 
 <div class="row">
