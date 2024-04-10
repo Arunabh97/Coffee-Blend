@@ -7,15 +7,17 @@ $isLoggedIn = isset($_SESSION['user_id']);
 
 if ($isLoggedIn) {
 	$userId = $_SESSION['user_id'];
-	$userQuery = $conn->prepare("SELECT first_name, last_name FROM users WHERE id = ?");
+	$userQuery = $conn->prepare("SELECT first_name, last_name, phone FROM users WHERE id = ?");
 	$userQuery->execute([$userId]);
 	$user = $userQuery->fetch(PDO::FETCH_ASSOC);
 
 	$firstName = $user['first_name'] ?? '';
 	$lastName = $user['last_name'] ?? '';
+	$phone = $user['phone'] ?? '';
 } else {
 	$firstName = '';
 	$lastName = '';
+	$phone = '';
 }
 
 $desserts = $conn->query("SELECT * FROM products WHERE type='dessert'");
@@ -148,10 +150,10 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
 	    			<form action="booking/book.php" method="POST" class="appointment-form">
 	    				<div class="d-md-flex">
 		    				<div class="form-group">
-		    					<input name = "first_name" type="text" class="form-control" value="<?php echo isset($firstName) ? $firstName : ''; ?>" placeholder="First Name">
+		    					<input name = "first_name" type="text" class="form-control" value="<?php echo isset($firstName) ? $firstName : ''; ?>" placeholder="First Name" required>
 		    				</div>
 		    				<div class="form-group ml-md-4">
-		    					<input name = "last_name" type="text" class="form-control" value="<?php echo isset($lasttName) ? $lastName : ''; ?>" placeholder="Last Name">
+		    					<input name = "last_name" type="text" class="form-control" value="<?php echo isset($lastName) ? $lastName : ''; ?>" placeholder="Last Name" required>
 		    				</div>
 							<div class="form-group ml-md-4">
 								<input name="seats" type="number" class="form-control" placeholder="Seats" required min="1" max="10">
@@ -166,11 +168,11 @@ $allAppetizers = $appetizers->fetchAll(PDO::FETCH_OBJ);
 		    				<div class="form-group ml-md-4">
 		    					<div class="input-wrap">
 		            		<div class="icon"><span class="ion-ios-clock"></span></div>
-		            		<input name = "time" type="text" class="form-control appointment_time" placeholder="Time">
+		            		<input name = "time" type="text" class="form-control appointment_time" placeholder="Time" required>
 	            		</div>
 		    				</div>
 		    				<div class="form-group ml-md-4">
-		    					<input name = "phone" type="text" class="form-control" placeholder="Phone">
+								<input name="phone" type="text" class="form-control" placeholder="Phone" value="<?php echo isset($phone) ? $phone : ''; ?>" required minlength="10" maxlength="10">
 		    				</div>
 	    				</div>
 	    				<div class="d-md-flex">

@@ -5,7 +5,7 @@
 if (isset($_POST['submit'])) {
   
     if (empty($_POST['first_name']) || empty($_POST['last_name']) || empty($_POST['seats']) || empty($_POST['date'])
-    || empty($_POST['time']) || empty($_POST['phone']) || empty($_POST['message'])) {
+    || empty($_POST['time']) || empty($_POST['phone'])) {
         echo "<script>alert('One or more inputs are empty');</script>";
     } else {
 

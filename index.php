@@ -7,15 +7,17 @@
 
 	if ($isLoggedIn) {
 		$userId = $_SESSION['user_id'];
-		$userQuery = $conn->prepare("SELECT first_name, last_name FROM users WHERE id = ?");
+		$userQuery = $conn->prepare("SELECT first_name, last_name, phone FROM users WHERE id = ?");
 		$userQuery->execute([$userId]);
 		$user = $userQuery->fetch(PDO::FETCH_ASSOC);
 	
 		$firstName = $user['first_name'] ?? '';
 		$lastName = $user['last_name'] ?? '';
+		$phone = $user['phone'] ?? '';
 	} else {
 		$firstName = '';
 		$lastName = '';
+		$phone = '';
 	}
 
 	$products = $conn->query("SELECT * FROM products WHERE type='drink' AND id IN (1, 2, 3, 4)");
@@ -291,11 +293,11 @@
 					<form action="booking/book.php" method="POST" class="appointment-form">
 						<div class="d-md-flex">
 							<div class="form-group">
-								<input type="text" name="first_name" class="form-control" placeholder="First Name" value="<?php echo isset($firstName) ? $firstName : ''; ?>">
+								<input type="text" name="first_name" class="form-control" placeholder="First Name" value="<?php echo isset($firstName) ? $firstName : ''; ?>" required>
 							</div>
 
 							<div class="form-group ml-md-4">
-								<input type="text" name="last_name" class="form-control" placeholder="Last Name" value="<?php echo isset($lastName) ? $lastName : ''; ?>">
+								<input type="text" name="last_name" class="form-control" placeholder="Last Name" value="<?php echo isset($lastName) ? $lastName : ''; ?>" required>
 							</div>
 
 							<div class="form-group ml-md-4">
@@ -311,11 +313,11 @@
 							<div class="form-group ml-md-4">
 								<div class="input-wrap">
 									<div class="icon"><span class="ion-ios-clock"></span></div>
-									<input name="time" type="text" class="form-control appointment_time" placeholder="Time">
+									<input name="time" type="text" class="form-control appointment_time" placeholder="Time" required>
 								</div>
 							</div>
 							<div class="form-group ml-md-4">
-								<input name="phone" type="text" class="form-control" placeholder="Phone">
+								<input name="phone" type="text" class="form-control" placeholder="Phone" value="<?php echo isset($phone) ? $phone : ''; ?>" required minlength="10" maxlength="10">
 							</div>
 						</div>
 						<div class="d-md-flex">

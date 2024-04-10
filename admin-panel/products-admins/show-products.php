@@ -128,7 +128,7 @@ $allProducts = $products->fetchAll(PDO::FETCH_OBJ);
                                 <td <?php echo ($product->stock_quantity <= 10) ? 'class="text-danger"' : ''; ?>>
                                     <?php 
                                         if ($product->stock_quantity == 0) {
-                                            echo '<span style="animation: blinker 1s linear infinite;">Out of Stock</span>';
+                                            echo '<span style="animation: blinker 1s linear infinite;"><strong>Out of Stock</strong></span>';
                                         } else if ($product->stock_quantity <= 10) {
                                             echo '<strong>Stock Low :</strong> <span class="text-danger">' . $product->stock_quantity . '</span>';
                                         } else {
