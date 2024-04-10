@@ -17,9 +17,11 @@ if(isset($_GET['id'])){
           $status = $_POST['status'];
           
           // Check if the current status is 'Cancelled' or 'Delivered'
-          $check_status = $conn->prepare("SELECT status FROM orders WHERE id=:id");
+          $check_status = $conn->prepare("SELECT status, pay_type FROM orders WHERE id=:id");
           $check_status->execute([":id" => $id]);
-          $current_status = $check_status->fetchColumn();
+          $order_info = $check_status->fetch(PDO::FETCH_ASSOC);
+          $current_status = $order_info['status'];
+          $pay_type = $order_info['pay_type'];
 
           if ($current_status === 'Cancelled') {
               echo "<script>alert('Once cancelled, status cannot be changed.');</script>";
@@ -33,11 +35,18 @@ if(isset($_GET['id'])){
                   ":id" => $id
               ]);
     
+              if ($status === 'Delivered' && $pay_type === 'Cash On Delivery') {
+                $update_payment_status = $conn->prepare("UPDATE orders SET pay_status = 'Completed' WHERE id=:id");
+                $update_payment_status->execute([
+                    ":id" => $id
+                ]);
+            }
+
               echo "<script>alert('Status updated successfully.');</script>";
               echo "<script>window.location.href = 'show-orders.php';</script>";
-          }
-      }
-  }
+            }
+        }
+    }
 }
 
 ?>

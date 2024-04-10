@@ -76,7 +76,7 @@ $totalAdmins = count($allAdmins);
                                 <?php endif; ?>
                             
                                 <?php if ($_SESSION['admin_id'] == 1 && $_SESSION['admin_id'] != $admin->id) : ?>
-                                <button class="btn btn-sm btn-danger delete-admin" data-id="<?php echo $admin->id; ?>"><i class="fas fa-trash"></i> Delete</button>
+                                <button class="btn btn-sm btn-danger delete-admin" data-id="<?php echo $admin->id; ?>"><i class="fas fa-trash-alt"></i> Delete</button>
                                 <?php endif; ?>
                             </td>
                         </tr>

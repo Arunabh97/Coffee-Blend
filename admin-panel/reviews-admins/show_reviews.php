@@ -80,6 +80,7 @@ $reviews = $reviewsQuery->fetchAll(PDO::FETCH_OBJ);
 
     .btn {
         border-radius: 15px; 
+        font-size: 17px;
     }
 
 </style>

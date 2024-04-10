@@ -64,6 +64,10 @@ $allProducts = $products->fetchAll(PDO::FETCH_OBJ);
         }
     }
 
+    .text-danger td {
+        background-color: #ffcccc; /* or any other shade of red */
+    }
+
 </style>
 
 <div class="row">
@@ -105,6 +109,7 @@ $allProducts = $products->fetchAll(PDO::FETCH_OBJ);
                             <th scope="col"><i class="fas fa-id-card"></i> Id</th>
                             <th scope="col"><i class="fas fa-user"></i> Name</th>
                             <th scope="col"><i class="fas fa-image"></i> Image</th>
+                            <th scope="col"><i class="fas fa-info-circle"></i> Description</th>
                             <th scope="col"><i class="fas fa-rupee-sign"></i> Price</th>
                             <th scope="col"><i class="fas fa-folder"></i> Type</th>
                             <th scope="col"><i class="fas fa-cubes"></i> Stock</th>
@@ -113,18 +118,19 @@ $allProducts = $products->fetchAll(PDO::FETCH_OBJ);
                     </thead>
                     <tbody>
                         <?php foreach ($allProducts as $product) : ?>
-                            <tr>
+                            <tr <?php echo ($product->stock_quantity <= 10) ? 'class="text-danger"' : ''; ?>>
                                 <th scope="row"><?php echo $product->id; ?></th>
-                                <td><?php echo $product->name; ?></td>
-                                <td><img src="images/<?php echo $product->image; ?>" style="width: 60px; height:60px;"></td>
-                                <td>₹<?php echo $product->price; ?></td>
-                                <td><?php echo $product->type; ?></td>
+                                <td <?php echo ($product->stock_quantity <= 10) ? 'class="text-danger"' : ''; ?>><?php echo $product->name; ?></td>
+                                <td <?php echo ($product->stock_quantity <= 10) ? 'class="text-danger"' : ''; ?>><img src="images/<?php echo $product->image; ?>" style="width: 60px; height:60px;"></td>
+                                <td style="max-width: 300px; overflow: hidden; text-overflow: ellipsis;"<?php echo ($product->stock_quantity <= 10) ? 'class="text-danger"' : ''; ?>><?php echo $product->description; ?></td>
+                                <td <?php echo ($product->stock_quantity <= 10) ? 'class="text-danger"' : ''; ?>>₹<?php echo $product->price; ?></td>
+                                <td <?php echo ($product->stock_quantity <= 10) ? 'class="text-danger"' : ''; ?>><?php echo $product->type; ?></td>
                                 <td <?php echo ($product->stock_quantity <= 10) ? 'class="text-danger"' : ''; ?>>
                                     <?php 
                                         if ($product->stock_quantity == 0) {
                                             echo '<span style="animation: blinker 1s linear infinite;">Out of Stock</span>';
                                         } else if ($product->stock_quantity <= 10) {
-                                            echo '<span class="text-danger">Stock Low : ' . $product->stock_quantity . '</span>';
+                                            echo '<strong>Stock Low :</strong> <span class="text-danger">' . $product->stock_quantity . '</span>';
                                         } else {
                                             echo $product->stock_quantity;
                                         }
