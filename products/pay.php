@@ -132,6 +132,11 @@ $razorpay = new Razorpay\Api\Api('rzp_test_FaDquQvryAR0L8', 'NkcrCAQCRWIq0mHz7De
                 rzp.open();
                 e.preventDefault();
             }
+            
+            rzp.on('payment.failed', function (response){
+                alert(response.error.description);
+                window.location.href = 'razorpay_failure.php';
+            });
         </script>
     </div>
 </div>
