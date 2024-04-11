@@ -89,6 +89,12 @@ if(isset($_GET['id'])) {
                     }
                 }
 
+                $sql_delete_cart = "DELETE FROM cart WHERE user_id = $user_id";
+
+                if ($conn->query($sql_delete_cart) === TRUE) {
+                    unset($_SESSION['cart_items']);
+                }
+
                 $conn->close();
 
                 // Construct success message with order details
