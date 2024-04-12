@@ -45,24 +45,61 @@ if (isset($_POST['submit'])) {
   
 ?>
 
+<style>
+.form-control {
+  line-height: 1;
+  margin: 0;
+  height: 45px;
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.form-outline {
+  position: relative;
+}
+
+.form-label {
+  color: #495057;
+  position: absolute;
+  pointer-events: none;
+  left: 12px;
+  top: 10px;
+  transition: 0.3s;
+}
+
+.form-control:focus ~ .form-label,
+.form-control:not(:placeholder-shown) ~ .form-label {
+  top: -12px;
+  left: 12px;
+  font-size: 12px;
+  background-color: #fff;
+  padding: 0 5px 0 5px;
+}
+</style>
+
 <div class="row">
     <div class="col">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title mb-5 d-inline">Create Admins</h5>
+                <h5 class="card-title mb-5 d-inline"><i class="fa-solid fa-user-tie"></i> Create Admins</h5>
                 <form method="POST" action="create-admins.php" enctype="multipart/form-data">
                     <!-- Email input -->
                     <div class="form-outline mb-4 mt-4">
-                        <input type="email" name="email" id="form2Example1" class="form-control" placeholder="Enter the Email" required/>
+                        <input type="email" name="email" class="form-control" placeholder=" " required/>
+                        <label class="form-label" for="email">Email *</label>
                     </div>
 
                     <div class="form-outline mb-4">
-                        <input type="text" name="adminname" id="form2Example1" class="form-control" placeholder="Enter the Username" required/>
+                        <input type="text" name="adminname" class="form-control" placeholder=" " required/>
+                        <label class="form-label" for="adminname">Username *</label>
                     </div>
 
                     <div class="form-outline mb-4">
                         <div class="input-group">
-                            <input type="password" name="password" id="form2Example1" class="form-control" placeholder="Enter the Password" required/>
+                            <input type="password" name="password" class="form-control" placeholder=" " required/>
+                            <label class="form-label" for="password">Password *</label>
                             <button class="btn btn-outline-secondary" type="button" id="togglePassword">
                                 <i class="fas fa-eye" id="passwordEye"></i>
                             </button>

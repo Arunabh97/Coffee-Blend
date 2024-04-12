@@ -116,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="col">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title mb-5 d-inline">Edit User</h5>
+                <h5 class="card-title mb-5 d-inline"><i class="fa-solid fa-user-pen"></i> Edit User</h5>
                 <form method="POST" action="">
 
                 <div class="form-outline mb-4 mt-4">

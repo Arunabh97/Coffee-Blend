@@ -64,25 +64,62 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
 
+<style>
+.form-control {
+  line-height: 1;
+  margin: 0;
+  height: 45px;
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.form-outline {
+  position: relative;
+}
+
+.form-label {
+  color: #495057;
+  position: absolute;
+  pointer-events: none;
+  left: 12px;
+  top: 10px;
+  transition: 0.3s;
+}
+
+.form-control:focus ~ .form-label,
+.form-control:not(:placeholder-shown) ~ .form-label {
+  top: -12px;
+  left: 12px;
+  font-size: 12px;
+  background-color: #fff;
+  padding: 0 5px 0 5px;
+}
+</style>
+
 <div class="row">
     <div class="col">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title mb-5 d-inline">Edit Admin</h5>
+                <h5 class="card-title mb-5 d-inline"><i class="fa-solid fa-user-tie"></i> Edit Admin</h5>
                 <form method="POST" action="edit-admins.php?id=<?php echo $adminId; ?>" enctype="multipart/form-data">
                     <!-- Email input -->
                     <div class="form-outline mb-4 mt-4">
-                        <input type="email" name="email" id="form2Example1" class="form-control" placeholder="Email" value="<?php echo $admin->email; ?>" required />
+                        <input type="email" name="email" class="form-control" placeholder=" " value="<?php echo $admin->email; ?>" required/>
+                        <label class="form-label" for="email">Email *</label>
                     </div>
 
                     <div class="form-outline mb-4">
-                        <input type="text" name="adminname" id="form2Example1" class="form-control" placeholder="Username" value="<?php echo $admin->adminname; ?>" required />
+                        <input type="text" name="adminname" class="form-control" placeholder=" " value="<?php echo $admin->adminname; ?>" required/>
+                        <label class="form-label" for="adminname">Username *</label>
                     </div>
 
                     <!-- Old Password input -->
                     <div class="form-outline mb-4 mt-4">
                         <div class="input-group">
-                            <input type="password" name="old_password" class="form-control" placeholder="Old Password" />
+                            <input type="password" name="old_password" class="form-control" placeholder=" ">
+                            <label class="form-label" for="old_password">Old Password</label>
                             <button type="button" class="btn btn-outline-secondary" id="toggleOldPassword">
                                 <i class="fas fa-eye" id="oldPasswordEye"></i>
                             </button>
@@ -92,7 +129,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <!-- New Password input -->
                     <div class="form-outline mb-4 mt-4">
                         <div class="input-group">
-                            <input type="password" name="new_password" class="form-control" placeholder="New Password"/>
+                            <input type="password" name="new_password" class="form-control" placeholder=" ">
+                            <label class="form-label" for="new_password">New Password</label>
                             <button type="button" class="btn btn-outline-secondary" id="toggleNewPassword">
                                 <i class="fas fa-eye" id="newPasswordEye"></i>
                             </button>
@@ -102,7 +140,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <!-- Confirm Password input -->
                     <div class="form-outline mb-4">
                         <div class="input-group">
-                            <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password"/>
+                            <input type="password" name="confirm_password" class="form-control" placeholder=" ">
+                            <label class="form-label" for="confirm_password">Confirm Password</label>
                             <button type="button" class="btn btn-outline-secondary" id="toggleConfirmPassword">
                                 <i class="fas fa-eye" id="confirmPasswordEye"></i>
                             </button>
