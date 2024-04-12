@@ -42,12 +42,13 @@ if(isset($_GET['id'])) {
             $total_price = $_SESSION['total_price'];
             $pay_type = "Online Payment";
             $pay_status = "Completed";
+            $discount = $_SESSION['total_discount'];
 
-            $sql_order = "INSERT INTO orders (first_name, last_name, state, street_address, town, zip_code, phone, email, user_id, status, total_price, pay_type, pay_status, pay_id) 
-              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql_order = "INSERT INTO orders (first_name, last_name, state, street_address, town, zip_code, phone, email, user_id, status, total_price, pay_type, pay_status, pay_id, discount) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             $stmt = $conn->prepare($sql_order);
-            $stmt->bind_param('ssssssssissssi', 
+            $stmt->bind_param('ssssssssissssii', 
                 $order_data['first_name'],
                 $order_data['last_name'],
                 $order_data['state'],
@@ -61,7 +62,8 @@ if(isset($_GET['id'])) {
                 $total_price,
                 $pay_type,
                 $pay_status,
-                $pay_id
+                $pay_id,
+                $discount
             );
 
             if ($stmt->execute()) {

@@ -152,10 +152,9 @@ if (isset($_GET['order_id'])) {
             );
         }
 
-    $total = 0;
+    $total = $order->total_price;
     $deliveryCharge = 50;
-    $discount = 5;
-    $total = $subtotal + $deliveryCharge - $discount;
+    $discount = $order->discount;
 
     $productColumnWidths = array(70, 40, 40, 40);
 
