@@ -41,42 +41,80 @@ if (isset($_POST['submit'])) {
 
 ?>
 
+<style>
+.form-control {
+  line-height: 1;
+  margin: 0;
+  height: 45px;
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.form-outline {
+  position: relative;
+}
+
+.form-label {
+  color: #495057;
+  position: absolute;
+  pointer-events: none;
+  left: 12px;
+  top: 10px;
+  transition: 0.3s;
+}
+
+.form-control:focus ~ .form-label,
+.form-control:not(:placeholder-shown) ~ .form-label {
+  top: -12px;
+  left: 12px;
+  font-size: 12px;
+  background-color: #fff;
+  padding: 0 5px 0 5px;
+}
+</style>
+
 <div class="row">
     <div class="col">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title mb-5 d-inline">Create Product</h5>
+                <h5 class="card-title mb-5 d-inline"><i class="fas fa-plus"></i> Create Product</h5>
                 <form method="POST" action="create-products.php" enctype="multipart/form-data">
-                    <!-- Email input -->
+                    <!-- Product Name input -->
                     <div class="form-outline mb-4 mt-4">
-                        <input type="text" name="name" id="form2Example1" class="form-control" placeholder="Name" />
+                        <input type="text" name="name" class="form-control" placeholder=" " required>
+                        <label class="form-label" for="name">Name *</label>
                     </div>
+                    <!-- Price input -->
                     <div class="form-outline mb-4 mt-4">
-                        <input type="text" name="price" id="form2Example1" class="form-control" placeholder="Price" />
+                        <input type="text" name="price" class="form-control" placeholder=" " required>
+                        <label class="form-label" for="price">Price *</label>
                     </div>
+                    <!-- Image input -->
                     <div class="form-outline mb-4 mt-4">
-                        <input type="file" name="image" id="form2Example1" class="form-control" />
+                        <input type="file" name="image" class="form-control" required>
+                        <label class="form-label" for="image">Image *</label>
                     </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlTextarea1">Description</label>
-                        <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <!-- Description textarea -->
+                    <div class="form-group mb-4">
+                        <label for="description">Description</label>
+                        <textarea name="description" class="form-control" id="description" rows="3"></textarea>
                     </div>
-
+                    <!-- Stock Quantity input -->
                     <div class="form-outline mb-4 mt-4">
-                        <input type="text" name="stock_quantity" class="form-control" placeholder="Stock Quantity" />
+                        <input type="text" name="stock_quantity" class="form-control" placeholder=" " required>
+                        <label class="form-label" for="stock_quantity">Stock Quantity *</label>
                     </div>
-
+                    <!-- Type select -->
                     <div class="form-outline mb-4 mt-4">
-                        <select name="type" class="form-select form-control" aria-label="Default select example">
-                            <option selected>Choose Type</option>
+                        <select name="type" class="form-select form-control" aria-label="Type" required>
+                            <option selected disabled>Choose Type *</option>
                             <option value="drink">Drink</option>
                             <option value="dessert">Dessert</option>
                             <option value="appetizer">Appetizer</option>
                         </select>
                     </div>
-
-                    <br />
-
                     <!-- Submit button -->
                     <button type="submit" name="submit" class="btn btn-primary mb-4 text-center"><i class="fa-solid fa-plus"></i> Create</button>
                 </form>
