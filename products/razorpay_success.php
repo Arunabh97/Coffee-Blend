@@ -157,7 +157,7 @@ if(isset($_GET['id'])) {
                     <p>Payment ID: ' . $payment_id . '</p>
                     <p>Order ID: ' . $inserted_order_id . '</p>
                     <p>Amount Paid: ₹' . $amount_paid . '</p>
-                    <p>Order Details:</p>' . $order_details . '
+                    <p><b><u>Order Details:</u></b></p>' . $order_details . '
                     <p>You will be redirected to the orders page in <span id="countdown">10</span> seconds.</p>
                     <p>If not redirected, <a href="../users/orders.php">click here</a>.</p>
                 </div>

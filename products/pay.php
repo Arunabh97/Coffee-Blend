@@ -112,6 +112,8 @@ $razorpay = new Razorpay\Api\Api('rzp_test_FaDquQvryAR0L8', 'NkcrCAQCRWIq0mHz7De
             </a>
         </div>
         <script>
+            var paymentInitiated = false;
+
             var options = {
                 key: 'rzp_test_FaDquQvryAR0L8',
                 amount: <?php echo $_SESSION['total_price'] * 100; ?>,
@@ -121,6 +123,7 @@ $razorpay = new Razorpay\Api\Api('rzp_test_FaDquQvryAR0L8', 'NkcrCAQCRWIq0mHz7De
                 image: '../images/icon.png',
                 handler: function(response) {
                     // Handle the success response and redirect if needed
+                    paymentInitiated = true;
                     window.location.href = 'delete-cart.php';
                     window.location.href = 'razorpay_success.php?id=' + response.razorpay_payment_id;
                 }
@@ -134,8 +137,22 @@ $razorpay = new Razorpay\Api\Api('rzp_test_FaDquQvryAR0L8', 'NkcrCAQCRWIq0mHz7De
             }
             
             rzp.on('payment.failed', function (response){
+                paymentInitiated = true;
                 alert(response.error.description);
                 window.location.href = 'razorpay_failure.php';
+            });
+
+            history.pushState(null, null, location.href);
+            window.onpopstate = function () {
+                history.go(1);
+            };
+
+            window.addEventListener('beforeunload', function(e) {
+                if (!paymentInitiated) {
+                    var confirmationMessage = 'Are you sure you want to leave this page? Your payment process is not complete.';
+                    e.returnValue = confirmationMessage; 
+                    return confirmationMessage; 
+                }
             });
         </script>
     </div>

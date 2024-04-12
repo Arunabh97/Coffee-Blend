@@ -54,7 +54,7 @@ if (isset($_SESSION['total_price']) && isset($_SESSION['user_id']) && isset($_SE
             <h2>Payment Failed</h2>
             <p>We are sorry, but your payment was not successful.</p>
             <p>Please try again later or contact customer support for assistance.</p>
-            <p>If you have any questions, <a href="<?php echo APPURL; ?>/contact.php">Contact Us</a>.</p>
+            <p>If you have any questions, <a href="../contact.php">Contact Us</a>.</p>
             <p>You will be redirected to the homepage in <span id="countdown">10</span> seconds.</p>
             </div>
         
