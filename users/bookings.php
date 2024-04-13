@@ -100,21 +100,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cancel_booking'])) {
 						    </thead>
 						    <tbody>
 								<?php foreach($allBookings as $booking) : ?>
-						      <tr class="text-center">
+						      	<tr class="text-center">
 							  	<td class="name"><?php echo $booking->first_name . ' ' . $booking->last_name; ?></td>
-						        
 								<td class="seats"><?php echo $booking->seats; ?></td>
-
-						        <td class="product-name">
-						        	<h3><?php echo $booking->date; ?></h3>
-						        </td>
-						        
-						        <td class="price"><?php echo $booking->time; ?></td>
-
-						        <td class="price"><?php echo $booking->phone; ?></td>
-						        <td>
-                                <?php echo $booking->message; ?>
-					            </td>
+								<td class="price"><?php echo $booking->date; ?></td>
+								<td class="price"><?php echo $booking->time; ?></td>
+								<td class="price"><?php echo $booking->phone; ?></td>
+								<td><?php echo $booking->message; ?></td>
 						        
 						        <td class="total"><?php echo $booking->status; ?></td>
 									<?php if ($booking->status == "Done") : ?>
