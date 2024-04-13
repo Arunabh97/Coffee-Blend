@@ -11,9 +11,8 @@ require "../config/config.php";
 if (isset($_GET['order_id'])) {
     $orderId = $_GET['order_id'];
 
-    $orderQuery = $conn->prepare("SELECT * FROM orders WHERE id=:orderId AND user_id=:userId");
+    $orderQuery = $conn->prepare("SELECT * FROM orders WHERE id=:orderId");
     $orderQuery->bindParam(':orderId', $orderId, PDO::PARAM_INT);
-    $orderQuery->bindParam(':userId', $_SESSION['user_id'], PDO::PARAM_INT);
     $orderQuery->execute();
 
     $order = $orderQuery->fetch(PDO::FETCH_OBJ);
@@ -59,16 +58,7 @@ if (isset($_GET['order_id'])) {
     $pdf->SetY(55); 
     $pdf->Line(160, $pdf->GetY(), 50, $pdf->GetY());
     $pdf->Ln(10);
-    // Fetch user details
-    $userQuery = $conn->prepare("SELECT * FROM users WHERE id=:userId");
-    $userQuery->bindParam(':userId', $_SESSION['user_id'], PDO::PARAM_INT);
-    $userQuery->execute();
-    $user = $userQuery->fetch(PDO::FETCH_OBJ);
-
-    if (!$user) {
-        die("User not found.");
-    }
-
+    
     $randomInvoiceNo = mt_rand(100000, 999999);
     
     $pdf->SetFont('times', '', 20); 
@@ -78,7 +68,7 @@ if (isset($_GET['order_id'])) {
     $pdf->SetFont('dejavusans','', 25);
 
     // Display user details
-    $fullName = $user->first_name . ' ' . $user->last_name;
+    $fullName = $order->first_name . ' ' . $order->last_name;
     $pdf->SetFont('dejavusans', '', 25); 
     $pdf->Cell(0, 10, $fullName, 0, 0, 'L'); 
 
