@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cancel_order'])) {
     $cancelOrder->execute();
 }
 
-$orders = $conn->prepare("SELECT * FROM orders WHERE user_id=:userId");
+$orders = $conn->prepare("SELECT * FROM orders WHERE user_id=:userId ORDER BY id DESC");
 $orders->bindParam(':userId', $_SESSION['user_id'], PDO::PARAM_INT);
 $orders->execute();
 
