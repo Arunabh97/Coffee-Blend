@@ -297,7 +297,11 @@ if (isset($_SESSION['user_id'])) {
     #cancelAddBtn:hover {
         color: #0056b3;
     }
-    
+
+    .logoutmodal {
+        cursor: pointer;
+    }
+        
 </style>
 
   </head>
@@ -367,7 +371,7 @@ if (isset($_SESSION['user_id'])) {
             <li><a class="dropdown-item" href="<?php echo APPURL; ?>/users/bookings.php"><i class='bx bx-calendar'></i> Bookings</a></li>
             <li><a class="dropdown-item" href="<?php echo APPURL; ?>/users/orders.php"><i class='bx bx-shopping-bag'></i> Orders</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<?php echo APPURL; ?>/logout.php">Logout <i class='bx bx-log-in' ></i></a></li>
+            <li><a class="dropdown-item logoutmodal" data-toggle="modal" data-target="#logoutConfirmationModal">Logout <i class='bx bx-log-in' ></i></a></li>
           </ul>
         </li>
         <?php else: ?>
@@ -479,8 +483,28 @@ if (isset($_SESSION['user_id'])) {
         </div>
     </div>
 
-    <!-- Add this script at the end of the HTML body -->
-    <script>
+    <!-- Logout Confirmation Modal -->
+<div class="modal fade" id="logoutConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="logoutConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="logoutConfirmationModalLabel">Logout Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to logout?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a href="<?php echo APPURL; ?>/logout.php" class="btn btn-primary">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
     $(document).ready(function () {
         // Use jQuery to handle the button click events
         $("#editDetailsBtn").click(function () {
@@ -508,7 +532,7 @@ if (isset($_SESSION['user_id'])) {
             // Send the updated data to the server via AJAX
             $.ajax({
                 type: "POST",
-                url: "update_user_details.php", // Adjust the URL to your server-side script
+                url: "update_user_details.php", 
                 data: updatedData,
                 success: function (response) {
                     // Update displayed details with edited values
@@ -579,25 +603,22 @@ if (isset($_SESSION['user_id'])) {
 </script>
 
 
-    <script>
+<script>
     $(document).ready(function () {
     // Handle "Change Password" button click
     $("#changePasswordBtn").click(function () {
-        // Hide details container, show the password change form
         $("#userDetailsContainer").hide();
         $("#changePasswordForm").show();
     });
 
     // Handle "Cancel Password Change" button click
     $("#cancelPasswordBtn").click(function () {
-        // Hide the password change form, show details container
         $("#changePasswordForm").hide();
         $("#userDetailsContainer").show();
     });
 
     // Handle "Save Password" button click
     $("#savePasswordBtn").click(function () {
-        // Prepare data for password update
         var passwordData = {
             userId: <?php echo isset($userDetails['id']) ? $userDetails['id'] : 0; ?>,
             currentPassword: $("#currentPassword").val(),
@@ -608,10 +629,9 @@ if (isset($_SESSION['user_id'])) {
         // Send the password update request to the server via AJAX
         $.ajax({
             type: "POST",
-            url: "update_password.php", // Adjust the URL to your server-side script
+            url: "update_password.php", 
             data: passwordData,
             success: function (response) {
-                // Display a pop-up message based on the server response
                 alert(response);
 
                 if (response.includes("successfully")) {
@@ -641,6 +661,14 @@ if (isset($_SESSION['user_id'])) {
             $(this).text("👁️");
             $(this).attr("data-status", "hidden");
         }
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $("#logoutButton").click(function() {
+            $("#logoutConfirmationModal").modal("show");
+        });
     });
 </script>
 
