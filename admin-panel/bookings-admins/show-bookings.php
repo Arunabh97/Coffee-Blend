@@ -29,18 +29,24 @@ foreach ($allBookings as $booking) {
     }
 }
 
-$filter = isset($_GET['filter']) ? $_GET['filter'] : 'all';
-$filteredBookings = [];
+$filterType = isset($_GET['filter']) ? $_GET['filter'] : '';
 
-if ($filter == 'all') {
-    $filteredBookings = $allBookings;
-} else {
-    foreach ($allBookings as $booking) {
-        if ($booking->status == $filter) {
-            $filteredBookings[] = $booking;
-        }
-    }
+$query = "SELECT * FROM bookings WHERE 1";
+
+if (!empty($filterType)) {
+    $query .= " AND status = :filterType";
 }
+
+$query .= " ORDER BY created_at DESC";
+
+$bookingsQuery = $conn->prepare($query);
+
+if (!empty($filterType)) {
+    $bookingsQuery->bindParam(':filterType', $filterType);
+}
+
+$bookingsQuery->execute();
+$allBookings = $bookingsQuery->fetchAll(PDO::FETCH_OBJ);
 
 ?>
 
@@ -157,18 +163,29 @@ if ($filter == 'all') {
                         ?>
                     </div>
                 </div>
-                <!-- Search Bar and Filters -->
-                <div class="mb-3">
-                    <input type="text" id="searchInput" class="form-control" placeholder="Search by name">
+
+                <div class="row justify-content-end">
+                    <div class="col-auto">
+                        <form action="" method="GET" class="form-inline">
+                            <div class="form-group mb-2 mr-1">
+                                <label for="status" class="sr-only">Status</label>
+                                <select class="form-control" id="status" name="filter">
+                                    <option value="">All Status</option>
+                                    <option value="Pending">Pending </option>
+                                    <option value="Confirmed">Confirmed </option>
+                                    <option value="In Progress">In Progress </option>
+                                    <option value="Cancelled">Cancelled </option>
+                                    <option value="Done">Completed </option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary mb-2" id="filter-button" onclick="this.disabled=true;this.form.submit();"><i class="fa-solid fa-filter"></i></button>
+                        </form>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <select id="statusFilter" class="form-select">
-                        <option value="all" <?php echo $filter == 'all' ? 'selected' : ''; ?>>All Status</option>
-                        <option value="Pending" <?php echo $filter == 'Pending' ? 'selected' : ''; ?>>Pending</option>
-                        <option value="Confirmed" <?php echo $filter == 'Confirmed' ? 'selected' : ''; ?>>Confirmed</option>
-                        <option value="Done" <?php echo $filter == 'Done' ? 'selected' : ''; ?>>Done</option>
-                    </select>
-                </div>
+
+                <?php if (!empty($filterType)) : ?>
+                <p class="lead">Filtering by status type: <strong><?php echo htmlspecialchars($filterType); ?></strong></p>
+                <?php endif; ?>
 
                 <table id="bookingTable" class="table table-striped table-hover">
                     <thead>
@@ -224,7 +241,6 @@ if ($filter == 'all') {
 </div>
 
 <script>
-
     var pendingCount = <?php echo $pendingCount; ?>;
     var confirmedCount = <?php echo $confirmedCount; ?>;
     var doneCount = <?php echo $doneCount; ?>;
@@ -258,39 +274,6 @@ if ($filter == 'all') {
             }
         }
     });
-
-    document.getElementById('searchInput').addEventListener('input', function () {
-        var searchTerm = this.value.toLowerCase();
-        var rows = document.querySelectorAll('tbody tr');
-
-        rows.forEach(function (row) {
-            var firstName = row.querySelector('td:nth-child(2)').innerText.toLowerCase();
-            var lastName = row.querySelector('td:nth-child(3)').innerText.toLowerCase();
-            var fullName = firstName + ' ' + lastName;
-
-            if (fullName.includes(searchTerm)) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    });
-
-    document.getElementById('statusFilter').addEventListener('change', function () {
-        var selectedStatus = this.value;
-        var rows = document.querySelectorAll('tbody tr');
-
-        rows.forEach(function (row) {
-            var status = row.querySelector('td:nth-child(8)').innerText.toLowerCase();
-            
-            if (selectedStatus === 'all' || status.includes(selectedStatus.toLowerCase())) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    });
-
 </script>
 
 <script>
