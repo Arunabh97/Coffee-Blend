@@ -41,12 +41,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Check if the user wants to update email and username
     if (!empty($_POST['email']) && !empty($_POST['adminname'])) {
-
         $email = $_POST['email'];
         $adminname = $_POST['adminname'];
-
+    
+        $emailCheckQuery = $conn->prepare("SELECT * FROM admins WHERE email = :email AND id != :adminId");
+        $emailCheckQuery->bindParam(':email', $email, PDO::PARAM_STR);
+        $emailCheckQuery->bindParam(':adminId', $adminId, PDO::PARAM_INT);
+        $emailCheckQuery->execute();
+        $existingEmail = $emailCheckQuery->fetch(PDO::FETCH_OBJ);
+    
+        $adminnameCheckQuery = $conn->prepare("SELECT * FROM admins WHERE adminname = :adminname AND id != :adminId");
+        $adminnameCheckQuery->bindParam(':adminname', $adminname, PDO::PARAM_STR);
+        $adminnameCheckQuery->bindParam(':adminId', $adminId, PDO::PARAM_INT);
+        $adminnameCheckQuery->execute();
+        $existingAdminname = $adminnameCheckQuery->fetch(PDO::FETCH_OBJ);
+    
+        if ($existingEmail) {
+            echo "<script>alert('Email address already exists. Please choose a different email.');</script>";
+            echo "<script>window.location.href='admins.php';</script>";
+            exit();
+        }
+    
+        if ($existingAdminname) {
+            echo "<script>alert('Admin username already exists. Please choose a different username.');</script>";
+            echo "<script>window.location.href='admins.php';</script>";
+            exit();
+        }
+    
         $updateInfoQuery = $conn->prepare("UPDATE admins SET email = :email, adminname = :adminname WHERE id = :adminId");
         $updateInfoQuery->bindParam(':email', $email, PDO::PARAM_STR);
         $updateInfoQuery->bindParam(':adminname', $adminname, PDO::PARAM_STR);

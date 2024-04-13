@@ -16,23 +16,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $firstName = htmlspecialchars($_POST['first_name']);
     $lastName = htmlspecialchars($_POST['last_name']);
 
-    // Insert new user into the database
-    $insertUser = $conn->prepare("INSERT INTO users (username, email, password, first_name, last_name) VALUES (:username, :email, :password, :first_name, :last_name)");
-    $insertUser->bindParam(":username", $username);
-    $insertUser->bindParam(":email", $email);
-    $insertUser->bindParam(":password", $password);
-    $insertUser->bindParam(":first_name", $firstName);
-    $insertUser->bindParam(":last_name", $lastName);
+    // Check if the email already exists in the database
+    $checkEmail = $conn->prepare("SELECT COUNT(*) FROM users WHERE email = :email");
+    $checkEmail->bindParam(":email", $email);
+    $checkEmail->execute();
+    $emailCount = $checkEmail->fetchColumn();
 
-    if ($insertUser->execute()) {
-        // Redirect to the users page after successful insertion
-        echo "<script>window.location.href = 'users.php';</script>";
-        exit();
+    if ($emailCount > 0) {
+        echo "<script>alert('Email address already exists. Please choose a different one.');</script>";
     } else {
-        // Handle error, you might want to display an error message or log the error
-        echo "Error inserting user into the database.";
+        // Insert new user into the database
+        $insertUser = $conn->prepare("INSERT INTO users (username, email, password, first_name, last_name) VALUES (:username, :email, :password, :first_name, :last_name)");
+        $insertUser->bindParam(":username", $username);
+        $insertUser->bindParam(":email", $email);
+        $insertUser->bindParam(":password", $password);
+        $insertUser->bindParam(":first_name", $firstName);
+        $insertUser->bindParam(":last_name", $lastName);
+
+        if ($insertUser->execute()) {
+            echo "<script>window.location.href = 'users.php';</script>";
+            exit();
+        } else {
+            echo "<script>alert('Error inserting user into the database.');</script>";
+        }
     }
 }
+
 ?>
 
 <style>
@@ -93,8 +102,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <label class="form-label" for="email">Email *</label>
                     </div>
                     <div class="form-outline mb-4">
-                        <input type="password" class="form-control" name="password" placeholder=" " required>
-                        <label class="form-label" for="password">Password *</label>
+                    <div class="input-group">
+                            <input type="password" name="password" class="form-control" placeholder=" " required/>
+                            <label class="form-label" for="password">Password *</label>
+                            <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                <i class="fas fa-eye" id="passwordEye"></i>
+                            </button>
+                        </div>
                     </div>
                     
                     <button type="submit" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Create User</button>
@@ -104,5 +118,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 </div>
 
+<script>
+    document.getElementById("togglePassword").addEventListener("click", function() {
+        var passwordInput = document.getElementsByName("password")[0];
+        var passwordEye = document.getElementById("passwordEye");
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            passwordEye.classList.remove("fa-eye");
+            passwordEye.classList.add("fa-eye-slash");
+        } else {
+            passwordInput.type = "password";
+            passwordEye.classList.remove("fa-eye-slash");
+            passwordEye.classList.add("fa-eye");
+        }
+    });
+</script>
 
 <?php require "../layouts/footer.php"; ?>

@@ -8,7 +8,7 @@ if (!isset($_SESSION['admin_id'])) {
 }
 
 if (!isset($_GET['id'])) {
-    header("Location: users.php");
+    echo "<script>window.location.href='users.php';</script>";
     exit();
 }
 
@@ -54,6 +54,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $updateQuery = $conn->prepare("UPDATE users SET first_name = :first_name, last_name = :last_name, username = :username, email = :email, street_address = :street_address, town = :town, zip_code = :zip_code, phone = :phone WHERE id = :userId");
     }
     
+    if ($email !== $user->email) {
+        $checkEmailQuery = $conn->prepare("SELECT COUNT(*) FROM users WHERE email = :email AND id != :userId");
+        $checkEmailQuery->bindParam(':email', $email);
+        $checkEmailQuery->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $checkEmailQuery->execute();
+        $emailCount = $checkEmailQuery->fetchColumn();
+
+        if ($emailCount > 0) {
+            echo "<script>alert('Email address already exists for another user. Please choose a different one.');</script>";
+            echo "<script>window.location.href='edit-user.php';</script>";
+            exit();
+        }
+    }
+
+    $updateQuery = $conn->prepare("UPDATE users SET first_name = :first_name, last_name = :last_name, username = :username, email = :email, street_address = :street_address, town = :town, zip_code = :zip_code, phone = :phone WHERE id = :userId");
+
     $updateQuery->bindParam(':first_name', $first_name, PDO::PARAM_STR);
     $updateQuery->bindParam(':last_name', $last_name, PDO::PARAM_STR);
     $updateQuery->bindParam(':username', $username, PDO::PARAM_STR);
