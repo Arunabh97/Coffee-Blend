@@ -185,6 +185,17 @@
 		margin-top: 10px; 
 	}
 
+	.carousel-indicators li {
+        background-color: white; 
+        border-radius: 50%; 
+        width: 15px; 
+        height: 15px;
+		margin-bottom: 20px;
+    }
+
+    .carousel-indicators .active {
+        background-color: yellow; 
+    }
 </style>
 
 <script>
@@ -591,14 +602,13 @@
 					</div>
 				<?php endforeach; ?>
 			</div>
-			<ol class="carousel-indicators">
+			<ol class="carousel-indicators" style="position: absolute; bottom: -25px; left: 35%; transform: translateX(-50%);">
 				<?php foreach ($reviewsChunks as $index => $reviewsChunk) : ?>
 					<li data-target="#testimonialCarousel" data-slide-to="<?php echo $index; ?>" class="<?php echo ($index === 0) ? 'active' : ''; ?>"></li>
 				<?php endforeach; ?>
 			</ol>
 		</div>
 	</div>
-
 </section>
 
 <script>
