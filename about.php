@@ -1,5 +1,6 @@
 <?php require "includes/header.php"; ?>
 <?php require "config/config.php"; ?>
+
 <?php
 
 $reviews = $conn->query("SELECT * FROM reviews");
@@ -8,6 +9,7 @@ $reviews->execute();
 $allReviews = $reviews->fetchAll(PDO::FETCH_OBJ);
 
 ?>
+
 <style>
     .rating {
         display: flex;
@@ -45,6 +47,35 @@ $allReviews = $reviews->fetchAll(PDO::FETCH_OBJ);
     border-radius: 8px;
     margin-bottom: 20px;
     }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 50px; 
+        height: 50px;
+        background-color: rgba(0, 0, 0, 0.5); 
+        border-radius: 50%; 
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 120px; 
+    }
+
+    .carousel-control-prev:hover,
+    .carousel-control-next:hover {
+        background-color: rgba(0, 0, 0, 0.7); 
+    }
+    
+    .carousel-indicators li {
+        background-color: white; 
+        border-radius: 50%; 
+        width: 15px; 
+        height: 15px;
+        margin-right: 5px; 
+    }
+
+    .carousel-indicators .active {
+        background-color: yellow; 
+    }
 </style>
 
 <section class="home-slider owl-carousel">
@@ -77,7 +108,7 @@ $allReviews = $reviews->fetchAll(PDO::FETCH_OBJ);
 </section>
 
 <section class="ftco-section ftco-no-pt ftco-no-pb">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row justify-content-center mb-5">
             <div class="col-md-7 heading-section text-center ftco-animate">
                 <span class="subheading">Testimony</span>
@@ -87,23 +118,22 @@ $allReviews = $reviews->fetchAll(PDO::FETCH_OBJ);
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div id="customerReviewsCarousel" class="carousel slide" data-ride="carousel" data-interval="3000"> <!-- Set data-interval to 2000 for 2 seconds -->
+                <div id="customerReviewsCarousel" class="carousel slide" data-ride="carousel" data-interval="3000">
                     <div class="carousel-inner">
                         <?php
-                        $chunkedReviews = array_chunk($allReviews, 3);
+                        $chunkedReviews = array_chunk($allReviews, 4);
                         foreach ($chunkedReviews as $index => $reviewsChunk) :
                         ?>
                             <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
                                 <div class="row">
                                     <?php foreach ($reviewsChunk as $review) : ?>
-                                        <div class="col-md-4 d-flex align-items-center">
+                                        <div class="col-md-3 d-flex align-items-center">
                                             <div class="testimony">
                                                 <blockquote>
                                                     <p>&ldquo;<?php echo $review->review; ?>.&rdquo;</p>
                                                 </blockquote>
                                                 <div class="rating">
                                                     <?php
-                                                    // Display stars based on the user rating
                                                     for ($i = 5; $i >= 1; $i--) {
                                                         echo '<input type="radio" id="star' . $i . '_review_' . $review->id . '" name="rating_' . $review->id . '" value="' . $i . '" disabled';
                                                         if ($i == $review->rating) {
@@ -124,17 +154,24 @@ $allReviews = $reviews->fetchAll(PDO::FETCH_OBJ);
                             </div>
                         <?php endforeach; ?>
                     </div>
-                    <ol class="carousel-indicators">
-        <?php foreach ($chunkedReviews as $index => $reviewsChunk) : ?>
-            <li data-target="#customerReviewsCarousel" data-slide-to="<?php echo $index; ?>" class="<?php echo ($index === 0) ? 'active' : ''; ?>"></li>
-        <?php endforeach; ?>
-    </ol>
+                    <a class="carousel-control-prev" href="#customerReviewsCarousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#customerReviewsCarousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                    <ol class="carousel-indicators" style="position: absolute; bottom: -35px; left: 35%; transform: translateX(-50%);"> <!-- Adjust position as needed -->
+                        <?php foreach ($chunkedReviews as $index => $reviewsChunk) : ?>
+                            <li data-target="#customerReviewsCarousel" data-slide-to="<?php echo $index; ?>" class="<?php echo ($index === 0) ? 'active' : ''; ?>"></li>
+                        <?php endforeach; ?>
+                    </ol>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
 
     <section class="ftco-section">
     	<div class="container">
