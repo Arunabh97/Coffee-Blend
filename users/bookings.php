@@ -31,17 +31,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cancel_booking'])) {
             padding: 30px;
             border: 2px dashed #ccc;
             border-radius: 10px;
-            background-color: #f0e68c;
+            background-image: linear-gradient(to right, #ff7e5f, #feb47b);
         }
 
         .no-bookings p {
             font-size: 24px;
             margin-bottom: 20px;
+			color: #fff;
         }
 
         .no-bookings i {
             font-size: 64px;
-            color: #007bff;
+            color: blue;
             margin-bottom: 20px;
             display: block;
         }

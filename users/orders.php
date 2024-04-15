@@ -45,6 +45,43 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
         margin: 0 auto;
     }
 
+    .no-orders {
+        text-align: center;
+        margin-top: 50px;
+        padding: 30px;
+        border-radius: 20px;
+        background-image: linear-gradient(to right, #ff7e5f, #feb47b);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .no-orders p {
+        font-size: 24px;
+        margin-bottom: 10px;
+        color: #fff;
+    }
+
+    .no-orders i {
+            font-size: 64px;
+            color: blue;
+            display: block;
+        }
+
+    .no-orders .message-icon {
+        font-size: 50px;
+        color: #fff;
+        margin-bottom: 10px;
+    }
+
+    .no-orders .btn-primary {
+        background-color: #fff;
+        color: #ff7e5f;
+        border: none;
+        padding: 20px 8px;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        font-size: 15px;
+    }
 </style>
 
 <section class="home-slider owl-carousel">
@@ -159,7 +196,11 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
                                 </tbody>
                             </table>
                         <?php else : ?>
-                            <p>You do not have any orders for now</p>
+                            <div class="no-orders">
+                                <p><i class='bx bxs-shopping-bags'></i> You do not have any orders for now.</p>
+                                <p>Ready to explore our products? Start shopping now!</p>
+                                <a href="<?php echo APPURL; ?>/menu.php" class="btn btn-primary"><i class='bx bx-plus-circle'></i> Explore Now</a>
+                            </div>
                         <?php endif; ?>
                     </div>
                 </div>
