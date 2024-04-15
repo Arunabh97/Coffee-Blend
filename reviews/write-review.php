@@ -19,6 +19,7 @@ if (isset($_POST['submit'])) {
         $rating = $_POST['rating'];
         $username = $_SESSION['username'];
 
+        $imageName = '';
         if (isset($_FILES["image"]) && $_FILES["image"]["error"] === UPLOAD_ERR_OK) {
             $targetDir = "uploads/";
             $imageName = basename($_FILES["image"]["name"]);
@@ -29,20 +30,7 @@ if (isset($_POST['submit'])) {
             if ($check !== false) {
 
                 if (in_array($imageFileType, array("jpg", "png", "jpeg", "gif"))) {
-                    // Upload image to server
-                    if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
-                        
-                        $writeReview = $conn->prepare("INSERT INTO reviews (review, rating, username, image) VALUES (:review, :rating, :username, :image)");
-                        $writeReview->execute([
-                            ":review" => $review,
-                            ":rating" => $rating,
-                            ":username" => $username,
-                            ":image" => $imageName
-                        ]);
-
-                        echo "<script>alert('Review Submitted');</script>";
-                        echo "<script>window.history.go(-2);</script>";
-                    } else {
+                    if (!move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
                         echo "<script>alert('Error uploading image');</script>";
                     }
                 } else {
@@ -51,9 +39,18 @@ if (isset($_POST['submit'])) {
             } else {
                 echo "<script>alert('File is not an image');</script>";
             }
-        } else {
-            echo "<script>alert('Image not uploaded');</script>";
         }
+
+        $writeReview = $conn->prepare("INSERT INTO reviews (review, rating, username, image) VALUES (:review, :rating, :username, :image)");
+        $writeReview->execute([
+            ":review" => $review,
+            ":rating" => $rating,
+            ":username" => $username,
+            ":image" => $imageName 
+        ]);
+
+        echo "<script>alert('Review Submitted');</script>";
+        echo "<script>window.history.go(-2);</script>";
     }
 }
 ?>
