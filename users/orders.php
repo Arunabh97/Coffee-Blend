@@ -27,24 +27,97 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 <style>
+    .cart-list table {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+        background-color: #f8f9fa; 
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .cart-list th,
+    .cart-list td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #dee2e6;
+        font-family: 'Arial', sans-serif; 
+    }
+
+    .cart-list td.order_id {
+        color: #2196f3; 
+        font-weight: bold;
+        font-style: italic;
+    }
+
+    .cart-list th {
+        background-color: #f44336; 
+        color: #fff;
+        font-weight: bold;
+        text-transform: uppercase; 
+    }
+
+    .cart-list tbody tr:nth-child(even) {
+        background-color: #ffe0b2;
+    }
+
     .cart-list tbody tr:hover {
-        background-color: #d4edda; 
+        background-color: #ff7043; 
+        color: #fff; 
     }
 
-    .cart-list tbody tr:hover td {
-        color: #000; 
+    .cart-list tbody td {
+        vertical-align: middle;
     }
 
-    .btn:hover {
-        background-color: transparent; 
+    .cart-list .btn {
+        padding: 10px 20px;
+        border-radius: 5px;
+        background-color: #4caf50; 
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        font-family: 'Arial', sans-serif; 
+    }
+
+    .cart-list .btn:hover {
+        background-color: #fff; 
+        color: #2196f3;
+    }
+
+    .cart-list .btn-primary {
+        background-color: #2196f3; 
         color: #fff;
     }
 
-    .cart-list table {
-        max-width: 100%;
-        margin: 0 auto;
+    .cart-list .btn-primary:hover {
+        background-color: #fff;
     }
 
+    .cart-list .btn-success {
+        background-color: red; 
+    }
+
+    .cart-list .btn-success:hover {
+        background-color: #fff; 
+    }
+
+    .cart-list .btn-link {
+        padding: 0;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        color: #2196f3; 
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .cart-list .btn-link:hover {
+        color: #1976d2; 
+    }
     .no-orders {
         text-align: center;
         margin-top: 50px;
@@ -81,6 +154,10 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
         text-decoration: none;
         transition: background-color 0.3s ease;
         font-size: 15px;
+    }
+
+    .btn {
+        border-radius: 5px;
     }
 </style>
 
@@ -129,10 +206,10 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
                                         <tr class="text-center">
                                             <td class="order_id"><?php echo $order->id; ?></td>
                                             <td class="name"><?php echo $order->first_name . ' ' . $order->last_name; ?></td>
-                                            <td class="price"><?php echo $order->town; ?></td>
+                                            <td class="town"><?php echo $order->town; ?></td>
                                             <td class="street_add"><?php echo $order->street_address; ?></td>
-                                            <td class="price"><?php echo $order->phone; ?></td>
-                                            <td class="price">₹<?php echo $order->total_price; ?></td>
+                                            <td class="phone"><?php echo $order->phone; ?></td>
+                                            <td class="total_price">₹<?php echo $order->total_price; ?></td>
                                             <td class="pay_type"><?php echo $order->pay_type; ?></td>
                                             <td class="pay_status"><?php echo $order->pay_status; ?></td>
                                             <td class="timestamp"><?php echo $order->created_at; ?></td>
@@ -180,14 +257,14 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
 											</button>
 													</form>
 												<?php else : ?>
-													N/A
+													<span style="color: #2196f3;">N/A</span>
 												<?php endif; ?>
 											</td>
 											<td class="total">
 												<?php if ($order->status == "Delivered") : ?>
                                                     <a class="btn btn-success" href="print.php?order_id=<?php echo $order->id; ?>" target="_blank">Download</a>
 												<?php else : ?>
-													N/A
+													<span style="color: #2196f3;">N/A</span>
 												<?php endif; ?>
 											</td>
                                             

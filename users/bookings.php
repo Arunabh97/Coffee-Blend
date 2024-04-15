@@ -25,6 +25,99 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cancel_booking'])) {
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/boxicons/2.0.7/css/boxicons.min.css">
 
 <style>
+	.cart-list table {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+        background-color: #f8f9fa; 
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .cart-list th,
+    .cart-list td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #dee2e6;
+        font-family: 'Arial', sans-serif; 
+		text-align: center;
+    }
+
+    .cart-list td.booking_id {
+        color: #2196f3; 
+        font-weight: bold;
+        font-style: italic;
+    }
+
+    .cart-list th {
+        background-color: #f44336; 
+        color: #fff;
+        font-weight: bold;
+        text-transform: uppercase; 
+    }
+
+    .cart-list tbody tr:nth-child(even) {
+        background-color: #ffe0b2;
+    }
+
+    .cart-list tbody tr:hover {
+        background-color: #ff7043; 
+        color: #fff; 
+    }
+
+    .cart-list tbody td {
+        vertical-align: middle;
+    }
+
+    .cart-list .btn {
+        padding: 10px 20px;
+        border-radius: 5px;
+        background-color: #4caf50; 
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        font-family: 'Arial', sans-serif; 
+    }
+
+    .cart-list .btn:hover {
+        background-color: #fff; 
+        color: #2196f3;
+    }
+
+    .cart-list .btn-primary {
+        background-color: #2196f3; 
+        color: #fff;
+    }
+
+    .cart-list .btn-primary:hover {
+        background-color: #fff;
+    }
+
+    .cart-list .btn-success {
+        background-color: red; 
+    }
+
+    .cart-list .btn-success:hover {
+        background-color: #fff; 
+    }
+
+    .cart-list .btn-link {
+        padding: 0;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        color: #2196f3; 
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .cart-list .btn-link:hover {
+        color: #1976d2; 
+    }
+
         .no-bookings {
             text-align: center;
             margin-top: 50px;
@@ -81,7 +174,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cancel_booking'])) {
     </section>
 
     <section class="ftco-section ftco-cart">
-			<div class="container">
+			<div class="container-fluid">
 				<div class="row">
     			<div class="col-md-12 ftco-animate">
     				<div class="cart-list">
@@ -89,6 +182,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cancel_booking'])) {
 	    				<table class="table">
 						    <thead class="thead-primary">
 						      <tr class="text-center">
+							  	<th>Booking Id</th>
 							  	<th>Name</th>
 								<th>Seats</th>
 						        <th>Date</th>
@@ -102,18 +196,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cancel_booking'])) {
 						    <tbody>
 								<?php foreach($allBookings as $booking) : ?>
 						      	<tr class="text-center">
+								<td class="booking_id"><?php echo $booking->id; ?></td>
 							  	<td class="name"><?php echo $booking->first_name . ' ' . $booking->last_name; ?></td>
 								<td class="seats"><?php echo $booking->seats; ?></td>
-								<td class="price"><?php echo $booking->date; ?></td>
-								<td class="price"><?php echo $booking->time; ?></td>
-								<td class="price"><?php echo $booking->phone; ?></td>
+								<td class="date"><?php echo $booking->date; ?></td>
+								<td class="time"><?php echo $booking->time; ?></td>
+								<td class="phone"><?php echo $booking->phone; ?></td>
 								<td><?php echo $booking->message; ?></td>
 						        
-						        <td class="total"><?php echo $booking->status; ?></td>
+						        <?php
+                                        $status = $booking->status;
+                                        $badgeClass = '';
+                                        switch ($status) {
+                                            case 'Pending':
+                                                $badgeClass = 'badge badge-info';
+                                                break;
+                                            case 'Confirmed':
+                                                $badgeClass = 'badge badge-success';
+                                                break;
+                                            case 'In Progress':
+                                                $badgeClass = 'badge badge-warning';
+                                                break;
+                                            case 'Cancelled':
+                                                $badgeClass = 'badge badge-danger';
+                                                break;
+                                            case 'Done':
+                                                $badgeClass = 'badge badge-success';
+                                                break;
+                                            default:
+                                                $badgeClass = 'badge badge-secondary';
+                                                break;
+                                        }
+
+                                    ?>
+                                    <td class="status"><span class="<?php echo $badgeClass; ?>"><?php echo $status; ?></span></td>
 									<?php if ($booking->status == "Done") : ?>
-										<td class="total"><a class="btn btn-primary" href="<?php echo APPURL; ?>/reviews/write-review.php">Write Review</a></td>
+										<td class="status"><a class="btn btn-primary" href="<?php echo APPURL; ?>/reviews/write-review.php">Write Review</a></td>
 									<?php elseif ($booking->status == "Pending" || $booking->status == "Confirmed") : ?>
-										<td class="total">
+										<td class="status">
 											<form method="post" action="" onsubmit="return confirm('Are you sure you want to cancel this booking?');">
 												<input type="hidden" name="booking_id" value="<?php echo $booking->id; ?>">
 												<button type="submit" name="cancel_booking" class="btn btn-link">
@@ -122,7 +242,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cancel_booking'])) {
 											</form>
 										</td>
 									<?php else : ?>
-										<td class="total">N/A</td>
+										<td class="err">N/A</td>
 									<?php endif; ?>
 								</tr>
 
