@@ -302,6 +302,9 @@ if (isset($_SESSION['user_id'])) {
         cursor: pointer;
     }
         
+    .btn {
+        border-radius: 5px;
+    }
 </style>
 
   </head>

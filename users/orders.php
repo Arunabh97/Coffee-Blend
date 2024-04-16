@@ -48,6 +48,7 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
         text-align: left;
         border-bottom: 1px solid #dee2e6;
         font-family: 'Arial', sans-serif; 
+        text-align: center;
     }
 
     .cart-list td.order_id {
