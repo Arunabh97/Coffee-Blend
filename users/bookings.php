@@ -258,7 +258,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cancel_booking'])) {
 							<div class="no-bookings">
 								<p><i class='bx bx-calendar'></i> You do not have any bookings for now.</p>
 								<p>Ready to book your next appointment?</p>
-								<a href="<?php echo APPURL; ?>/menu.php" class="btn btn-primary"><i class='bx bx-plus-circle'></i> Book Now</a>
+								<a href="<?php echo APPURL; ?>/book.php" class="btn btn-primary"><i class='bx bx-plus-circle'></i> Book Now</a>
 							</div>
 							<?php endif; ?>
 					  </div>
