@@ -1,10 +1,10 @@
 <?php require "../config/config.php"; ?>
-
 <?php
 
-	if(!isset($_SESSION['user_id'])){
-		header("location: ".APPURL."");
-	}
+if(!isset($_SERVER['HTTP_REFERER'])){
+    echo "<script>window.location.href = 'http://localhost/coffee-blend';</script>";
+	exit;
+}
 
     if(isset($_GET['id']) && filter_var($_GET['id'], FILTER_VALIDATE_INT)) {
         $productId = $_GET['id'];

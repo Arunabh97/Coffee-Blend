@@ -3,7 +3,7 @@ require "../includes/header.php";
 require "../config/config.php";
 
 if (!isset($_SESSION['user_id'])) {
-    header("location: " . APPURL . "");
+    echo "<script>window.location.href = '" . APPURL . "';</script>";
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cancel_order'])) {
@@ -27,6 +27,11 @@ $allOrders = $orders->fetchAll(PDO::FETCH_OBJ);
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 <style>
+    .cart-list {
+        max-height: 1024px;
+        overflow-y: auto;
+    }
+    
     .cart-list table {
         width: 100%;
         border-collapse: collapse;

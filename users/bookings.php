@@ -3,7 +3,7 @@
 <?php
 
 if(!isset($_SESSION['user_id'])){
-	header("location: ".APPURL."");
+	echo "<script>window.location.href = '" . APPURL . "';</script>";
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cancel_booking'])) {
@@ -25,6 +25,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cancel_booking'])) {
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/boxicons/2.0.7/css/boxicons.min.css">
 
 <style>
+    .cart-list {
+        max-height: 1024px;
+        overflow-y: auto;
+    }
+    
 	.cart-list table {
         width: 100%;
         border-collapse: collapse;

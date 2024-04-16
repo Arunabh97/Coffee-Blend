@@ -130,7 +130,7 @@ $reviews = $reviewsQuery->fetchAll(PDO::FETCH_OBJ);
                         <?php foreach ($reviews as $review) : ?>
                             <tr>
                                 <td><?php echo $review->id; ?></td>
-                                <td><?php echo $review->review; ?></td>
+                                <td style="max-width: 700px; overflow: hidden; text-overflow: ellipsis;"><?php echo $review->review; ?></td>
                                 <td><?php echo $review->rating; ?></td>
                                 <td><?php echo $review->username; ?></td>
                                 <td><?php echo $review->created_at; ?></td>
