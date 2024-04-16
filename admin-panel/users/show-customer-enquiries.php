@@ -106,8 +106,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["change_status"])) {
                                     echo '<tr class="' . $status_class . '">';
                                     echo '<td>' . $row['name'] . '</td>';
                                     echo '<td>' . $row['email'] . '</td>';
-                                    echo '<td>' . $row['subject'] . '</td>';
-                                    echo '<td>' . $row['message'] . '</td>';
+                                    echo '<td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;">' . $row['subject'] . '</td>';
+                                    echo '<td style="max-width: 400px; overflow: hidden; text-overflow: ellipsis;">' . $row['message'] . '</td>';
                                     echo '<td>' . $row['status'] . '</td>';
                                     echo '<td>
                                         <form method="post" action="">

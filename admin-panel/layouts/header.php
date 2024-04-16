@@ -69,7 +69,7 @@
 <div id="wrapper">
     <nav class="navbar header-top fixed-top navbar-expand-lg  navbar-dark bg-dark">
       <div class="container">
-      <a class="navbar-brand" href="#"><i class='bx bx-coffee-togo' style='font-size: 1.5em;'></i> <span class="coffee-blend-text" style='font-size: 1.2em;'>COFFEE BLEND</span> Admin Panel</a>
+      <a class="navbar-brand" href="<?php echo ADMINURL; ?>"><i class='bx bx-coffee-togo' style='font-size: 1.5em;'></i> <span class="coffee-blend-text" style='font-size: 1.2em;'>COFFEE BLEND</span> Admin Panel</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -119,8 +119,7 @@
             <i class="fa-solid fa-user-tie"></i> <?php echo $_SESSION['admin_name']; ?>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="<?php echo ADMINURL; ?>/admins/logout.php">Logout <i class="fa-solid fa-right-from-bracket"></i></a>
-              
+            <a class="dropdown-item" href="#" onclick="confirmLogout()">Logout <i class="fa-solid fa-right-from-bracket"></i></a>
           </li>
                 <?php else : ?>
 
@@ -135,3 +134,12 @@
     </div>
     </nav>
     <div class="container-fluid">
+
+<script>
+    function confirmLogout() {
+        var logout = confirm("Are you sure you want to logout?");
+        if (logout) {
+            window.location.href = "<?php echo ADMINURL; ?>/admins/logout.php"; 
+        }
+    }
+</script>
