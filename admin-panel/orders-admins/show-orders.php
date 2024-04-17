@@ -75,6 +75,14 @@ $allOrders = $ordersQuery->fetchAll(PDO::FETCH_OBJ);
     text-decoration-thickness: 2px;
     }
 
+    .table tbody tr.pending-order {
+        background-color: #ffe5b3 !important;
+        color: black;
+    }
+
+    .table tbody tr.in-progress-order {
+        background-color: #cce5ff !important;
+    }
 </style>
 
 <div class="row">
@@ -144,7 +152,7 @@ $allOrders = $ordersQuery->fetchAll(PDO::FETCH_OBJ);
                                 <?php
                                 $statusClass = $order->status === 'Delivered' ? 'delivered-order' : ($order->status === 'Cancelled' ? 'cancelled-order' : '');
                                 ?>
-                                <tr class="<?php echo $statusClass; ?>">
+                                <tr class="<?php echo $statusClass . ($order->status === 'Pending' ? ' pending-order' : '') . ($order->status === 'In Progress' ? ' in-progress-order' : ''); ?>">
                                     <td><input type="checkbox" class="order-checkbox" value="<?php echo $order->id; ?>"></td>
                                     <td><?php echo $serial++; ?></td> 
                                     <td><?php echo $order->first_name; ?></td>

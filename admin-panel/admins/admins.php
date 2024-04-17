@@ -53,8 +53,16 @@ $totalAdmins = count($allAdmins);
     <div class="col">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title mb-4 d-inline"><i class="fas fa-user-tie"></i> Admins</h5>
-                <a href="create-admins.php" class="btn btn-primary mb-4 text-center float-right"><i class="fa-solid fa-plus"></i> Create Admins</a>
+                <div class="row mb-3">
+                    <div class="col-md-10">
+                        <h5 class="card-title mb-4 d-inline"><i class="fas fa-user-tie"></i> Admins</h5>
+                    </div>
+                    <div class="col-md-2 text-right"> 
+                        <?php if ($_SESSION['admin_id'] == 1) : ?>
+                            <a href="create-admins.php" class="btn btn-primary mb-2 text-center"><i class="fa-solid fa-plus"></i> Create Admins</a>
+                        <?php endif; ?>
+                    </div>
+                </div>
                 <table id="adminTable" class="table table-striped table-hover">
                     <thead>
                         <tr>
@@ -65,22 +73,22 @@ $totalAdmins = count($allAdmins);
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach($allAdmins as $admin) : ?>
+                    <?php foreach($allAdmins as $admin) : ?>
                         <tr>
                             <th scope="row"><?php echo $admin->id; ?></th>
                             <td><?php echo $admin->adminname; ?></td>
                             <td><?php echo $admin->email; ?></td>
                             <td>
-                                <?php if ($_SESSION['admin_id'] == $admin->id) : ?>
-                                <a href="edit-admins.php?id=<?php echo $admin->id; ?>" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i> Edit</a>
+                                <?php if ($_SESSION['admin_id'] == $admin->id || $_SESSION['admin_id'] == 1) : ?>
+                                    <a href="edit-admins.php?id=<?php echo $admin->id; ?>" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i> Edit</a>
                                 <?php endif; ?>
-                            
+                                
                                 <?php if ($_SESSION['admin_id'] == 1 && $_SESSION['admin_id'] != $admin->id) : ?>
-                                <button class="btn btn-sm btn-danger delete-admin" data-id="<?php echo $admin->id; ?>"><i class="fas fa-trash-alt"></i> Delete</button>
+                                    <button class="btn btn-sm btn-danger delete-admin" data-id="<?php echo $admin->id; ?>"><i class="fas fa-trash-alt"></i> Delete</button>
                                 <?php endif; ?>
                             </td>
                         </tr>
-                        <?php endforeach; ?>
+                    <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>

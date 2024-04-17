@@ -63,6 +63,31 @@
             vertical-align: middle; 
         }
 
+        .logout-button {
+            display: inline-block;
+            padding: 12px 24px;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(to right, #ff4b1f, #ff9068); 
+            box-shadow: 0 4px 6px rgba(255, 75, 31, 0.2); 
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .logout-button:hover {
+            background: linear-gradient(to right, #ff9068, #ff4b1f); 
+            box-shadow: 0 6px 12px rgba(255, 75, 31, 0.4); 
+            transform: scale(1.05);
+        }
+
+        .dropdown-menu {
+            background: transparent !important;
+            border: none;
+        }
       </style>
 </head>
 <body>
@@ -119,7 +144,8 @@
             <i class="fa-solid fa-user-tie"></i> <?php echo $_SESSION['admin_name']; ?>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#" onclick="confirmLogout()">Logout <i class="fa-solid fa-right-from-bracket"></i></a>
+              <a class="dropdown-item logout-button" href="#" onclick="confirmLogout()"><i class="fa-solid fa-sign-out-alt"></i> Logout</a>
+            </div>
           </li>
                 <?php else : ?>
 

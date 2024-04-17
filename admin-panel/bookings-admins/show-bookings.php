@@ -119,11 +119,18 @@ $allBookings = $bookingsQuery->fetchAll(PDO::FETCH_OBJ);
     }
 
     .done-booking td {
-    text-decoration: line-through;
-    text-decoration-color: red; 
-    text-decoration-thickness: 2px; 
+        text-decoration: line-through;
+        text-decoration-color: red; 
+        text-decoration-thickness: 2px; 
     }
 
+    .pending-booking {
+        background-color: #ffe5b3 !important; 
+    }
+
+    .in-progress-booking {
+        background-color: #cce5ff !important;
+    }
 </style>
 
 <div class="row">
@@ -209,8 +216,10 @@ $allBookings = $bookingsQuery->fetchAll(PDO::FETCH_OBJ);
                             <?php
                             // Determine if the status is "Done"
                             $doneClass = $booking->status === 'Done' ? 'done-booking' : '';
+                            $pendingClass = $booking->status === 'Pending' ? 'pending-booking' : '';
+                            $inProgressClass = $booking->status === 'In Progress' ? 'in-progress-booking' : '';
                             ?>
-                            <tr class="<?php echo $doneClass; ?>">
+                            <tr class="<?php echo $doneClass . ' ' . $pendingClass . ' ' . $inProgressClass; ?>">
                                 <th scope="row"><?php echo $booking->id; ?></th>
                                 <td><?php echo $booking->first_name; ?></td>
                                 <td><?php echo $booking->last_name; ?></td>
