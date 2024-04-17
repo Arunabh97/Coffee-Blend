@@ -1,6 +1,6 @@
 <?php
 if (!isset($_SESSION['admin_name'])) {
-    header("location: " . ADMINURL . "/admins/login-admins.php");
+    echo "<script>window.location.href = '" . ADMINURL . "/admins/login-admins.php';</script>";
     exit();
 }
 

@@ -3,7 +3,6 @@
 <?php
 
 if(isset ($_SESSION['admin_name'])){
-  //header("location: ".ADMINURL."");
   echo "<script>window.location.href = '" . ADMINURL . "';</script>";
 }
 

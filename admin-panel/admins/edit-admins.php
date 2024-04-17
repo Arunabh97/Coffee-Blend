@@ -3,7 +3,7 @@ require "../layouts/header.php";
 require "../../config/config.php";
 
 if (!isset($_SESSION['admin_id']) || !isset($_GET['id'])) {
-    header("location: " . ADMINURL . "/admins/login-admins.php");
+    echo "<script>window.location.href = '" . ADMINURL . "/admins/login-admins.php';</script>";
 }
 
 $adminId = $_GET['id'];
