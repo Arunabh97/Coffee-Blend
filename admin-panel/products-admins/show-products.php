@@ -74,7 +74,7 @@ $allProducts = $products->fetchAll(PDO::FETCH_OBJ);
     <div class="col">
         <div class="card">
             <div class="card-body">
-                <div class="row mb-3">
+                <div class="row mb-12">
                     <div class="col-md-8">
                         <h5 class="card-title mb-4 d-inline"><i class="fas fa-shopping-bag"></i> Products</h5>
                     </div>
