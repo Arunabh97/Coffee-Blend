@@ -102,7 +102,7 @@ $allOrders = $ordersQuery->fetchAll(PDO::FETCH_OBJ);
                                     <option value="">All Status</option>
                                     <option value="Pending">Pending</option>
                                     <option value="In Progress">In Progress</option>
-                                    <option value="Shipped">Shipped</option>
+                                    <!-- <option value="Shipped">Shipped</option> -->
                                     <option value="Delivered">Delivered</option>
                                     <option value="Cancelled">Cancelled</option>
                                 </select>

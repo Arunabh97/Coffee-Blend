@@ -65,7 +65,7 @@ if(isset($_GET['id'])){
               <option selected>Choose Type</option>
               <option value="Pending">Pending <i class="fas fa-info-circle text-info"></i> - Waiting for processing</option>
               <option value="In Progress">In Progress <i class="fas fa-sync-alt text-warning"></i> - Currently being processed</option>
-              <option value="Shipped">Shipped <i class="fas fa-truck text-primary"></i> - Order has been shipped</option>
+              <!-- <option value="Shipped">Shipped <i class="fas fa-truck text-primary"></i> - Order has been shipped</option> -->
               <option value="Delivered">Delivered <i class="fas fa-check-circle text-success"></i> - Order has been delivered</option>
               <option value="Cancelled">Cancelled <i class="fas fa-times-circle text-danger"></i> - Order has been cancelled</option>
             </select>
