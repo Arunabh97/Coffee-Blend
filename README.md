@@ -1,4 +1,5 @@
 Coffee Blend: Coffee Ordering & Table Reservation System ☕
+
 Coffee Blend is a sophisticated web application designed to revolutionize the coffee ordering process and streamline table reservations, with seamless integration of payment gateways for a hassle-free experience.
 
 Features 🛠️
