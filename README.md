@@ -5,10 +5,15 @@ Coffee Blend is a sophisticated web application designed to revolutionize the co
 Features 🛠️
 
 ☕ Coffee Ordering: Place orders effortlessly with a user-friendly interface and customized options.
+
 🍽️ Table Reservation: Reserve tables conveniently in advance to ensure a delightful dining experience.
+
 📝 Order Customization: Tailor coffee orders based on preferences, including size, type, and additional toppings.
+
 📅 Reservation Management: Efficiently manage table reservations, with options for editing and cancellation.
+
 📋 Menu Display: Showcase an appealing menu with prices and descriptions for easy selection.
+
 📧 Email Notifications: Send confirmation emails for successful orders and reservations, keeping users informed.
 💳 Payment Gateway Integration: Seamlessly integrate Razorpay gateway for secure and efficient payment processing.
 🌐 Responsive Design: Enjoy a consistent experience across all devices, from desktops to tablets and mobile phones.
